@@ -1,0 +1,92 @@
+#header nav a {
+    font-size: 18px;
+}
+
+#header nav a:hover {
+    color: yellow;
+}
+
+#header nav a.active {
+    color: greenyellow;
+}
+#header .buttons-container a:hover {
+    color: yellow;
+}
+
+#header .buttons-container a.active {
+    color: greenyellow;
+}
+
+@media (max-width: 990px) {
+    #header nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        z-index: 50;
+        padding-top: 10vw;
+        width: 200px;
+        height: 100vh;
+        background-color: #00000075;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow:
+            0 4px 30px rgba(0, 0, 0, 0.1),
+            0 0 10px rgba(255, 255, 255, 0.1),
+            inset 0 0 20px rgba(255, 255, 255, 0.05);
+        transition: right 0.4s ease;
+    }
+
+    #header nav.showMenu {
+        right: 0;
+    }
+
+    #header nav ul {
+        flex-direction: column;
+    }
+
+    #header nav button {
+        display: inline-block;
+    }
+
+    #header .buttons-container button.menu-btn {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 750px) {
+    #header nav li.add-me {
+        display: block;
+    }
+    #header .buttons-container a.remove-me {
+        display: none;
+    }
+}
+@media (max-width: 500px) {
+    #header .logo img {
+        width: 100px;
+    }
+    #header > .container{
+        gap: 10px;
+    }
+}
+
+@media (max-width: 440px) {
+    #header .buttons-container {
+        gap: 10px;
+    }
+
+    #header .cart-btn {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    #header .cart-btn i {
+        font-size: 20px;
+        margin-left: 0;
+    }
+
+    #header .cart-btn span {
+        display: none;
+    }
+}

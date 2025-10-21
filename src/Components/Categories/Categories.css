@@ -1,0 +1,32 @@
+@media (max-width: 1000px) {
+    #categories .category-items {
+        justify-content: flex-start;
+        overflow-x: scroll;
+    }
+
+    #categories .category-items:active {
+        cursor: grabbing;
+    }
+
+    #categories .image {
+        width: 100px;
+        height: 100px;
+    }
+}
+@media (max-width: 870px) {
+    #categories > h2 {
+        font-size: 3.3vw;
+    }
+}
+@media (max-width: 550px) {
+    #categories > h2 {
+        font-size: 4.3vw;
+    }
+    #categories .category-items {
+        padding-top: 5px;
+    }
+    #categories .image {
+        width: 80px;
+        height: 80px;
+    }
+}

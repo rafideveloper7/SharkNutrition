@@ -28,4 +28,7 @@
     #footer nav ul{
         row-gap: 5px;
     }
+    #footer p{
+        font-size: 14px;
+    }
 }

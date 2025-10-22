@@ -1,3 +1,8 @@
+#header {
+    background-color: black;
+    color: #ffffff;
+}
+
 #header nav a {
     font-size: 18px;
 }

@@ -9,8 +9,8 @@ function Navbar() {
   const [openSearch, setOpenSearch] = useState(false)
 
   return (
-    <header id='header' className='shadow-[0_1px_1px_#aaa]'>
-      <div className="container flex justify-between items-center gap-15 h-[90px] ">
+    <header id='header' className='shadow-[0_0_2px_#fff]'>
+      <div className="container flex justify-between items-center gap-15 h-[90px]">
         <div className="logo">
           <img className='w-50' src={logo} alt="" />
         </div>

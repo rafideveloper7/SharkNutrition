@@ -7,7 +7,7 @@ function Products() {
     <section id='products' className='py-10'>
       {
         products?.map(product => (
-          <CategoryProducts key={product.catId} product={product} />
+          <CategoryProducts key={product.catId} product={product} catId={product?.catId} />
         ))
       }
     </section>

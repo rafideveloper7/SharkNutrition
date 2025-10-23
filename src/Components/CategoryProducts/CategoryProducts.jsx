@@ -1,5 +1,5 @@
 import ProductCard from '../ProductCard/ProductCard'
-function CategoryProducts({product}) {
+function CategoryProducts({product, catId}) {
     
     return (
         <section id={`${product?.category.toLowerCase().replace(/\s+/g, '-')}`} className='py-10'>
@@ -7,7 +7,7 @@ function CategoryProducts({product}) {
             <div className="flex flex-wrap justify-center gap-y-10 px-5">
                 {
                     product?.products?.map(item => (
-                        <ProductCard key={item?.productId} product={item} />
+                        <ProductCard key={catId + '-' + item?.productId} product={item} />
                     ))
                 }
             </div>

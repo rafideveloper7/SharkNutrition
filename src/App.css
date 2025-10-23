@@ -8,3 +8,9 @@
 .bg-blue{
     background-color: #37b5fe;
 }
+
+@media (max-width: 600px) {
+    .container{
+        max-width: 95%;
+    }
+}

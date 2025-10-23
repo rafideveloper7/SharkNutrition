@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../../assets/logo.webp'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import './Footer.css'
 
 function Footer() {
@@ -8,7 +8,9 @@ function Footer() {
     <footer id="footer" className='min-h-[90px] shadow-[0_0_2px_#fff]'>
       <div className='container flex justify-between items-center gap-15 py-5'>
         <div className="logo">
-          <img className='w-50' src={logo} alt="" />
+          <Link to='/'>
+            <img className='w-50' src={logo} alt="" />
+          </Link>
         </div>
         <nav className='flex-1'>
           <ul className='flex justify-center flex-wrap gap-10 text-xl items-center'>

@@ -4,7 +4,7 @@ import ownerImg from "../../assets/owner-img.webp";
 function About() {
   return (
     <section className="w-full max-w-[1200px] mx-auto bg-black text-white flex flex-col md:flex-row justify-between p-6 md:p-10">
-      
+
       {/* Left section: text */}
       <div className="w-full md:w-1/2 mb-8 md:mb-0 md:pr-8">
         <p className="text-blue-400 leading-8 text-center md:text-left">

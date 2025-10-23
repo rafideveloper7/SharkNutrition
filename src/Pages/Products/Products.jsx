@@ -1,8 +1,16 @@
 import React from 'react'
+import CategoryProducts from '../../Components/CategoryProducts/CategoryProducts'
+import { products } from '../../data'
 
 function Products() {
   return (
-    <div>Products</div>
+    <section id='products' className='py-10'>
+      {
+        products?.map(product => (
+          <CategoryProducts key={product.catId} product={product} />
+        ))
+      }
+    </section>
   )
 }
 

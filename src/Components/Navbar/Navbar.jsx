@@ -4,9 +4,8 @@ import './Navbar.css'
 import logo from '../../assets/logo.webp'
 import Search from '../Search/Search'
 
-function Navbar() {
+function Navbar({setOpenSearch}) {
   const [showMenu, setShowMenu] = useState(false)
-  const [openSearch, setOpenSearch] = useState(false)
 
   return (
     <header id='header' className='shadow-[0_0_2px_#fff] sticky top-0 bg-[#000000ea] z-100'>
@@ -40,7 +39,6 @@ function Navbar() {
           <button onClick={() => setShowMenu(false)} className='hidden absolute top-5 left-5 text-lg px-1 cursor-pointer rounded-md border-1'>
             <i className="fa-solid fa-xmark"></i>
           </button>
-          {openSearch && <Search setOpenSearch={setOpenSearch} />}
         </nav>
         <div className='buttons-container flex gap-5 items-center'>
           <button onClick={() => setOpenSearch(true)} className='cursor-pointer'><i className="fa-solid fa-magnifying-glass text-lg"></i></button>

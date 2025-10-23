@@ -50,12 +50,5 @@
         font-size: 13px;
     }
 
-    #categories .image {
-        width: 80px;
-        height: 80px;
-    }
-
-    #categories .image img {
-        scale: 166%;
-    }
+    
 }

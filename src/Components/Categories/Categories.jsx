@@ -14,8 +14,8 @@ function Categories() {
                     products?.map(item => (
                         <a href={`#${item?.category.toLowerCase().replace(/\s+/g, '-')}`} key={item?.catId}>
                             <div className='text-center'>
-                                <div className="image w-[10vw] h-[10vw] bg-[#bbb] rounded-full p-5 mb-5">
-                                    <img className='w-full h-full object-cover rounded-full' src={item?.image} alt="" />
+                                <div className="image w-[10vw] h-[10vw] bg-[#bbb] rounded-full mb-5">
+                                    <img className='w-full h-full object-cover rounded-full drop-shadow-[0_5px_5px_#444]' src={item?.image} alt="" />
                                 </div>
                                 <h3>{item?.category}</h3>
                             </div>

@@ -1,14 +1,14 @@
 
-import protein1 from './assets/protein1.jpeg'
+import protein1 from './assets/protein1.png'
 import protein2 from './assets/protein2.png'
-import protein3 from './assets/protein3.jpeg'
-import protein4 from './assets/protein4.jpeg'
-import creatine1 from './assets/creatine1.jpeg'
-import creatine2 from './assets/creatine2.jpeg'
-import creatine3 from './assets/creatine3.jpeg'
-import preworkout1 from './assets/preworkout1.jpeg'
-import preworkout2 from './assets/preworkout2.jpeg'
-import weightGainer1 from './assets/weight-gainer1.jpeg'
+import protein3 from './assets/protein3.png'
+import protein4 from './assets/protein4.png'
+import creatine1 from './assets/creatine1.png'
+import creatine2 from './assets/creatine2.png'
+import creatine3 from './assets/creatine3.png'
+import preworkout1 from './assets/preworkout1.png'
+import preworkout2 from './assets/preworkout2.png'
+import weightGainer1 from './assets/weight-gainer1.png'
 
 const products = [
     {
@@ -17,7 +17,7 @@ const products = [
         image: protein1,
         products: [
             {
-                productId: 1,
+                productId: 11,
                 name: "Nitrotech Ripped Whey Protein",
                 price: 26000,
                 flavor: ['Chocolate'],
@@ -26,7 +26,7 @@ const products = [
                 description: 'High-quality whey protein powder designed to help build lean muscle, improve recovery, and enhance strength after every workout.',
             },
             {
-                productId: 2,
+                productId: 12,
                 name: "Rule One Whey Protein",
                 price: 23000,
                 flavor: '',
@@ -35,7 +35,7 @@ const products = [
                 description: 'High-quality whey protein powder designed to help build lean muscle, improve recovery, and enhance strength after every workout.',
             },
             {
-                productId: 3,
+                productId: 13,
                 name: "On Whey Protein 80 servings",
                 price: 34000,
                 flavor: ['Chocolate'],
@@ -44,7 +44,7 @@ const products = [
                 description: 'High-quality whey protein powder designed to help build lean muscle, improve recovery, and enhance strength after every workout.',
             },
             {
-                productId: 4,
+                productId: 14,
                 name: "Kevin Levrone Gold Whey Protein",
                 price: 24000,
                 flavor: ['Chocolate'],
@@ -60,7 +60,7 @@ const products = [
         image: creatine1,
         products: [
             {
-                productId: 1,
+                productId: 21,
                 name: "Anobolic Creatine 60 Servings",
                 price: 8000,
                 weight: '300g',
@@ -69,7 +69,7 @@ const products = [
                 description: 'Pure micronized creatine monohydrate that boosts ATP production for more power, endurance, and muscle growth during high-intensity workouts.',
             },
             {
-                productId: 2,
+                productId: 22,
                 name: "RedRex Creatine 60 Servings",
                 price: 23000,
                 weight: '300g',
@@ -78,7 +78,7 @@ const products = [
                 description: 'Pure micronized creatine monohydrate that boosts ATP production for more power, endurance, and muscle growth during high-intensity workouts.',
             },
             {
-                productId: 3,
+                productId: 23,
                 name: "Gold Creatine 100 Servings",
                 price: 11000,
                 weight: '300g',
@@ -94,7 +94,7 @@ const products = [
         image: preworkout1,
         products: [
             {
-                productId: 1,
+                productId: 31,
                 name: "Yeah Buddy Preworkout",
                 price: 7000,
                 weight: '270g',
@@ -103,7 +103,7 @@ const products = [
                 description: 'Explosive energy and focus formula with caffeine, beta-alanine, and L-citrulline to maximize your training performance and stamina.',
             },
             {
-                productId: 2,
+                productId: 32,
                 name: "C4 Preworkout",
                 price: 7000,
                 weight: '227g',
@@ -119,7 +119,7 @@ const products = [
         image: weightGainer1,
         products: [
             {
-                productId: 1,
+                productId: 41,
                 name: "Anabolic Mass Gainer",
                 price: 28000,
                 weight: '7kg',

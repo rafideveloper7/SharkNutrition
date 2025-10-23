@@ -14,6 +14,7 @@
 #header nav a.active {
     color: greenyellow;
 }
+
 #header .buttons-container a:hover {
     color: yellow;
 }
@@ -60,18 +61,24 @@
 }
 
 @media (max-width: 750px) {
+    #header nav a {
+        font-size: 14px;
+    }
     #header nav li.add-me {
         display: block;
     }
+
     #header .buttons-container a.remove-me {
         display: none;
     }
 }
+
 @media (max-width: 500px) {
     #header .logo img {
         width: 100px;
     }
-    #header > .container{
+
+    #header>.container {
         gap: 10px;
     }
 }

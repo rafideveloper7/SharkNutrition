@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom'
-import products from '../../products'
 import Categories from '../../Components/Categories/Categories'
+import Products from '../Products/Products'
+import Banner from '../../Components/Banner/Banner'
 
 function Home() {
-  
-  
+
+
   return (
     <>
-      <Categories/>
+      <Banner />
+      <Categories />
+      <Products />
     </>
   )
 }

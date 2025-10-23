@@ -24,7 +24,7 @@ function App() {
             <Route path='/contact' element={<Contact />} />
             <Route path='/products' element={<Products />} />
             <Route path='/products/:productId' element={<ProductDetails />} />
-            <Route path='/card' element={<Cart/>} />
+            <Route path='/cart' element={<Cart/>} />
             <Route path='/wishlist' element={<Wishlist/>} />
           </Route>
           <Route element={<RedirectIfAuthenticated />}>

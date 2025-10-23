@@ -1,0 +1,7 @@
+#banner{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../../assets/hero-bg2.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-color: #00000098; */
+}

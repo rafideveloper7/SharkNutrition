@@ -4,11 +4,15 @@
 *{
     box-sizing: border-box;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 body{
     background-color: #000000;
     color: #ffffff;
     font-family: "Poppins", sans-serif;
+    letter-spacing: 1px;
 }
 #root{
     max-width: 1920px;

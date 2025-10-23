@@ -9,10 +9,12 @@ function Navbar() {
   const [openSearch, setOpenSearch] = useState(false)
 
   return (
-    <header id='header' className='shadow-[0_0_2px_#fff]'>
+    <header id='header' className='shadow-[0_0_2px_#fff] sticky top-0 bg-[#000000ea] z-100'>
       <div className="container flex justify-between items-center gap-15 h-[90px]">
         <div className="logo">
-          <img className='w-50' src={logo} alt="" />
+          <Link to='/'>
+            <img className='w-50' src={logo} alt="" />
+          </Link>
         </div>
         <nav className={`${showMenu ? 'showMenu' : ''} flex-1`}>
           <ul className='flex gap-10 text-xl items-center'>
@@ -41,7 +43,7 @@ function Navbar() {
           {openSearch && <Search setOpenSearch={setOpenSearch} />}
         </nav>
         <div className='buttons-container flex gap-5 items-center'>
-          <button onClick={() => setOpenSearch(true)} className='cursor-pointer'><i class="fa-solid fa-magnifying-glass text-lg"></i></button>
+          <button onClick={() => setOpenSearch(true)} className='cursor-pointer'><i className="fa-solid fa-magnifying-glass text-lg"></i></button>
           <NavLink to="/login" className='remove-me'>Login / Register</NavLink>
           <NavLink to="/wishlist" className='remove-me'><i className="fa-regular fa-heart text-lg me-2"></i></NavLink>
           <NavLink to='/cart'><i className="fa-solid fa-cart-shopping text-lg me-2"></i></NavLink>

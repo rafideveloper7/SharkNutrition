@@ -24,14 +24,13 @@ function Contact() {
       </div>
 
       <div className="w-full flex flex-wrap justify-around">
-  <div className="w-full md:w-[40%] h-fit m-5 p-5 rounded">
-    <FAQSection />
-  </div>
-  <div className="w-full md:w-[50%] h-fit m-5">
-    <ContactForm />
-  </div>
-</div>
-
+        <div className="w-full md:w-[40%] h-fit m-5 p-5 rounded">
+          <FAQSection />
+        </div>
+        <div className="w-full md:w-[50%] h-fit m-5">
+          <ContactForm />
+        </div>
+      </div>
     </>
   );
 }

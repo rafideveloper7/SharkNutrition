@@ -7,10 +7,10 @@ import TrustUs from "../../Components/CustomersTrust/TrustUs";
 function About() {
   return (
     <>
-      <div className="bg-white text-black w-[min(100%,calc(1320px-30px))] mx-auto flex flex-col md:flex-row justify-between p-6 md:p-10">
+      <div className=" w-[min(100%,calc(1320px-30px))] mx-auto flex flex-col md:flex-row justify-between p-6 md:p-10">
         {/* Left section: text */}
-        <div className="w-full md:w-1/2 p-4 md:p-10 text-center md:text-left">
-          <p className="max-w-[520px] text-[14px] md:text-[15px] font-medium leading-7 text-center md:text-left mx-auto md:mx-0">
+        <div className="w-full md:w-1/2 p-4 md:p-10 text-center">
+          <p className="max-w-[520px] text-[14px] md:text-[15px] font-medium leading-7 text-center mx-auto md:mx-0">
             Some words about us
           </p>
           <h1 className="max-w-[520px] text-3xl sm:text-4xl md:text-5xl font-semibold my-3 leading-relaxed mx-auto md:mx-0">
@@ -60,7 +60,7 @@ function About() {
 
           {/* Right column: card + last image */}
           <div className="w-full  flex flex-col gap-4  m-auto">
-            <div className="text-left border rounded-lg bg-[#2E6BC6] flex flex-col justify-center items-center p-4">
+            <div className="text-left rounded-lg bg-[#2E6BC6] flex flex-col justify-center items-center p-4">
               <p className="text-[#ffffffcc] text-[14px] leading-6 mb-16">
                 Aiming to make sure that our customers avail genuine, authentic
                 and original supplements at fair rates. Providing gifts with

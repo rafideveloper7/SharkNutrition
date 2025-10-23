@@ -5,21 +5,21 @@ function Contact() {
   return (
     <>
       {/* need help sec */}
-      <div className="text-center mb-20 bg-[#f1efef]">
+      <div className="text-center m-2 mb-10 ">
         <h4 className="text-[48px] font-[500] leading-[3] text-center w-[281.484] m-auto">
           Need Help?
         </h4>
         <h4 className="p-5 text-[24px] font-[500]">Contact us Via Whatsapp!</h4>
-        <p className="p-5 text-[18px]">
-          During business hours please send us a message at +923046584342
+        <p className="p-3 text-[18px]">
+          During business hours please send us a message at <span className="text-blue-300">+923046584342</span>
         </p>
         <h4 className="p-5 text-[24px] font-[500]">Contact Us Via Call!</h4>
-        <p className="p-5 text-[18px]">
-          During business Hours please Call Us At +923046584342
+        <p className="p-3 text-[18px]">
+          During business Hours please Call Us At <span className="text-blue-300">+923046584342</span>
         </p>
         <h4 className="p-5 text-[24px] font-[500]">Email Us!</h4>
-        <p className="p-5 text-[18px]">
-          During business hours please send us a message at +923046584342
+        <p className="p-3 text-[18px]">
+          During business hours please send us a message at <span className="text-blue-300">+923046584342</span>
         </p>
       </div>
 

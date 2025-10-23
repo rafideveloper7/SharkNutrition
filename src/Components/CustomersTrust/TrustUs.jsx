@@ -2,7 +2,7 @@ import React from "react";
 
 function TrustUs() {
   return (
-    <div className="bg-white text-black w-[min(100%,calc(1320px-30px))] mx-auto flex flex-col p-6 md:p-10">
+    <div className="w-[min(100%,calc(1320px-30px))] mx-auto flex flex-col p-6 md:p-10">
       <div className="w-full md:w-1/2 mb-8 md:mb-0 md:pr-8 text-center mx-auto">
         <p className="max-w-[520px] text-[14px] md:text-[15px] font-medium leading-7 text-center">
           Buyers trust us
@@ -28,7 +28,7 @@ function TrustUs() {
         <div className="sm:w-[30%] flex flex-col items-center p-3 rounded">
           <i className="fa-solid fa-truck-fast text-blue-500 text-3xl mb-2"></i>
           <h3 className="font-semibold text-lg mb-1 text-center">Fast Delivery</h3>
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-gray-400">
             Experience lightning-fast delivery like never before. Get your
             orders delivered swiftly, right to your doorstep.
           </p>
@@ -38,7 +38,7 @@ function TrustUs() {
         <div className="sm:w-[30%] flex flex-col items-center p-3 rounded">
           <i className="fa-solid fa-award text-blue-500 text-3xl mb-2"></i>
           <h3 className="font-semibold text-lg mb-1 text-center">Best Quality</h3>
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-gray-400">
             Elevate your wellness journey with our premium-grade supplements,
             crafted for exceptional quality and effectiveness.
           </p>
@@ -48,7 +48,7 @@ function TrustUs() {
         <div className="sm:w-[30%] flex flex-col items-center p-3 rounded">
           <i className="fa-solid fa-rotate-right text-blue-500 text-3xl mb-2"></i>
           <h3 className="font-semibold text-lg mb-1 text-center">Return Policy</h3>
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-gray-400">
             Shop with confidence knowing our hassle-free return policy ensures
             your satisfaction. We stand by the quality of our supplements,
             guaranteed.

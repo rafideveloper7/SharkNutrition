@@ -2,9 +2,9 @@
     max-width: 80%;
     margin: 0 auto;
 }
-.text-green{
-    color: greenyellow;
+.text-blue{
+    color: #37b5fe;
 }
-.bg-green{
-    background-color: greenyellow;
+.bg-blue{
+    background-color: #37b5fe;
 }

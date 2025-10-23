@@ -8,19 +8,19 @@
 }
 
 #header nav a:hover {
-    color: yellow;
+    color: #8ed5ff;
 }
 
 #header nav a.active {
-    color: greenyellow;
+    color: #37b5fe;
 }
 
 #header .buttons-container a:hover {
-    color: yellow;
+    color: #8ed5ff;
 }
 
 #header .buttons-container a.active {
-    color: greenyellow;
+    color: #37b5fe;
 }
 
 @media (max-width: 990px) {

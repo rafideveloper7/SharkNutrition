@@ -16,7 +16,7 @@ function ProductCard({ product }) {
                         <button><i className="fa-regular fa-heart text-xl cursor-pointer me-2"></i></button>
                     </div>
                     <p className='description text-sm mt-3 text-[#bbb]'>{product?.description?.slice(0, 115) + '...'}</p>
-                    <button className='add-to-cart cursor-pointer bg-green text-black mt-2 rounded-md text-sm py-1 px-2 font-semibold'>Add to cart</button>
+                    <button className='add-to-cart cursor-pointer bg-blue text-black mt-2 rounded-md text-sm py-1 px-2 font-semibold'>Add to cart</button>
                 </div>
             </div>
         </div>

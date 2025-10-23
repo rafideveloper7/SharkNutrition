@@ -3,60 +3,60 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  })
-  const navigate = useNavigate()
+  const [userName, setUserName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (!formData.name || !formData.email || !formData.password) {
-      alert('Please fill in all fields')
+    if (!userName || !email || !password || !confirmPassword) {
+      alert("Please fill the form completely")
       return
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match')
+    if (password !== confirmPassword) {
+      alert("Passwords do not match")
       return
     }
+    //  get all registered users or create empty array
+    const users = JSON.parse(localStorage.getItem("users") || "[]")
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]')
-    const existingUser = users.find(u => u.email === formData.email)
+    // check if user already exist 
+    const existingUser = users.find(u => u.email === email)
 
     if (existingUser) {
-      alert('User already exists with this email')
+      alert("User already exists with this email")
       return
     }
 
+    // store new user data
     const newUser = {
-      id: Date.now(),
-      name: formData.name,
-      email: formData.email,
-      password: formData.password
+      userName,
+      email,
+      password,
+      wishlist: [] // make array to store wishlist items with user
     }
 
+    // push new user in users array
     users.push(newUser)
-    localStorage.setItem('users', JSON.stringify(users))
-    localStorage.setItem('user', JSON.stringify(newUser))
 
-    navigate('/')
-    alert('Registration successful!')
+    localStorage.setItem("users", JSON.stringify(users))
+    localStorage.setItem("user", JSON.stringify(newUser))
+
+    alert("Registration successful")
+    navigate("/")
   }
 
   return (
-    <div className=" flex items-center justify-center bg-black text-white px-4 mt-8">
+    <div className="flex items-center justify-center bg-black text-white px-4 mt-8">
       <div className="w-full max-w-md bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl">
         <h1 className="text-3xl font-semibold text-center mb-6">Create Account</h1>
         <p className="text-center text-gray-400 mb-8 text-sm">
-          Sign in to have full control
+          Sign up to have full control
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -67,9 +67,8 @@ const Register = () => {
             <input
               type="text"
               id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
               className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition"
             />
           </div>
@@ -81,9 +80,8 @@ const Register = () => {
             <input
               type="email"
               id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition"
             />
           </div>
@@ -95,9 +93,8 @@ const Register = () => {
             <input
               type="password"
               id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition"
             />
           </div>
@@ -109,9 +106,8 @@ const Register = () => {
             <input
               type="password"
               id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition"
             />
           </div>
@@ -125,7 +121,7 @@ const Register = () => {
         </form>
 
         <p className="text-center text-gray-400 mt-6 text-sm">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link to="/login" className="text-blue-500 hover:text-blue-400">
             Login here
           </Link>

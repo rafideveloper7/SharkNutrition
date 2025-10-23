@@ -6,7 +6,7 @@ function Contact() {
     <>
       {/* need help sec */}
       <div className="text-center mb-20 bg-[#f1efef]">
-        <h4 className="w-[281x] text-[48px] font-[500] leading-[3] text-center w-[281.484]">
+        <h4 className="text-[48px] font-[500] leading-[3] text-center w-[281.484] m-auto">
           Need Help?
         </h4>
         <h4 className="p-5 text-[24px] font-[500]">Contact us Via Whatsapp!</h4>

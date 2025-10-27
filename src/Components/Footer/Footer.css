@@ -36,3 +36,11 @@
         font-size: 14px;
     }
 }
+@media (max-width: 500px) {
+    #footer .logo img{
+        width: 80px;
+    }
+    #footer .logo h1{
+        font-size: 18px;
+    }
+}

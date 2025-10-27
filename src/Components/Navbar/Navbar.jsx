@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import './Navbar.css'
-import logo from '../../assets/logo.webp'
-import Search from '../Search/Search'
+import logo from '../../assets/logo.png'
 
 function Navbar({setOpenSearch}) {
   const [showMenu, setShowMenu] = useState(false)
@@ -11,8 +10,9 @@ function Navbar({setOpenSearch}) {
     <header id='header' className='shadow-[0_0_2px_#fff] sticky top-0 bg-[#000000ea] z-100'>
       <div className="container flex justify-between items-center gap-15 h-[90px]">
         <div className="logo">
-          <Link to='/'>
-            <img className='w-50' src={logo} alt="" />
+          <Link to='/' className='flex items-center'>
+            <img className='w-25' src={logo} alt="" />
+            <h1 className='font-bold text-xl'>Shark Nutrition</h1>
           </Link>
         </div>
         <nav className={`${showMenu ? 'showMenu' : ''} flex-1`}>

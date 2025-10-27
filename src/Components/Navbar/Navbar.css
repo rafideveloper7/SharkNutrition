@@ -81,9 +81,18 @@
     #header>.container {
         gap: 10px;
     }
+    #header .logo img{
+        width: 80px;
+    }
+    #header .logo h1{
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 440px) {
+    #header .logo h1{
+        font-size: 18px;
+    }
     #header .buttons-container {
         gap: 10px;
     }

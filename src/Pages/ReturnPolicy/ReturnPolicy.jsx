@@ -6,14 +6,15 @@ function ReturnPolicy() {
     <div>
       {/* Header Section */}
       <div
-        className="relative w-full h-[300px] sm:h-[200px] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: `url(${returnHeader})` }}
-      >
-        <div className="absolute inset-0 bg-black/60"></div>
-        <h1 className="relative text-5xl md:text-4xl sm:text-3xl font-semibold text-white text-center z-10 px-2">
-          Return & Refund Policy
-        </h1>
-      </div>
+  className="relative w-full h-[180px] sm:h-[220px] md:h-[300px] bg-cover bg-center sm:bg-[center_top] md:bg-center flex items-center justify-center"
+  style={{ backgroundImage: `url(${returnHeader})` }}
+>
+  <div className="absolute inset-0 bg-black/60"></div>
+  <h1 className="relative text-3xl sm:text-4xl md:text-5xl font-semibold text-white text-center z-10 px-2 leading-snug">
+    Return & Refund Policy
+  </h1>
+</div>
+
 
       {/* Content Section */}
       <div className="w-full max-w-5xl mx-auto py-12 px-6 sm:px-4">

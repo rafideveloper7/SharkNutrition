@@ -13,6 +13,7 @@ body{
     color: #ffffff;
     font-family: "Poppins", sans-serif;
     letter-spacing: 1px;
+    overflow-x: hidden;
 }
 #root{
     max-width: 1920px;

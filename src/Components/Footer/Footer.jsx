@@ -5,8 +5,8 @@ import './Footer.css'
 
 function Footer() {
   return (
-    <footer id="footer" className='min-h-[90px] shadow-[0_0_2px_#fff]'>
-      <div className='container flex justify-between items-center gap-15 py-5'>
+    <footer id="footer" className='min-h-[80px] shadow-[0_0_2px_#fff]'>
+      <div className='container flex justify-between items-center gap-15'>
         <div className="logo">
           <Link to='/' className='flex items-center'>
             <img className='w-25' src={logo} alt="" />
@@ -19,13 +19,13 @@ function Footer() {
               <NavLink to='/'>About</NavLink>
             </li>
             <li>
-              <NavLink to='/need-help'>Need Help</NavLink>
+              <NavLink to='/contact'>Need Help</NavLink>
             </li>
             <li>
               <NavLink to='/return-policy'>Return Policy</NavLink>
             </li>
             <li>
-              <NavLink to='/term-conditions'>Terms & Conditions</NavLink>
+              <NavLink to='/terms-and-conditions'>Terms & Conditions</NavLink>
             </li>
           </ul>
         </nav>

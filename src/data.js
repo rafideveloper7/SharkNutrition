@@ -23,7 +23,6 @@ const products = [
                 flavor: ['Chocolate'],
                 weight: '1.82kg',
                 image: protein1,
-                description: 'High-quality whey protein powder designed to help build lean muscle, improve recovery, and enhance strength after every workout.',
             },
             {
                 productId: 12,
@@ -32,7 +31,6 @@ const products = [
                 flavor: '',
                 weight: '',
                 image: protein2,
-                description: 'High-quality whey protein powder designed to help build lean muscle, improve recovery, and enhance strength after every workout.',
             },
             {
                 productId: 13,
@@ -41,7 +39,6 @@ const products = [
                 flavor: ['Chocolate'],
                 weight: '2.27kg',
                 image: protein3,
-                description: 'High-quality whey protein powder designed to help build lean muscle, improve recovery, and enhance strength after every workout.',
             },
             {
                 productId: 14,
@@ -50,7 +47,6 @@ const products = [
                 flavor: ['Chocolate'],
                 weight: '2kg',
                 image: protein4,
-                description: 'High-quality whey protein powder designed to help build lean muscle, improve recovery, and enhance strength after every workout.',
             },
         ]
     },
@@ -66,7 +62,6 @@ const products = [
                 weight: '300g',
                 flavor: '',
                 image: creatine1,
-                description: 'Pure micronized creatine monohydrate that boosts ATP production for more power, endurance, and muscle growth during high-intensity workouts.',
             },
             {
                 productId: 22,
@@ -75,7 +70,6 @@ const products = [
                 weight: '300g',
                 flavor: 'Mango',
                 image: creatine2,
-                description: 'Pure micronized creatine monohydrate that boosts ATP production for more power, endurance, and muscle growth during high-intensity workouts.',
             },
             {
                 productId: 23,
@@ -84,7 +78,6 @@ const products = [
                 weight: '300g',
                 flavor: '',
                 image: creatine3,
-                description: 'Pure micronized creatine monohydrate that boosts ATP production for more power, endurance, and muscle growth during high-intensity workouts.',
             },
         ]
     },
@@ -100,7 +93,6 @@ const products = [
                 weight: '270g',
                 flavor: '',
                 image: preworkout1,
-                description: 'Explosive energy and focus formula with caffeine, beta-alanine, and L-citrulline to maximize your training performance and stamina.',
             },
             {
                 productId: 32,
@@ -109,7 +101,6 @@ const products = [
                 weight: '227g',
                 flavor: '',
                 image: preworkout2,
-                description: 'Explosive energy and focus formula with caffeine, beta-alanine, and L-citrulline to maximize your training performance and stamina.',
             },
         ]
     },
@@ -125,7 +116,6 @@ const products = [
                 weight: '7kg',
                 flavor: '',
                 image: weightGainer1,
-                description: 'High-calorie, nutrient-rich mass gainer blend loaded with protein, carbs, and essential vitamins to help you gain healthy weight and size.',
             },
         ]
     },

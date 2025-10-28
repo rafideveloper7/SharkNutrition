@@ -10,7 +10,7 @@ function Layout() {
         <>
             <Navbar setOpenSearch={setOpenSearch} />
             {openSearch && <Search setOpenSearch={setOpenSearch} />}
-            <main id='layout' className='min-h-[80vh]'>
+            <main id='layout' className='min-h-[70.5vh]'>
                 {<Outlet/>}
             </main>
             <Footer />

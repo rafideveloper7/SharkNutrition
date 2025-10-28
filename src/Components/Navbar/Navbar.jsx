@@ -7,7 +7,7 @@ function Navbar({setOpenSearch}) {
   const [showMenu, setShowMenu] = useState(false)
 
   return (
-    <header id='header' className='shadow-[0_0_2px_#fff] sticky top-0 bg-[#000000ea] z-100'>
+    <header id='header' className='sticky top-0 z-[1000] bg-[#000000ea] shadow-[0_0_2px_#fff] backdrop-blur-md'>
       <div className="container flex justify-between items-center gap-15 h-[90px]">
         <div className="logo">
           <Link to='/' className='flex items-center'>

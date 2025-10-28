@@ -15,15 +15,15 @@
   z-index: 99;
 }
 
-.product-card .description {
+.product-card .flavor-weight {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
   transition: max-height 0.6s ease, opacity 0.2s ease;
 }
 
-.product-card:hover .description {
-  max-height: 200px;
+.product-card:hover .flavor-weight {
+  max-height: 50px;
   opacity: 1;
 }
 
@@ -80,8 +80,10 @@
     box-shadow: none;
   }
 
-  .product-card .description {
-    display: none;
+  .product-card .flavor-weight {
+    /* display: none; */
+    max-height: 50px;
+    opacity: 1;
   }
 
   .product-card .add-to-cart {

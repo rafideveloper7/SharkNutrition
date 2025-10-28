@@ -15,6 +15,9 @@
     background-color: #0083cf;
 }
 
+button{
+    cursor: pointer;
+}
 @media (max-width: 600px) {
     .container{
         max-width: 95%;

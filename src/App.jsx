@@ -10,8 +10,8 @@ import Products from './Pages/Products/Products'
 import Contact from './Pages/Contact/Contact'
 import ProductDetails from './Pages/ProductDetails/ProductDetails'
 import Register from './Pages/Register/Register'
+import Wishlist from './Pages/Wishlist/Whishlist'
 import Cart from './Pages/Cart/Cart'
-import Wishlist from './Pages/Wishlist/Wishlist'
 
 function App() {
   return (

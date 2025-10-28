@@ -23,6 +23,27 @@
     color: #37b5fe;
 }
 
+@media (max-width: 1366px) {
+    #header > div.container{
+        height: 75px;
+    }
+    #header .logo img{
+        width: 85px;
+    }
+    #header .logo h1{
+        font-size: 16px;
+    }
+    #header nav a{
+        font-size: 13px;
+    }
+    #header .buttons-container a{
+        font-size: 13px;
+    }
+    #header .buttons-container  i{
+        font-size: 14px;
+    }
+}
+
 @media (max-width: 990px) {
     #header nav {
         position: fixed;
@@ -81,9 +102,18 @@
     #header>.container {
         gap: 10px;
     }
+    #header .logo img{
+        width: 80px;
+    }
+    #header .logo h1{
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 440px) {
+    #header .logo h1{
+        font-size: 18px;
+    }
     #header .buttons-container {
         gap: 10px;
     }

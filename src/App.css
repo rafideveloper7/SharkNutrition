@@ -8,6 +8,12 @@
 .bg-blue{
     background-color: #37b5fe;
 }
+.text-blue-dark{
+    color: #0083cf;
+}
+.bg-blue-dark{
+    background-color: #0083cf;
+}
 
 @media (max-width: 600px) {
     .container{

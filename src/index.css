@@ -20,3 +20,9 @@ body{
     min-height: 100vh;
     margin: 0 auto;
 }
+
+@media (max-width: 1366px) {
+    body{
+        font-size: 15px;
+    }
+}

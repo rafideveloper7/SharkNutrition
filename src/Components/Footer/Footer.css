@@ -33,9 +33,11 @@
 }
 
 @media (max-width: 980px) {
-    #footer>.container {
+    #footer> div.container {
         flex-direction: column;
-        gap: 15px;
+        gap: 0px;
+        height: fit-content;
+        padding-bottom: 10px;
     }
 
     #footer p {

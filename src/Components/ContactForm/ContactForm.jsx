@@ -14,7 +14,7 @@ function ContactForm() {
         <h1 className="text-[20px] md:text-3xl font-[500] text-center mb-5">Contact Customer Support.</h1>
         <h4 className="text-center font-[500] mb-4">Fill The Form Below!</h4>
         <p className="mb-8 text-center text-gray-600">
-          Contact Protonic Nutrition today for market competitive prices,
+          Contact Shark Nutrition today for market competitive prices,
           authentic and original supplements.
         </p>
 

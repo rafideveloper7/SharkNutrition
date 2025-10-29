@@ -16,6 +16,7 @@ import Checkout from './Pages/Checkout/Checkout'
 import BankDetails from './Pages/BankDetails/BankDetails'
 import ReturnPolicy from './Pages/ReturnPolicy/ReturnPolicy'
 import TermsConditions from './Pages/TermsConditions/TermsConditions'
+import Settings from './Pages/Settings/Settings'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path='/bankDetails' element={<BankDetails />} />
               <Route path='/return-policy' element={<ReturnPolicy />} />
               <Route path='/terms-and-conditions' element={<TermsConditions />} />
+              <Route path='/settings' element={<Settings />} />
             </Route>
             <Route element={<RedirectIfAuthenticated />}>
               <Route path='/login' element={<Login />} />

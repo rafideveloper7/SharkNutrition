@@ -11,16 +11,16 @@ function Contact() {
         </h4>
         <h4 className="p-5 text-[24px] font-[500]">Contact us Via Whatsapp!</h4>
         <p className="p-3 text-[18px]">
-          During business hours please send us a message at <span className="text-blue-300">+923046584342</span>
+          During business hours please send us a message at <span className="text-blue-300">+92 330 2721777</span>
         </p>
         <h4 className="p-5 text-[24px] font-[500]">Contact Us Via Call!</h4>
         <p className="p-3 text-[18px]">
-          During business Hours please Call Us At <span className="text-blue-300">+923046584342</span>
+          During business Hours please Call Us At <span className="text-blue-300">+92 330 2721777</span>
         </p>
-        <h4 className="p-5 text-[24px] font-[500]">Email Us!</h4>
+        {/* <h4 className="p-5 text-[24px] font-[500]">Email Us!</h4>
         <p className="p-3 text-[18px]">
           During business hours please send us a message at <span className="text-blue-300">+923046584342</span>
-        </p>
+        </p> */}
       </div>
 
       <div className="w-full flex flex-wrap justify-around">

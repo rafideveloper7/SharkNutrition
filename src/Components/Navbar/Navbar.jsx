@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import './Navbar.css'
 import logo from '../../assets/logo.png'
+import { CartContext } from '../../Context/CartContext'
 
-function Navbar({setOpenSearch}) {
+function Navbar({ setOpenSearch }) {
+  const { cartData } = useContext(CartContext)
   const [showMenu, setShowMenu] = useState(false)
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const location = useLocation();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setCurrentUser(user);
+  }, [location]);
 
   return (
     <header id='header' className='sticky top-0 z-[1000] bg-[#000000ea] shadow-[0_0_2px_#fff] backdrop-blur-md'>
@@ -29,8 +38,9 @@ function Navbar({setOpenSearch}) {
             <li>
               <NavLink to='/contact'>Contact</NavLink>
             </li>
-            <li className='add-me hidden'>
-              <NavLink to="/login">Login / Register</NavLink>
+            <li className="add-me hidden">
+              {!currentUser ? <NavLink to="/login">Login / Register</NavLink> :
+                <NavLink to="/settings">Settings</NavLink>}
             </li>
             <li className='add-me hidden'>
               <NavLink to="/wishlist">Wishlist</NavLink>
@@ -42,9 +52,17 @@ function Navbar({setOpenSearch}) {
         </nav>
         <div className='buttons-container flex gap-5 items-center'>
           <button onClick={() => setOpenSearch(true)} className='cursor-pointer'><i className="fa-solid fa-magnifying-glass text-lg"></i></button>
-          <NavLink to="/login" className='remove-me'>Login / Register</NavLink>
+          {!currentUser ? <NavLink to="/login" className='remove-me'>Login / Register</NavLink> :
+            <NavLink to="/settings" className='remove-me'>Settings</NavLink>}
+
           <NavLink to="/wishlist" className='remove-me'><i className="fa-regular fa-heart text-lg me-2"></i></NavLink>
-          <NavLink to='/cart'><i className="fa-solid fa-cart-shopping text-lg me-2"></i></NavLink>
+          <div className="relative">
+            <NavLink to='/cart'><i className="fa-solid fa-cart-shopping text-lg me-2"></i></NavLink>
+            <span className="cart-count absolute -top-2 -right-1 bg-green-600 text-red-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
+              {cartData?.length}
+            </span>
+          </div>
+
           <button onClick={() => setShowMenu(true)} className='menu-btn px-1 cursor-pointer rounded-md border-1 hidden'>
             <i className="fa-solid fa-bars"></i>
           </button>

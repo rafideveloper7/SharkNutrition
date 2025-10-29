@@ -17,7 +17,7 @@ function About() {
             Meet The Man <br /> Behind The Idea!
           </h1>
           <p className="mb-4">
-            Meet Abdullah Bin Mazhar, the visionary CEO behind Protonic
+            Meet Abdullah Bin Mazhar, the visionary CEO behind Shark
             Nutrition.
           </p>
           <p className="mb-4">
@@ -27,11 +27,11 @@ function About() {
             Pakistan.
           </p>
           <p className="mb-4">
-            Abdullah ensures that every product offered by Protonic Nutrition is
+            Abdullah ensures that every product offered by Shark Nutrition is
             rigorously authenticated, safe, and affordably priced.
           </p>
           <p className="mb-4">
-            More than just a supplement store, Protonic Nutrition embodies a
+            More than just a supplement store, Shark Nutrition embodies a
             lifestyle focused on wellness and gains, integrating the latest in
             weight loss techniques to redefine what's possible for your health
             journey.
@@ -68,10 +68,10 @@ function About() {
               </p>
               <div className="w-full text-left">
                 <h4 className="text-[18px]  text-[#ffffff] font-semibold leading-6 mb-1">
-                Abdullah Mazher
+                Gohar Zaman
               </h4>
               <p className="text-[14px] text-[#ffffff] leading-7 mb-3">
-                Founder - Protonic Nutrition
+                Founder - Shark Nutrition
               </p>
               <span className="ml-[40%] text-center inline-flex items-center justify-center w-10 h-10 bg-pink-100 rounded-full text-pink-600 hover:bg-pink-200 hover:text-pink-700 transition mx-auto">
                 <i className="fa-brands fa-instagram text-[24px] text-center"></i>

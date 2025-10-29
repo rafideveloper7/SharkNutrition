@@ -94,6 +94,11 @@
     #header .buttons-container a.remove-me {
         display: none;
     }
+    .cart-count{
+        font-size: 11px;
+        width: 15px;
+        height: 15px;
+    }
 }
 
 @media (max-width: 500px) {

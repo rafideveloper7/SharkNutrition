@@ -30,7 +30,7 @@ function Search({ setOpenSearch }) {
   return (
     <section
       id="search"
-      className="fixed top-0 left-0 z-[1000] w-full h-full py-10 px-5 overflow-y-auto"
+      className="fixed top-0 left-0 z-[1000] w-full h-full pt-10  px-5 overflow-y-auto"
     >
       <div className="search-content">
         <button
@@ -55,7 +55,7 @@ function Search({ setOpenSearch }) {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-y-10 px-5 container py-10">
+      <div className="flex flex-wrap justify-center gap-y-10 px-5 container py-10 mb-10">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((item) => (
             <ProductCard key={`${item.catId}-${item.productId}`} setOpenSearch={setOpenSearch} product={item} />

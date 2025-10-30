@@ -12,31 +12,31 @@ function Checkout() {
         }
     }, [cartData, navigate]);
 
-    // 🧮 Total amount
+    // Total amount
     const total = useMemo(() => {
         return cartData
             .reduce((acc, item) => acc + item?.price * item?.count, 0)
             .toFixed(2);
     }, [cartData]);
 
-    // 🧾 Form data
+    // Form data
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         phone: "",
         address: "",
-        paymentMethod: "", // 👈 added
+        paymentMethod: "", // added
     });
 
     const [orderPlaced, setOrderPlaced] = useState(false);
 
-    // 🔁 Handle input changes
+    // Handle input changes
     function handleChange(e) {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
-    // ✅ Submit form
+    // Submit form
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -53,11 +53,11 @@ function Checkout() {
         }
 
         if (formData.paymentMethod === "cod") {
-            // 🟢 Cash on Delivery → show success message
+            // Cash on Delivery → show success message
             setOrderPlaced(true);
             setCartData([]); // clear cart
         } else if (formData.paymentMethod === "bank") {
-            // 🏦 Bank Transfer → go to bank details page
+            // Bank Transfer → go to bank details page
             navigate("/bankDetails");
         }
 

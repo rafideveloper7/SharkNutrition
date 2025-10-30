@@ -19,7 +19,7 @@ export default function AllProducts() {
           <img 
             src={protein1} 
             alt="Product" 
-            className="w-full h-40 lg:h-48 object-cover rounded-md mb-3 lg:mb-4"
+            className="mx-auto h-40 lg:h-48 object-cover rounded-md mb-3 lg:mb-4"
           />
           <h3 className="text-lg lg:text-xl font-bold mb-2">Nitrotech Whey Protein</h3>
           <p className="text-gray-300 text-sm lg:text-base mb-2">Category: Protein</p>
@@ -38,7 +38,7 @@ export default function AllProducts() {
           <img 
             src={protein2}
             alt="Product" 
-            className="w-full h-40 lg:h-48 object-cover rounded-md mb-3 lg:mb-4"
+            className="mx-auto h-40 lg:h-48 object-cover rounded-md mb-3 lg:mb-4"
           />
           <h3 className="text-lg lg:text-xl font-bold mb-2">Creatine Monohydrate</h3>
           <p className="text-gray-300 text-sm lg:text-base mb-2">Category: Creatine</p>
@@ -57,7 +57,7 @@ export default function AllProducts() {
           <img 
             src={protein3}
             alt="Product" 
-            className="w-full h-40 lg:h-48 object-cover rounded-md mb-3 lg:mb-4"
+            className="mx-auto h-40 lg:h-48 object-cover rounded-md mb-3 lg:mb-4"
           />
           <h3 className="text-lg lg:text-xl font-bold mb-2">C4 Pre Workout</h3>
           <p className="text-gray-300 text-sm lg:text-base mb-2">Category: Pre Workout</p>

@@ -39,17 +39,17 @@ export default function Cart() {
                   />
                   <div className="flex-1">
                     <h2 className="font-medium text-sm">{item?.name?.slice(0, 20)}...</h2>
-                    <p className="text-green-300 font-medium text-md sm:text-lg">
+                    <p className="font-medium text-md sm:text-md">
                       Rs {item.price.toLocaleString()}
                     </p>
                   </div>
                 </div>
 
                 {/* 🔢 Quantity Controls */}
-                <div className="flex items-center gap-2 sm:gap-2 mt-2 sm:mt-0">
+                <div className="flex items-center gap-1 border-1 max-w-[fit-content] rounded-full p-1">
                   <button
                     onClick={() => decreaseQuantity(item.productId)}
-                    className="bg-red-600 hover:bg-red-700 text-white w-12 h-12 sm:w-10 sm:h-10 rounded-full text-2xl sm:text-3xl flex justify-center items-center transition transform hover:scale-110"
+                    className="px-2 py-[2px] text-black rounded-full bg-gray-300"
                   >
                     −
                   </button>
@@ -60,7 +60,7 @@ export default function Cart() {
 
                   <button
                     onClick={() => increaseQuantity(item.productId)}
-                    className="bg-green-600 hover:bg-green-700 text-white w-10 h-10 sm:w-10 sm:h-10 rounded-full text-2xl sm:text-3xl flex justify-center items-center transition transform hover:scale-110"
+                    className="px-2 py-[2px] text-black rounded-full bg-gray-300"
                   >
                     +
                   </button>
@@ -68,7 +68,7 @@ export default function Cart() {
 
                 {/* 💰 Total + Remove */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2 mt-2 sm:mt-0 w-full sm:w-auto">
-                  <div className="font-semibold text-yellow-400 text-md sm:text-lg">
+                  <div className="font-semibold text-md sm:text-md">
                     Rs. {(item.price * item.count).toLocaleString()}
                   </div>
                   <button
@@ -95,7 +95,7 @@ export default function Cart() {
               <span>Rs. {totalPrice.toLocaleString()}</span>
             </div>
 
-            <div className="flex justify-between text-lg sm:text-xl font-bold text-yellow-400 mt-4 border-t border-gray-700 pt-4">
+            <div className="flex justify-between text-lg sm:text-xl font-bold mt-4 border-t border-gray-700 pt-4">
               <span>Total</span>
               <span>Rs. {totalPrice.toLocaleString()}</span>
             </div>

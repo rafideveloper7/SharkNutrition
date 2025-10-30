@@ -20,6 +20,7 @@ body{
     position: relative;
     min-height: 100vh;
     margin: 0 auto;
+    overflow-x: hidden;
 }
 
 @media (max-width: 1366px) {

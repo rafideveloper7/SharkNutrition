@@ -53,7 +53,8 @@
         right: 0;
         z-index: 50;
         padding-top: 10vw;
-        width: 200px;
+        width: 0;
+        overflow: hidden;
         height: 100vh;
         background-color: #000000cb;
         backdrop-filter: blur(20px);
@@ -63,12 +64,13 @@
             0 4px 30px rgba(0, 0, 0, 0.1),
             0 0 10px rgba(255, 255, 255, 0.1),
             inset 0 0 20px rgba(255, 255, 255, 0.05);
-            transform: translateX(200px);
-        transition: transform 0.4s ease;
+            /* transform: translateX(200px); */
+        transition: width 0.4s ease;
     }
 
     #header nav.showMenu {
-        transform: translateX(0);
+        /* transform: translateX(0); */
+        width: 200px;
     }
 
     #header nav ul {

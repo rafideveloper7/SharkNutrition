@@ -74,6 +74,15 @@ export const createOrder = (orderData) => {
     });
 };
 
+export const fetchAllOrders = () => {
+  return api
+    .get("/api/orders", { withCredentials: true }) // Send cookie automatically
+    .then((res) => res.data.orders)
+    .catch((err) => {
+      console.error("❌ Error fetching orders:", err);
+      throw err;
+    });
+};
 
 
 export const submitContactForm = (formData) => {

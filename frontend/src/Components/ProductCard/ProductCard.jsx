@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import AddToCart from "../AddToCart/AddToCart";
 import { api } from "../../api";
 import { getImageUrl } from "../../utils/imageHelper";
+import toast from "react-hot-toast"; // ✅ added
 
 function ProductCard({ product, refreshWishlist }) {
   const [isInWishlist, setIsInWishlist] = useState(false);
@@ -13,6 +14,7 @@ function ProductCard({ product, refreshWishlist }) {
     checkWishlistStatus();
   }, [product]);
 
+  // ✅ check if product already exists in wishlist
   function checkWishlistStatus() {
     try {
       const userStr = localStorage.getItem("user");
@@ -31,45 +33,53 @@ function ProductCard({ product, refreshWishlist }) {
     }
   }
 
+  // ✅ handle add/remove wishlist
   async function handleWishlist() {
     try {
       const userStr = localStorage.getItem("user");
       if (!userStr) {
-        alert("Please log in to manage your wishlist.");
+        toast.error("Please log in to manage your wishlist!");
         return;
       }
 
       const currentUser = JSON.parse(userStr);
       const email = currentUser?.email;
       if (!email) {
-        alert("User session invalid. Please log in again.");
+        toast.error("User session invalid. Please log in again!");
         return;
       }
 
       setLoading(true);
-
       const action = isInWishlist ? "remove" : "add";
 
-      await api.post("/api/users/wishlist", {
+      const response = await api.post("/api/users/wishlist", {
         email,
         productId: product._id,
         action,
       });
 
-      // Fetch updated wishlist
-      const res = await api.get(`/api/users/wishlist/${email}`);
-
-      // Update localStorage user object
-      currentUser.wishlist = res.data.wishlist;
-      localStorage.setItem("user", JSON.stringify(currentUser));
+      if (response.data?.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      } else {
+        const res = await api.get(`/api/users/wishlist/${email}`);
+        currentUser.wishlist = res.data.wishlist;
+        localStorage.setItem("user", JSON.stringify(currentUser));
+      }
 
       setIsInWishlist(!isInWishlist);
+
       if (typeof refreshWishlist === "function") {
         refreshWishlist();
       }
+
+      toast.success(
+        isInWishlist
+          ? "Removed from wishlist ❤️"
+          : "Added to wishlist ❤️"
+      );
     } catch (err) {
       console.error("❌ Wishlist update failed:", err);
-      alert(
+      toast.error(
         err.response?.data?.message ||
           "Failed to update wishlist. Please try again."
       );
@@ -95,12 +105,19 @@ function ProductCard({ product, refreshWishlist }) {
         </div>
 
         <div className="content">
-          <h4 className="my-3 font-semibold text-lg truncate" title={product?.name}>
+          <h4
+            className="my-3 font-semibold text-lg truncate"
+            title={product?.name}
+          >
             {product?.name || "Unnamed Product"}
           </h4>
 
           <div className="flex justify-between items-center mb-3">
-            <p className="font-bold text-xl">Rs {product?.price?.toLocaleString() || "0"}</p>
+            <p className="font-bold text-xl">
+              Rs {product?.price?.toLocaleString() || "0"}
+            </p>
+
+            {/* ❤️ wishlist button */}
             <button
               className="cursor-pointer transition-transform hover:scale-110 disabled:opacity-50"
               onClick={handleWishlist}
@@ -125,7 +142,9 @@ function ProductCard({ product, refreshWishlist }) {
                 </div>
               )}
               {product?.weight && (
-                <p className="text-blue-500 text-sm font-medium">{product.weight}</p>
+                <p className="text-blue-500 text-sm font-medium">
+                  {product.weight}
+                </p>
               )}
             </div>
           )}

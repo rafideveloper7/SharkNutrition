@@ -8,7 +8,18 @@ export default function Sidebar() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const handleLogout = async () => {
+  try {
+    await fetch("http://localhost:5000/api/admin/logout", {
+      method: "POST",
+      credentials: "include", // important for cookies
+    });
 
+    window.location.href = "/admin/login"; // redirect after logout
+  } catch (error) {
+    console.error("Logout failed", error);
+  }
+};
   return (
     <>
       {/* Mobile Hamburger Button */}
@@ -84,10 +95,14 @@ export default function Sidebar() {
         </nav>
 
         <div className="absolute bottom-0 w-64 p-6">
-          <button className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors">
-            <i className="fas fa-sign-out-alt mr-2"></i>
-            Logout
-          </button>
+          <button
+  onClick={handleLogout}
+  className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+>
+  <i className="fas fa-sign-out-alt mr-2"></i>
+  Logout
+</button>
+
         </div>
       </div>
 

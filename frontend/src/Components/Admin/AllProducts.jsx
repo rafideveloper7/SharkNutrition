@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 
+import getImageUrl from "../../utils/imageHelper";
 export default function AllProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,27 +31,17 @@ export default function AllProducts() {
 
   const API_BASE = "http://localhost:5000/products";
 
-  // Helper function to get correct image URL
-  const getImageUrl = (imagePath) => {
-    if (!imagePath) return "/images/placeholder.png";
-    if (imagePath.startsWith('http')) return imagePath;
-    if (imagePath.startsWith('/uploads')) return `http://localhost:5000${imagePath}`;
-    return `http://localhost:5000/uploads/${imagePath}`;
-  };
+ 
 
-  // Fetch all products
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/getAllProducts`);
+      const res = await fetch(`${API_BASE}/getAllProducts`, { credentials: "include" });
       const data = await res.json();
-      if (data.success) {
-        setProducts(data.products);
-      } else {
-        toast.error("Failed to fetch products");
-      }
+      if (data.success) setProducts(data.products);
+      else toast.error("Failed to fetch products");
     } catch (err) {
-      console.error("Fetch error:", err);
+      console.error(err);
       toast.error("Failed to fetch products");
     } finally {
       setLoading(false);
@@ -61,46 +52,43 @@ export default function AllProducts() {
     fetchProducts();
   }, []);
 
-  // Open modal with product details for editing
   const openEditModal = (product) => {
     setCurrentProduct({
       _id: product._id,
       name: product.name,
       price: product.price,
       category: product.category,
+        flavor: product.flavor || "",
+      weight: product.weight || "",
       image: product.image || "",
       imageFile: null,
     });
     setIsModalOpen(true);
   };
 
-  // Save edited product
   const handleEditSubmit = async () => {
     try {
       const formData = new FormData();
       formData.append("name", currentProduct.name);
       formData.append("price", Number(currentProduct.price));
       formData.append("category", currentProduct.category);
-
-      if (currentProduct.imageFile) {
-        formData.append("image", currentProduct.imageFile);
-      }
+       formData.append("flavor", currentProduct.flavor);
+       formData.append("weight", currentProduct.weight);
+      if (currentProduct.imageFile) formData.append("image", currentProduct.imageFile);
 
       const res = await fetch(`${API_BASE}/${currentProduct._id}`, {
         method: "PUT",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("adminToken"),
-        },
         body: formData,
+        credentials: "include", // ✅ Send HTTP-only cookie
       });
 
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         toast.success("Product updated successfully!");
         fetchProducts();
         setIsModalOpen(false);
       } else {
-        toast.error("Failed to update product: " + (data.error || "Unknown error"));
+        toast.error(data.message || "Failed to update product");
       }
     } catch (err) {
       console.error(err);
@@ -108,24 +96,21 @@ export default function AllProducts() {
     }
   };
 
-  // Delete product
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
       const res = await fetch(`${API_BASE}/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("adminToken"),
-          "Content-Type": "application/json",
-        },
+        credentials: "include", // ✅ Send HTTP-only cookie
       });
+
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         toast.success("Product deleted successfully!");
         fetchProducts();
       } else {
-        toast.error("Failed to delete product");
+        toast.error(data.message || "Failed to delete product");
       }
     } catch (err) {
       console.error(err);
@@ -133,7 +118,6 @@ export default function AllProducts() {
     }
   };
 
-  // Filter products by search query
   const filteredProducts = products.filter(
     (p) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -218,8 +202,16 @@ export default function AllProducts() {
               onChange={(e) => setCurrentProduct({ ...currentProduct, category: e.target.value })}
               placeholder="Category"
             />
-
-            {/* File input */}
+     <Input
+              value={currentProduct.flavor}
+              onChange={(e) => setCurrentProduct({ ...currentProduct, flavor: e.target.value })}
+              placeholder="flavor"
+            />
+              <Input
+              value={currentProduct.weight}
+              onChange={(e) => setCurrentProduct({ ...currentProduct, weight: e.target.value })}
+              placeholder="weight"
+            />
             <div>
               <label className="block text-gray-300 mb-1 text-sm">Product Image</label>
               <input
@@ -228,8 +220,6 @@ export default function AllProducts() {
                 onChange={(e) => setCurrentProduct({ ...currentProduct, imageFile: e.target.files[0] })}
                 className="w-full text-black"
               />
-
-              {/* Image Preview */}
               {currentProduct.imageFile ? (
                 <img
                   src={URL.createObjectURL(currentProduct.imageFile)}
@@ -239,7 +229,7 @@ export default function AllProducts() {
                 />
               ) : currentProduct.image ? (
                 <img
-                  src={getImageUrl(currentProduct.image)}
+                  src={getImageUrl(currentProduct.image) + "?t=" + Date.now()}
                   alt="Current"
                   className="mt-2"
                   style={{ width: "150px", height: "150px", objectFit: "contain", borderRadius: "8px" }}

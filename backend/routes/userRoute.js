@@ -45,9 +45,9 @@ router.get('/orders/text', verifyAdmin, (req, res) => {
 router.get('/getAllUsers',  async (req, res) => {
   try {
     const users = await User.find({}).sort({ createdAt: -1 }).lean();
-    console.log(users);
+  
     
-    console.log(`Retrieved all users, count: ${users.length}`);
+   
 
     res.json({
       success: true,
@@ -64,6 +64,7 @@ router.get('/getAllUsers',  async (req, res) => {
 });
 router.get('/stats/count', getUserCount);
 // ADD / REMOVE WISHLIST ITEM (BY EMAIL)
+
 router.post('/wishlist', async (req, res) => {
   const { email, productId, action } = req.body;
 
@@ -79,15 +80,30 @@ router.post('/wishlist', async (req, res) => {
     }
 
     if (action === 'add') {
-      const exists = user.wishlist.some(item => item.productId.toString() === productId);
+      // check if already exists
+      const exists = user.wishlist.some(
+        (item) => item.productId?._id?.toString() === productId
+      );
+
       if (exists) {
         return res.status(400).json({ message: "Product already in wishlist" });
       }
+
       user.wishlist.push({ productId });
     } 
+
     else if (action === 'remove') {
-      user.wishlist = user.wishlist.filter(item => item.productId.toString() !== productId);
+      // ✅ compare productId._id with given productId
+      const beforeCount = user.wishlist.length;
+      user.wishlist = user.wishlist.filter(
+        (item) => item.productId?._id?.toString() !== productId
+      );
+
+      if (user.wishlist.length === beforeCount) {
+        return res.status(404).json({ message: "Product not found in wishlist" });
+      }
     } 
+
     else {
       return res.status(400).json({ message: "Action must be 'add' or 'remove'" });
     }
@@ -98,7 +114,7 @@ router.post('/wishlist', async (req, res) => {
 
     res.status(200).json({
       message: `Product ${action}ed to wishlist successfully`,
-      user: updatedUser,
+      wishlist: updatedUser.wishlist,
     });
 
   } catch (err) {
@@ -106,6 +122,7 @@ router.post('/wishlist', async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 // GET USER WITH POPULATED WISHLIST (BY EMAIL)
 router.get('/wishlist/:email', async (req, res) => {
   try {

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "../../Context/CartContext";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../../utils/imageHelper";
 
 export default function Cart() {
   const { cartData, increaseQuantity, decreaseQuantity, removeCartItem } =
@@ -33,9 +34,12 @@ export default function Cart() {
                 {/* 🖼️ Product Info */}
                 <div className="flex items-center gap-4 sm:gap-5 w-full sm:w-auto">
                   <img
-                    src={item?.image}
+                    src={getImageUrl(item?.image)}
                     alt={item?.name}
                     className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg object-cover shadow-lg"
+                    onError={(e) => {
+                      e.target.src = '/images/placeholder.png';
+                    }}
                   />
                   <div className="flex-1">
                     <h2 className="font-medium text-sm">{item?.name?.slice(0, 20)}...</h2>

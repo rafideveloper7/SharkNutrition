@@ -3,9 +3,19 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { verifyAdmin } from "../middleware/auth.js";
-
+import User from "../models/User.js";
+import registerAuth from "../middleware/registerAuth.js";
+import registerCon from "../controllers/registerCon.js";
+import loginCon from "../controllers/loginCon.js";
+import { getUserCount } from '../controllers/userController.js';
 const router = express.Router();
 const EXPORT_DIR = path.join(path.resolve(), 'exports');
+
+//Auth Routes
+router.post("/register",registerAuth,registerCon);
+
+router.post("/login",loginCon); 
+
 
 router.get('/users/excel', verifyAdmin, (req, res) => {
   const file = path.join(EXPORT_DIR, 'users.xlsx');
@@ -19,16 +29,100 @@ router.get('/users/text', verifyAdmin, (req, res) => {
   res.download(file);
 });
 
-router.get('/details/excel', verifyAdmin, (req, res) => {
-  const file = path.join(EXPORT_DIR, 'userDetails.xlsx');
+
+router.get('/orders/excel', verifyAdmin, (req, res) => {
+  const file = path.join(EXPORT_DIR, 'orders.xlsx');
   if (!fs.existsSync(file)) return res.status(404).send('No file');
   res.download(file);
 });
 
-router.get('/details/text', verifyAdmin, (req, res) => {
-  const file = path.join(EXPORT_DIR, 'userDetails.txt');
+router.get('/orders/text', verifyAdmin, (req, res) => {
+  const file = path.join(EXPORT_DIR, 'orders.txt');
   if (!fs.existsSync(file)) return res.status(404).send('No file');
   res.download(file);
 });
+
+router.get('/getAllUsers',  async (req, res) => {
+  try {
+    const users = await User.find({}).sort({ createdAt: -1 }).lean();
+    console.log(users);
+    
+    console.log(`Retrieved all users, count: ${users.length}`);
+
+    res.json({
+      success: true,
+      message: "All users retrieved successfully",
+      users,
+    });
+  } catch (err) {
+    console.error("Error retrieving all users:", err);
+    res.status(500).json({
+      error: "Failed to retrieve all users",
+      message: err.message,
+    });
+  }
+});
+router.get('/stats/count', getUserCount);
+// ADD / REMOVE WISHLIST ITEM (BY EMAIL)
+router.post('/wishlist', async (req, res) => {
+  const { email, productId, action } = req.body;
+
+  if (!email || !productId || !action) {
+    return res.status(400).json({ message: "Email, productId and action are required" });
+  }
+
+  try {
+    const user = await User.findOne({ email }).populate('wishlist.productId');
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (action === 'add') {
+      const exists = user.wishlist.some(item => item.productId.toString() === productId);
+      if (exists) {
+        return res.status(400).json({ message: "Product already in wishlist" });
+      }
+      user.wishlist.push({ productId });
+    } 
+    else if (action === 'remove') {
+      user.wishlist = user.wishlist.filter(item => item.productId.toString() !== productId);
+    } 
+    else {
+      return res.status(400).json({ message: "Action must be 'add' or 'remove'" });
+    }
+
+    await user.save();
+
+    const updatedUser = await User.findOne({ email }).populate('wishlist.productId');
+
+    res.status(200).json({
+      message: `Product ${action}ed to wishlist successfully`,
+      user: updatedUser,
+    });
+
+  } catch (err) {
+    console.error("Error updating wishlist:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+// GET USER WITH POPULATED WISHLIST (BY EMAIL)
+router.get('/wishlist/:email', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email })
+      .select('-password')
+      .populate('wishlist.productId');
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json({ wishlist: user.wishlist });
+
+  } catch (err) {
+    console.error("Error fetching wishlist:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 
 export default router;

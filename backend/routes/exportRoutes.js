@@ -6,14 +6,13 @@ import { verifyAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Directory setup
 const __dirname = path.resolve();
 const EXPORT_DIR = path.join(__dirname, "exports");
 
 // Ensure exports folder exists
 if (!fs.existsSync(EXPORT_DIR)) fs.mkdirSync(EXPORT_DIR);
 
-// =============== EXPORT ROUTES ===============
+
 
 // Export Users (Excel)
 router.get("/users/excel", verifyAdmin, (req, res) => {

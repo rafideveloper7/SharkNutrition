@@ -73,4 +73,4 @@ function Navbar({ setOpenSearch }) {
   )
 }
 
-export default Navbar
+export default Navbar;

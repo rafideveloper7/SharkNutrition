@@ -1,44 +1,63 @@
-// scripts/seedProducts.js
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Product from "../models/Product.js";
-import { products } from "../data.js"; // adjust relative path
+import { products } from "../data.js";
 
 dotenv.config();
 
 const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/sharkdb";
 
 async function seed() {
-  await mongoose.connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true });
-  console.log("Connected");
+  try {
+    await mongoose.connect(MONGO);
+    console.log(" Connected to MongoDB");
 
-  // Delete all existing products first
-  await Product.deleteMany({});
-  console.log("Deleted existing products");
+    await Product.deleteMany({});
+    console.log("Cleared existing products");
 
+    const flatProducts = [];
+    
+    products.forEach(category => {
+      if (!category.products || !Array.isArray(category.products)) {
+        return;
+      }
 
-  const flat = [];
-  products.forEach(group => {
-    (group.products || []).forEach(p => {
-      flat.push({
-        productId: p.productId,
-        name: p.name,
-        price: Number(p.price),
-        image: p.image,
-        category: group.category,
-        flavor: p.flavor,
-        weight: p.weight,
-        description: p.description || ""
+      category.products.forEach(p => {
+        if (!p.productId || !p.name || p.price == null) {
+          return;
+        }
+
+        flatProducts.push({
+          productId: String(p.productId),
+          name: p.name,
+          price: Number(p.price),
+          image: p.image || '/images/placeholder.png',
+          category: category.category,
+          flavor: Array.isArray(p.flavor) ? p.flavor : (p.flavor ? [p.flavor] : []),
+          weight: p.weight || ''
+        });
       });
     });
-  });
 
-  for (const p of flat) {
-    await Product.create(p);
-    console.log("Inserted", p.productId);
+    if (flatProducts.length === 0) {
+      console.error(" No valid products to insert!");
+      process.exit(1);
+    }
+
+    console.log(` Inserting ${flatProducts.length} products...`);
+
+    const inserted = await Product.insertMany(flatProducts);
+    console.log(` Successfully inserted ${inserted.length} products`);
+
+    const count = await Product.countDocuments();
+    console.log(`Total products in database: ${count}`);
+
+    console.log(" Seeding complete!");
+    process.exit(0);
+  } catch (err) {
+    console.error(" Seeding failed:", err);
+    process.exit(1);
   }
-
-  console.log("Done");
-  process.exit(0);
 }
-seed().catch(err => { console.error(err); process.exit(1); });
+
+seed();

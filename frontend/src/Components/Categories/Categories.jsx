@@ -3,6 +3,7 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import "react-indiana-drag-scroll/dist/style.css";
 import { useState, useEffect } from 'react';
 import { fetchAllProducts } from '../../api';
+import { getImageUrl } from '../../utils/imageHelper';
 
 function Categories() {
     const [categories, setCategories] = useState([]);
@@ -13,7 +14,6 @@ function Categories() {
             try {
                 const products = await fetchAllProducts();
                 
-           
                 const categoryMap = {};
                 products.forEach(p => {
                     const cat = p.category || 'Uncategorized';
@@ -54,7 +54,14 @@ function Categories() {
                         <a href={`#${item?.category.toLowerCase().replace(/\s+/g, '-')}`} key={index}>
                             <div className='text-center'>
                                 <div className="image w-[10vw] h-[10vw] bg-[#bbb] rounded-full mb-5">
-                                    <img className='w-full h-full object-cover rounded-full drop-shadow-[0_5px_5px_#444]' src={item?.image} alt="" />
+                                    <img 
+                                        className='w-full h-full object-cover rounded-full drop-shadow-[0_5px_5px_#444]' 
+                                        src={getImageUrl(item?.image)} 
+                                        alt={item?.category}
+                                        onError={(e) => {
+                                            e.target.src = '/images/placeholder.png';
+                                        }}
+                                    />
                                 </div>
                                 <h3>{item?.category}</h3>
                             </div>
@@ -67,10 +74,3 @@ function Categories() {
 }
 
 export default Categories
-
-/*
-
-
-
-bg for gem nutrition products
-*/

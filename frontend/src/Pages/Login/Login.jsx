@@ -1,13 +1,14 @@
-// src/pages/Login.jsx
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
+import { Link, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!email || !password) {
@@ -15,22 +16,36 @@ const Login = () => {
       return
     }
 
-    // get users array where users saved
-    const users = JSON.parse(localStorage.getItem('users') || '[]')
+    try {
+      setLoading(true)
 
-    // check if intered data eqaul to exist user
-    const existingUser = users.find(
-      (u) => u.email === email && u.password === password
-    )
+      const res = await fetch('http://localhost:5000/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-    if (!existingUser) {
-      alert('Invalid email or password')
-      return
+      const data = await res.json()
+
+      if (!res.ok) {
+        alert(data.message || 'Login failed')
+        return
+      }
+console.log(data);
+
+    
+
+      toast.success('Login successful')
+localStorage.setItem("user", JSON.stringify(data));
+      navigate('/')
+    } catch (error) {
+      console.error('Login error:', error)
+      toast.error('Something went wrong while logging in')
+    } finally {
+      setLoading(false)
     }
-
-    localStorage.setItem('user', JSON.stringify(existingUser))
-    alert('Login successful')
-    navigate('/')
   }
 
   return (
@@ -70,9 +85,10 @@ const Login = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition duration-200"
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
@@ -87,4 +103,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

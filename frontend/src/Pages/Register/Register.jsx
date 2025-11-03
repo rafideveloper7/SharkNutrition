@@ -1,60 +1,68 @@
-// src/pages/Register.jsx
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
-  const [userName, setUserName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     if (!userName || !email || !password || !confirmPassword) {
-      alert("Please fill the form completely")
-      return
+      toast.error("Please fill the form completely");
+      return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match")
-      return
-    }
-    //  get all registered users or create empty array
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
-
-    // check if user already exist 
-    const existingUser = users.find(u => u.email === email)
-
-    if (existingUser) {
-      alert("User already exists with this email")
-      return
+      toast.error("Passwords do not match");
+      return;
     }
 
-    // store new user data
-    const newUser = {
-      userName,
-      email,
-      password,
-      wishlist: [] // make array to store wishlist items with user
+    setLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:5000/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: userName,
+          email,
+          password,
+        }),
+      });
+
+      const data = await res.json();
+      console.log("Server Response:", data);
+
+   if (res.ok && data.register) {
+  toast.success(data.message || "Registration successful");
+  navigate("/login");
+} else {
+  toast.error(data.message || "Registration failed");
+}
+
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    // push new user in users array
-    users.push(newUser)
-
-    localStorage.setItem("users", JSON.stringify(users))
-    localStorage.setItem("user", JSON.stringify(newUser))
-
-    alert("Registration successful")
-    navigate("/")
-  }
+  };
 
   return (
     <div className="flex items-center justify-center bg-black text-white px-4 mt-8">
       <div className="w-full max-w-md bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl">
-        <h1 className="text-3xl font-semibold text-center mb-6">Create Account</h1>
+        <h1 className="text-3xl font-semibold text-center mb-6">
+          Create Account
+        </h1>
         <p className="text-center text-gray-400 mb-8 text-sm">
           Sign up to have full control
         </p>
@@ -87,7 +95,10 @@ const Register = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-gray-300 mb-2 text-sm">
+            <label
+              htmlFor="password"
+              className="block text-gray-300 mb-2 text-sm"
+            >
               Password
             </label>
             <input
@@ -100,7 +111,10 @@ const Register = () => {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-gray-300 mb-2 text-sm">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-gray-300 mb-2 text-sm"
+            >
               Confirm Password
             </label>
             <input
@@ -114,9 +128,10 @@ const Register = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition duration-200"
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
@@ -128,7 +143,7 @@ const Register = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

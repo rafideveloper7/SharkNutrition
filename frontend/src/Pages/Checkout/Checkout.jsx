@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { CartContext } from "../../Context/CartContext";
 import { useNavigate } from "react-router-dom";
-
+import { createOrder } from "../../api";
 function Checkout() {
     const navigate = useNavigate();
     const { cartData, setCartData } = useContext(CartContext);
@@ -25,7 +25,7 @@ function Checkout() {
         email: "",
         phone: "",
         address: "",
-        paymentMethod: "", // added
+        paymentMethod: "", 
     });
 
     const [orderPlaced, setOrderPlaced] = useState(false);
@@ -37,29 +37,50 @@ function Checkout() {
     }
 
     // Submit form
-    function handleSubmit(e) {
-        e.preventDefault();
+async function handleSubmit(e) {
+    e.preventDefault();
 
-        // Validation
-        if (
-            !formData?.name ||
-            !formData?.email ||
-            !formData?.phone ||
-            !formData?.address ||
-            !formData?.paymentMethod
-        ) {
-            alert("Please fill all the fields and select payment method.");
-            return;
-        }
+    // Validation
+    if (
+        !formData?.name ||
+        !formData?.email ||
+        !formData?.phone ||
+        !formData?.address ||
+        !formData?.paymentMethod
+    ) {
+        alert("Please fill all the fields and select payment method.");
+        return;
+    }
 
+   
+    const orderPayload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        paymentMethod: formData.paymentMethod,
+        cartItems: cartData.map(item => ({
+            productId: item.productId,
+            name: item.name,
+            price: item.price,
+            count: item.count,
+            flavor: item.flavor || [],
+        })),
+        totalAmount: total,
+    };
+
+    try {
+        const response = await createOrder(orderPayload);
+        console.log(" Order placed:", response.data);
+
+    
         if (formData.paymentMethod === "cod") {
-            // Cash on Delivery → show success message
             setOrderPlaced(true);
-            setCartData([]); // clear cart
         } else if (formData.paymentMethod === "bank") {
-            // Bank Transfer → go to bank details page
             navigate("/bankDetails");
         }
+
+        setCartData([]); 
 
         // Reset form
         setFormData({
@@ -69,7 +90,12 @@ function Checkout() {
             address: "",
             paymentMethod: "",
         });
+    } catch (error) {
+        toast.error("Failed to place order!");
+        console.error(" Error in order submission:", error);
     }
+}
+
 
     return (
         <section id="checkout" className="container min-h-[80vh] py-10">
@@ -136,7 +162,7 @@ function Checkout() {
                             ></textarea>
                         </div>
 
-                        {/* 💳 Payment Method */}
+               
                         <div>
                             <label className="block font-medium mb-2">Payment Method</label>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">

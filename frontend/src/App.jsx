@@ -18,7 +18,7 @@ import BankDetails from './Pages/BankDetails/BankDetails'
 import ReturnPolicy from './Pages/ReturnPolicy/ReturnPolicy'
 import TermsConditions from './Pages/TermsConditions/TermsConditions'
 import Settings from './Pages/Settings/Settings'
-
+import { Toaster } from "react-hot-toast";
 import AdminPanel from './Components/Admin/AdminPanel'
 import Dashboard from './Components/Admin/Dashboard'
 import AllProducts from './Components/Admin/AllProducts'
@@ -28,6 +28,15 @@ import Users from './Components/Admin/Users'
 function App() {
   return (
     <ContextProvider>
+          <Toaster 
+        position="top-right" 
+        reverseOrder={false} 
+        toastOptions={{
+          style: { fontSize: '16px', padding: '12px' },
+          success: { duration: 3000, theme: { primary: '#4ade80' } },
+          error: { duration: 4000, theme: { primary: '#f87171' } },
+        }}
+      />
       <Routes>
         <Route element={<Layout />}>
           <Route element={<ProtectedRoutes />}>

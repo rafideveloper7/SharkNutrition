@@ -55,13 +55,54 @@ export const fetchProducts = (category) => {
 
 export const fetchAllProducts = () => {
   console.log("📦 fetchAllProducts called");
-  return api.get("/products").then((res) => {
+  return api.get("/products/getAllProducts").then((res) => {
     console.log("📊 fetchAllProducts response:", res.data);
-    return res.data;
+    // Backend se already formatted response aata hai with products array
+    return res.data.products || res.data;
   }).catch(err => {
     console.error("❌ fetchAllProducts error:", err);
     throw err;
   });
 };
+export const createOrder = (orderData) => {
+  return api
+    .post("/api/orders", orderData)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.error("❌ Error creating order:", err);
+      throw err;
+    });
+};
+
+
+
+export const submitContactForm = (formData) => {
+  return api
+    .post("/api/contact", formData)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.error("❌ Error submitting contact form:", err);
+      throw err;
+    });
+};
+export const fetchDashboardStats = async () => {
+  try {
+    const [productsRes, usersRes, ordersRes] = await Promise.all([
+      api.get("/products/stats/count"),
+      api.get("/api/users/stats/count"),
+      api.get("/api/orders/stats/count"),
+    ]);
+
+    return {
+      totalProducts: productsRes.data.count || 0,
+      totalUsers: usersRes.data.userCount || 0,
+      totalOrders: ordersRes.data.count || 0,
+    };
+  } catch (err) {
+    console.error("❌ Error fetching dashboard stats:", err);
+    throw err;
+  }
+};
+
 
 export default API_BASE;

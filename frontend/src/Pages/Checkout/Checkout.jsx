@@ -121,7 +121,7 @@ async function handleSubmit(e) {
                                 value={formData?.name}
                                 onChange={handleChange}
                                 className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
-                                placeholder="Israr Ahmad"
+                                placeholder="Jone Doe"
                             />
                         </div>
 
@@ -133,7 +133,7 @@ async function handleSubmit(e) {
                                 value={formData?.email}
                                 onChange={handleChange}
                                 className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
-                                placeholder="israrahmadtech@gmail.com"
+                                placeholder="example@gmail.com"
                             />
                         </div>
 
@@ -145,7 +145,7 @@ async function handleSubmit(e) {
                                 value={formData?.phone}
                                 onChange={handleChange}
                                 className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
-                                placeholder="+92 335 8335803"
+                                placeholder="03000000000"
                             />
                         </div>
 

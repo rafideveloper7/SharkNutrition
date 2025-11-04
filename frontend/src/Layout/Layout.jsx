@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import Footer from '../Components/Footer/Footer'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Search from '../Components/Search/Search'
 import whatsapp from '../assets/whatsapp.png'
 import './Layout.css'
 
 function Layout() {
     const [openSearch, setOpenSearch] = useState(false)
+    const location = useLocation().pathname
     return (
         <>
             <Navbar setOpenSearch={setOpenSearch} />
@@ -17,14 +18,17 @@ function Layout() {
             </main>
             <Footer />
             {/* Whatsapp Button */}
-            <a
-                href="https://wa.me/923302721777"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="whatsapp fixed z-[100000] bottom-[5%] right-[3%]"
-            >
-                <img  src={whatsapp} alt="go to whatsapp" className='w-28 h-28' />
-            </a>
+            {
+                !location?.includes('admin') &&
+                <a
+                    href="https://wa.me/923302721777"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whatsapp fixed z-[100000] bottom-[5%] right-[3%]"
+                >
+                    <img src={whatsapp} alt="go to whatsapp" className='w-28 h-28' />
+                </a>
+            }
         </>
     )
 }

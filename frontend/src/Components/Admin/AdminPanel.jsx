@@ -9,7 +9,7 @@ export default function AdminPanel() {
   if(!isLoggedIn) return <AdminLogin setIsLoggedIn={setIsLoggedIn}/>
   return (
     <div className="flex h-screen bg-gray-900">
-      <Sidebar />
+      <Sidebar setIsLoggedIn={setIsLoggedIn} />
       <div className="flex-1 overflow-auto lg:ml-0 pt-16 lg:pt-0">
         <Outlet />
       </div>

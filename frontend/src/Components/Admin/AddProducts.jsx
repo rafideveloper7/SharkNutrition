@@ -122,15 +122,13 @@ export default function AddProducts() {
               type="file"
               name="image"
               onChange={handleChange}
-              className="w-full px-3 lg:px-4 py-2 text-sm lg:text-base bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+              className="w-full px-3 lg:px-4 py-2 text-sm cursor-pointer lg:text-base bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
 
-    
-
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 transition-colors text-sm lg:text-base"
+            className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors text-sm lg:text-base"
           >
             Add Product
           </button>

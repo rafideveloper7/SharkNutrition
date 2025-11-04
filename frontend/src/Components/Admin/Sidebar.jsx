@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Sidebar() {
+export default function Sidebar({setIsLoggedIn}) {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -84,7 +84,7 @@ export default function Sidebar() {
         </nav>
 
         <div className="absolute bottom-0 w-64 p-6">
-          <button className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors">
+          <button onClick={() => setIsLoggedIn(false)} className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors">
             <i className="fas fa-sign-out-alt mr-2"></i>
             Logout
           </button>

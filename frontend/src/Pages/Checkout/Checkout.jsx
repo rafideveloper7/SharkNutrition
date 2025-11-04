@@ -80,8 +80,6 @@ async function handleSubmit(e) {
             navigate("/bankDetails");
         }
 
-        setCartData([]); 
-
         // Reset form
         setFormData({
             name: "",

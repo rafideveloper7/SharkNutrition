@@ -171,7 +171,7 @@ export default function AllProducts() {
               />
               <h3 className="text-lg lg:text-xl font-bold mb-2">{product.name}</h3>
               <p className="text-gray-300 text-sm lg:text-base mb-2">Category: {product.category}</p>
-              <p className="text-green-400 font-bold text-base lg:text-lg mb-3">Rs {product.price}</p>
+              <p className="text-blue-400 font-bold text-base lg:text-lg mb-3">Rs {product.price}</p>
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   onClick={() => openEditModal(product)}

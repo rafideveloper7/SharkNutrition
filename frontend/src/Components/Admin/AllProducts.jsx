@@ -231,8 +231,7 @@ export default function AllProducts() {
                 <img
                   src={getImageUrl(currentProduct.image) + "?t=" + Date.now()}
                   alt="Current"
-                  className="mt-2"
-                  style={{ width: "150px", height: "150px", objectFit: "contain", borderRadius: "8px" }}
+                  className="mt-2 w-[150px] h=[150px] object-contain rounded-[8px]"
                 />
               ) : null}
             </div>

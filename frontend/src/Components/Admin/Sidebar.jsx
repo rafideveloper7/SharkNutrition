@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Sidebar({ setIsLoggedIn }) {
+export default function Sidebar() {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -90,7 +90,7 @@ export default function Sidebar({ setIsLoggedIn }) {
           </Link>
         </nav>
 
-        <div className="absolute bottom-0 w-64 p-6">
+        <div className="absolute bottom-0 w-64">
           <div className="absolute bottom-0 w-64 p-6">
             <button
               onClick={handleLogout}

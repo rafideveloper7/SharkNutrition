@@ -81,7 +81,7 @@ function ProductCard({ product, refreshWishlist }) {
       console.error("❌ Wishlist update failed:", err);
       toast.error(
         err.response?.data?.message ||
-          "Failed to update wishlist. Please try again."
+        "Failed to update wishlist. Please try again."
       );
     } finally {
       setLoading(false);
@@ -125,20 +125,23 @@ function ProductCard({ product, refreshWishlist }) {
               title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
             >
               <i
-                className={`text-xl ${
-                  isInWishlist
-                    ? "fa-solid fa-heart text-red-500"
-                    : "fa-regular fa-heart hover:text-red-500"
-                }`}
+                className={`text-xl ${isInWishlist
+                  ? "fa-solid fa-heart text-red-500"
+                  : "fa-regular fa-heart hover:text-red-500"
+                  }`}
               ></i>
             </button>
           </div>
 
           {(product?.flavor?.length > 0 || product?.weight) && (
             <div className="flavor-weight flex justify-between items-center py-1 pb-2 mb-2">
-              {product?.flavor?.length > 0 && (
+              {product?.flavor?.filter(f => f.trim() !== "").length > 0 && (
                 <div className="text-xs p-1 border border-gray-400 rounded-md">
-                  {product.flavor.join(", ")}
+                  {product.flavor.filter(f => f.trim() !== "").join(", ")}
+                </div>
+              )}
+              {product?.flavor?.filter(f => f.trim() !== "").length === 0 && (
+                <div className="text-xs p-1 rounded-md">
                 </div>
               )}
               {product?.weight && (

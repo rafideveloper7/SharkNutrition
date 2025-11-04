@@ -117,6 +117,7 @@ export default function Dashboard() {
               <th className="px-4 py-2 text-left">Total Amount</th>
               <th className="px-4 py-2 text-left">Date</th>
               <th className="px-4 py-2 text-left">Cart Items</th>
+              <th className="px-4 py-2 text-left">Payment Method</th>
             </tr>
           </thead>
           <tbody>
@@ -139,6 +140,7 @@ export default function Dashboard() {
                     "No items"
                   )}
                 </td>
+                <td className="px-4 py-2">{order.paymentMethod == "cod" ? "Cash on Delivery" : order.paymentMethod}</td>
               </tr>
             )) : (
               <tr>

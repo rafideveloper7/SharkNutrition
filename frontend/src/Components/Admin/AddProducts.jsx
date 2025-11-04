@@ -75,8 +75,8 @@ export default function AddProducts() {
               <option value="creatine">Creatine</option>
               <option value="preworkout">Pre Workout</option>
               <option value="weightgainer">Weight Gainer</option>
-                <option value="weightgainer">Vitamin and Minerals</option>
-                <option value="weightgainer">Amino Acid</option>
+                <option value="vitamins and minerals">Vitamin and Minerals</option>
+                <option value="amino acid">Amino Acid</option>
             </select>
           </div>
 

@@ -63,7 +63,7 @@ function Categories() {
                                         }}
                                     />
                                 </div>
-                                <h3>{item?.category}</h3>
+                                <h3>{item?.category.charAt(0).toUpperCase() + item?.category.slice(1)}</h3>
                             </div>
                         </a>
                     ))

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom'
 import './App.css'
 import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes'
 import RedirectIfAuthenticated from './RedirectIfAuthenticated/RedirectIfAuthenticated'
@@ -24,11 +24,86 @@ import Dashboard from './Components/Admin/Dashboard'
 import AllProducts from './Components/Admin/AllProducts'
 import AddProducts from './Components/Admin/AddProducts'
 import Users from './Components/Admin/Users'
+import AdminLogin from './Components/Admin/AdminLogin'
+
+// ✅ Admin Protected Route Component
+function AdminProtectedRoute({ children }) {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    async function verifyAdmin() {
+      try {
+        const res = await fetch("http://localhost:5000/api/admin/verify", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (res.ok) {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error("Admin verification failed:", error);
+      } finally {
+        setChecking(false);
+      }
+    }
+
+    verifyAdmin();
+  }, []);
+
+  if (checking) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="text-white text-xl">Verifying admin access...</div>
+      </div>
+    );
+  }
+
+  return isAdmin ? children : <Navigate to="/admin/login" replace />;
+}
+
+// ✅ Admin Login Route Component (redirects if already logged in)
+function AdminLoginRoute() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    async function verifyAdmin() {
+      try {
+        const res = await fetch("http://localhost:5000/api/admin/verify", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (res.ok) {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error("Admin verification failed:", error);
+      } finally {
+        setChecking(false);
+      }
+    }
+
+    verifyAdmin();
+  }, []);
+
+  if (checking) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="text-white text-xl">Checking authentication...</div>
+      </div>
+    );
+  }
+
+  return isAdmin ? <Navigate to="/admin" replace /> : <AdminLogin />;
+}
 
 function App() {
   return (
     <ContextProvider>
-          <Toaster 
+      <Toaster 
         position="top-right" 
         reverseOrder={false} 
         toastOptions={{
@@ -38,6 +113,24 @@ function App() {
         }}
       />
       <Routes>
+        {/* ✅ Admin routes - OUTSIDE Layout (separate from main site) */}
+        <Route path='/admin/login' element={<AdminLoginRoute />} />
+        
+        <Route 
+          path='/admin/*' 
+          element={
+            <AdminProtectedRoute>
+              <AdminPanel />
+            </AdminProtectedRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />         
+          <Route path='all-products' element={<AllProducts />} />    
+          <Route path='add-product' element={<AddProducts />} />  
+          <Route path='users' element={<Users />} />          
+        </Route>
+
+        {/* ✅ Main site routes - WITH Layout */}
         <Route element={<Layout />}>
           <Route element={<ProtectedRoutes />}>
             <Route path='/' element={<Home />} />
@@ -51,14 +144,6 @@ function App() {
             <Route path='/return-policy' element={<ReturnPolicy />} />
             <Route path='/terms-and-conditions' element={<TermsConditions />} />
             <Route path='/settings' element={<Settings />} />
-
-            {/* Admin nested routes - rafi edit*/}
-            <Route path='/admin' element={<AdminPanel />}>
-              <Route index element={<Dashboard />} />         
-              <Route path='all-products' element={<AllProducts />} />    
-              <Route path='add-product' element={<AddProducts />} />  
-              <Route path='users' element={<Users />} />          
-            </Route>
           </Route>
 
           <Route element={<RedirectIfAuthenticated />}>

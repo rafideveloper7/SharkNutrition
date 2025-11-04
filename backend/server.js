@@ -7,7 +7,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import path from "path";
 import fs from "fs";
-
+import cookieParser from "cookie-parser";
 // Import routes
 import adminRoutes from "./routes/adminRoute.js";
 import userRoutes from "./routes/userRoute.js";
@@ -18,13 +18,16 @@ import contactRoutes from "./routes/ContactRoute.js";
 const app = express();
 
 // =============== MIDDLEWARE ===============
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // frontend origin
+  credentials: true,               // allow cookies
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cookieParser());
 // Request logging middleware
 app.use((req, res, next) => {
-  console.log(`📨 ${req.method} ${req.url}`);
+  console.log(` ${req.method} ${req.url}`);
   next();
 });
 

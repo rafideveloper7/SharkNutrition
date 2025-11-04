@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+
 export default function AddProducts() {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,6 +31,7 @@ export default function AddProducts() {
     try {
       const res = await axios.post("http://localhost:5000/products", data, {
         headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
       });
       toast.success("Product added successfully!");
       console.log(res.data);
@@ -73,6 +75,8 @@ export default function AddProducts() {
               <option value="creatine">Creatine</option>
               <option value="preworkout">Pre Workout</option>
               <option value="weightgainer">Weight Gainer</option>
+                <option value="weightgainer">Vitamin and Minerals</option>
+                <option value="weightgainer">Amino Acid</option>
             </select>
           </div>
 

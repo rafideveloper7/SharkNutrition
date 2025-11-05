@@ -159,7 +159,6 @@ async function handleSubmit(e) {
                                 placeholder="House #, Street, City"
                             ></textarea>
                         </div>
-
                
                         <div>
                             <label className="block font-medium mb-2">Payment Method</label>

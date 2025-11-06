@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+const backendApi = import.meta.env.VITE_API_BASE
 
 export default function Users() {
   const [users, setUsers] = useState([])     
@@ -9,7 +10,7 @@ export default function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('http://localhost:5000/users/getAllUsers')
+        const res = await fetch(`${backendApi}/users/getAllUsers`)
         if (!res.ok) {
           throw new Error('Failed to fetch users')
         }

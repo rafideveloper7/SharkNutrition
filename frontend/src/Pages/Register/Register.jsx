@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+const backendApi = import.meta.env.VITE_API_BASE
 
 const Register = () => {
   const [userName, setUserName] = useState("");
@@ -27,7 +28,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/users/register", {
+      const res = await fetch(`${backendApi}/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

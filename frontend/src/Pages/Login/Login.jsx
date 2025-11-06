@@ -34,7 +34,6 @@ const Login = () => {
         alert(data.message || 'Login failed')
         return
       }
-console.log(data);
 
     
 

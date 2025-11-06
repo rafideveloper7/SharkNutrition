@@ -35,7 +35,6 @@ export default function AddProducts() {
         withCredentials: true,
       });
       toast.success("Product added successfully!");
-      console.log(res.data);
     } catch (err) {
       console.error(err);
       toast.error("Error adding product.");

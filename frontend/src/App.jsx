@@ -29,7 +29,6 @@ const backendApi = import.meta.env.VITE_API_BASE
 
 // ✅ Admin Protected Route Component
 function AdminProtectedRoute({ children }) {
-    console.log("Israr", backendApi);
   const [isAdmin, setIsAdmin] = useState(false);
   const [checking, setChecking] = useState(true);
 

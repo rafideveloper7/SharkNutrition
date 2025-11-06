@@ -41,7 +41,6 @@ const Register = () => {
       });
 
       const data = await res.json();
-      console.log("Server Response:", data);
 
    if (res.ok && data.register) {
   toast.success(data.message || "Registration successful");

@@ -19,7 +19,7 @@ const app = express();
 
 // =============== MIDDLEWARE ===============
 app.use(cors({
-  origin: "http://localhost:5173", // frontend origin
+  origin: "https://sharknutrition.store", // frontend origin
   credentials: true,               // allow cookies
 }));
 app.use(bodyParser.json());

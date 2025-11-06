@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
+const backendApi = import.meta.env.VITE_API_BASE
 
 export default function ProtectedAdminRoute() {
   const [checking, setChecking] = useState(true);
@@ -8,7 +9,7 @@ export default function ProtectedAdminRoute() {
   useEffect(() => {
     async function verify() {
       try {
-        const res = await fetch("http://localhost:5000/api/admin/verify", {
+        const res = await fetch(`${backendApi}/api/admin/verify`, {
           method: "GET",
           credentials: "include",
         });

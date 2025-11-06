@@ -1,0 +1,17 @@
+http://localhost:5000/export/users/excel
+http://localhost:5000/export/users/text
+http://localhost:5000/export/details/excel
+http://localhost:5000/export/details/text
+
+for product image 
+http://localhost:5000/images/preworkout2.png
+for testing product in browser 
+http://localhost:5000/products
+for testing userDetail in Postman   POST method 
+http://localhost:5000/userDetails
+for testing all user in Postman GET method
+http://localhost:5000/users
+for testing specific user in Postman GET method
+http://localhost:5000/users/<userID>
+e.g
+http://localhost:5000/users/6901f65ec6e80b35eeb5174e

@@ -9,7 +9,7 @@ export default function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('http://localhost:5000/users/getAllUsers')
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/users/getAllUsers`)
         if (!res.ok) {
           throw new Error('Failed to fetch users')
         }

@@ -19,7 +19,8 @@ const app = express();
 
 // =============== MIDDLEWARE ===============
 app.use(cors({
-  origin: "http://localhost:5173", // frontend origin
+  origin: "http://localhost:5173", 
+  // frontend origin
   credentials: true,               // allow cookies
 }));
 app.use(bodyParser.json());
@@ -37,7 +38,7 @@ const EXPORT_DIR = path.join(__dirname, "exports");
 if (!fs.existsSync(EXPORT_DIR)) fs.mkdirSync(EXPORT_DIR);
 
 // =============== MONGODB ===============
-const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/sharkdb";
+const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/Shark-Nutrition";
 mongoose
   .connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log(" MongoDB connected"))

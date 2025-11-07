@@ -10,7 +10,8 @@ export default function Sidebar() {
   };
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:5000/api/admin/logout", {
+   await fetch(`${import.meta.env.VITE_API_BASE}/api/admin/logout`, {
+        method: "POST",
         method: "POST",
         credentials: "include", // important for cookies
       });

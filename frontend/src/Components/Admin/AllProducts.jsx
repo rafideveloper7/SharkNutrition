@@ -29,14 +29,14 @@ export default function AllProducts() {
     imageFile: null,
   });
 
-  const API_BASE = "http://localhost:5000/products";
+  const API_BASE = import.meta.env.VITE_API_BASE;
 
  
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/getAllProducts`, { credentials: "include" });
+      const res = await fetch(`${API_BASE}/products/getAllProducts`, { credentials: "include" });
       const data = await res.json();
       if (data.success) setProducts(data.products);
       else toast.error("Failed to fetch products");

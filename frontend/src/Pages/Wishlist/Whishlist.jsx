@@ -12,7 +12,7 @@ export default function Wishlist() {
         if (!currentUser?.email) return;
 
         const res = await axios.get(
-          `http://localhost:5000/api/users/wishlist/${currentUser.email}`
+          `${import.meta.env.VITE_API_BASE}/api/users/wishlist/${currentUser.email}`
         );
         setWishlist(res.data.wishlist);
       } catch (err) {
@@ -26,7 +26,7 @@ export default function Wishlist() {
   const refreshWishlist = async () => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const res = await axios.get(
-      `http://localhost:5000/api/users/wishlist/${currentUser.email}`
+      `${import.meta.env.VITE_API_BASE}/api/users/wishlist/${currentUser.email}`
     );
     setWishlist(res.data.wishlist);
   };

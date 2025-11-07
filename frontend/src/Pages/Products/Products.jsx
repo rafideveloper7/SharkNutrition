@@ -17,7 +17,6 @@ function Products() {
       setError(null);
 
       const response = await fetchAllProducts();
-      console.log("🔍 API Response:", response);
 
       // Handle different API response formats
       let productArray = [];
@@ -29,7 +28,6 @@ function Products() {
         productArray = response.products;
       }
 
-      console.log("Product Array:", productArray);
 
       if (productArray.length === 0) {
         setError("No products available");
@@ -56,7 +54,6 @@ function Products() {
         })
       );
 
-      console.log(" Grouped by category:", groupedArray);
       setGroups(groupedArray);
     } catch (err) {
       console.error(" Failed to load products:", err);

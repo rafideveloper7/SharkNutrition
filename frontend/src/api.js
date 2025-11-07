@@ -1,10 +1,9 @@
 // src/api.js
 import axios from "axios";
+const backendApi = import.meta.env.VITE_API_BASE
 
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-
-console.log("🌐 API Base URL:", API_BASE);
+const API_BASE = import.meta.env.VITE_API_BASE || backendApi;
 
 export const api = axios.create({
   baseURL: API_BASE,
@@ -15,7 +14,6 @@ export const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const fullUrl = `${config.baseURL}${config.url}`;
-    console.log(`🚀 Making request to: ${fullUrl}`);
     return config;
   },
   (error) => {
@@ -26,12 +24,6 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    console.log(`✅ Response received:`, {
-      url: response.config.url,
-      status: response.status,
-      dataLength: Array.isArray(response.data) ? response.data.length : 'not an array',
-      data: response.data
-    });
     return response;
   },
   (error) => {
@@ -54,9 +46,7 @@ export const fetchProducts = (category) => {
 };
 
 export const fetchAllProducts = () => {
-  console.log("📦 fetchAllProducts called");
   return api.get("/products/getAllProducts").then((res) => {
-    console.log("📊 fetchAllProducts response:", res.data);
     // Backend se already formatted response aata hai with products array
     return res.data.products || res.data;
   }).catch(err => {

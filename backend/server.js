@@ -18,11 +18,17 @@ import contactRoutes from "./routes/ContactRoute.js";
 const app = express();
 
 // =============== MIDDLEWARE ===============
-app.use(cors({
-  origin: "http://localhost:5173", 
-  // frontend origin
-  credentials: true,               // allow cookies
-}));
+
+app.use(
+  cors({
+  origin: [
+    "http://localhost:5173", 
+    "https://sharknutritionpk.store"
+  ],
+    credentials: true,
+  })
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

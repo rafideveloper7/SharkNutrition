@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+const backendApi = import.meta.env.VITE_API_BASE
+
 import {
   Dialog,
   DialogContent,
@@ -29,7 +31,10 @@ export default function AllProducts() {
     imageFile: null,
   });
 
+
   const API_BASE = import.meta.env.VITE_API_BASE;
+
+
 
  
 

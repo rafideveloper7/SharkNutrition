@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+const backendApi = import.meta.env.VITE_API_BASE
 
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
@@ -19,7 +20,7 @@ const Login = () => {
     try {
       setLoading(true)
 
-      const res = await fetch('http://localhost:5000/users/login', {
+      const res = await fetch(`${backendApi}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +34,6 @@ const Login = () => {
         alert(data.message || 'Login failed')
         return
       }
-console.log(data);
 
     
 

@@ -25,6 +25,7 @@ import AllProducts from './Components/Admin/AllProducts'
 import AddProducts from './Components/Admin/AddProducts'
 import Users from './Components/Admin/Users'
 import AdminLogin from './Components/Admin/AdminLogin'
+const backendApi = import.meta.env.VITE_API_BASE
 
 // ✅ Admin Protected Route Component
 function AdminProtectedRoute({ children }) {
@@ -34,7 +35,7 @@ function AdminProtectedRoute({ children }) {
   useEffect(() => {
     async function verifyAdmin() {
       try {
-        const res = await fetch("http://localhost:5000/api/admin/verify", {
+        const res = await fetch(`${backendApi}/api/admin/verify`, {
           method: "GET",
           credentials: "include",
         });
@@ -51,6 +52,7 @@ function AdminProtectedRoute({ children }) {
 
     verifyAdmin();
   }, []);
+  
 
   if (checking) {
     return (
@@ -71,7 +73,7 @@ function AdminLoginRoute() {
   useEffect(() => {
     async function verifyAdmin() {
       try {
-        const res = await fetch("http://localhost:5000/api/admin/verify", {
+        const res = await fetch(`${backendApi}/api/admin/verify`, {
           method: "GET",
           credentials: "include",
         });

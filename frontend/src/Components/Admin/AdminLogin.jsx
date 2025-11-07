@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+const backendApi = import.meta.env.VITE_API_BASE
 
 function AdminLogin() {
   const [message, setMessage] = useState("");
@@ -19,7 +20,10 @@ function AdminLogin() {
       setLoading(true);
       setMessage("");
 
+
       const res = await fetch(`${import.meta.env.VITE_API_BASE}api/admin/login`, {
+
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // ✅ send cookies

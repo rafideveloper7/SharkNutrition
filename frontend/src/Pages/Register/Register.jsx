@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
+
 const Register = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +28,10 @@ const Register = () => {
     setLoading(true);
 
     try {
+
       const res = await fetch(`${import.meta.env.VITE_API_BASE}/users/register`, {
+
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +44,6 @@ const Register = () => {
       });
 
       const data = await res.json();
-      console.log("Server Response:", data);
 
    if (res.ok && data.register) {
   toast.success(data.message || "Registration successful");

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+
 export default function AddProducts() {
   const [formData, setFormData] = useState({
     name: "",
@@ -29,12 +30,13 @@ export default function AddProducts() {
     }
 
     try {
+
       const res = await axios.post(`${import.meta.env.VITE_API_BASE}/products`, data, {
+
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
       toast.success("Product added successfully!");
-      console.log(res.data);
     } catch (err) {
       console.error(err);
       toast.error("Error adding product.");

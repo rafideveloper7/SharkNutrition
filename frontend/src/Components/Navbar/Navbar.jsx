@@ -16,13 +16,19 @@ function Navbar({ setOpenSearch }) {
   }, [location]);
 
   return (
-    <header id='header' className='sticky top-0 z-[1000] bg-[#000000ea] shadow-[0_0_2px_#fff] backdrop-blur-md'>
-      <div className="container flex justify-between items-center gap-15 h-[90px]">
-        <div className="logo">
+    <header id='header' className='sticky top-0 z-[1000] bg-[#000000ea] shadow-[0_0_2px_#fff] backdrop-blur-md pb-2'>
+      <div className="container flex justify-between items-center gap-15 p-2">
+        <div className='buttons-container flex items-center mt-3'>
+          <button onClick={() => setShowMenu(true)} className='menu-btn px-1 cursor-pointer rounded-md border-1 hidden'>
+            <i className="fa-solid fa-bars"></i>
+          </button>
+        </div>
+        <div className="logo text-center">
           <Link to='/' className='flex items-center'>
             <img className='w-25' src={logo} alt="" />
-            <h1 className='font-bold text-xl'>SHARK NUTRITIONS</h1>
+            <h1 className='font-bold text-xl'>SHARK NUTRITION</h1>
           </Link>
+            <p className='text-[11px] text-blue-400 mt-[-30px] mr-[-80px]'>DIV INTO AUTHENTICITY</p>
         </div>
         <nav className={`${showMenu ? 'showMenu' : ''} flex-1`}>
           <ul className='flex gap-10 text-xl items-center'>
@@ -51,21 +57,21 @@ function Navbar({ setOpenSearch }) {
           </button>
         </nav>
         <div className='buttons-container flex gap-5 items-center'>
-          <button onClick={() => setOpenSearch(true)} className='cursor-pointer'><i className="fa-solid fa-magnifying-glass text-lg"></i></button>
+          <button onClick={() => setOpenSearch(true)} className='cursor-pointer'><i className="fa-solid fa-magnifying-glass text-lg mt-4"></i></button>
           {!currentUser ? <NavLink to="/login" className='remove-me'>Login / Register</NavLink> :
             <NavLink to="/settings" className='remove-me'>Settings</NavLink>}
 
           <NavLink to="/wishlist" className='remove-me'><i className="fa-regular fa-heart text-lg me-2"></i></NavLink>
-          <div className="relative">
+          <div className="relative mt-3">
             <NavLink to='/cart'><i className="fa-solid fa-cart-shopping text-lg me-2"></i></NavLink>
             <span className="cart-count absolute -top-2 -right-1 bg-[#2e96d2] text-red-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
               {cartData?.length}
             </span>
           </div>
 
-          <button onClick={() => setShowMenu(true)} className='menu-btn px-1 cursor-pointer rounded-md border-1 hidden'>
+          {/* <button onClick={() => setShowMenu(true)} className='menu-btn px-1 cursor-pointer rounded-md border-1 hidden'>
             <i className="fa-solid fa-bars"></i>
-          </button>
+          </button> */}
         </div>
       </div>
       {showMenu && <div className="fixed inset-0 bg-black/40 z-40" onClick={() => setShowMenu(false)}></div>}

@@ -121,9 +121,14 @@
 }
 
 @media (max-width: 440px) {
+    #header {
+       
+    }
+
     #header .logo h1{
         font-size: 18px;
     }
+
     #header .buttons-container {
         gap: 10px;
     }
@@ -140,5 +145,10 @@
 
     #header .cart-btn span {
         display: none;
+    }
+
+
+    .menu-btn {
+        
     }
 }

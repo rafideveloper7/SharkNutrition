@@ -23,10 +23,10 @@ function Navbar({ setOpenSearch }) {
             <i className="fa-solid fa-bars"></i>
           </button>
         </div>
-        <div className="logo text-center">
+        <div className="logo text-center flex-col justify-center items-center ml-[-13px]">
           <Link to='/' className='flex items-center'>
-            <img className='w-25' src={logo} alt="" />
-            <h1 className='font-bold text-xl'>SHARK NUTRITION</h1>
+            <img className='w-11' src={logo} alt="Shark Nutrition" />
+            <p className='text-[18px] whitespace-nowrap font-bold'>SHARK NUTRITION</p>
           </Link>
             <p className='text-[11px] text-blue-400 mt-[-30px] mr-[-80px]'>DIV INTO AUTHENTICITY</p>
         </div>

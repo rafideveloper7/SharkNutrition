@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/Components/ui/dialog";
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 import { toast } from "react-hot-toast";
 
 import getImageUrl from "../../utils/imageHelper";
@@ -31,14 +31,17 @@ export default function AllProducts() {
     imageFile: null,
   });
 
-  const API_BASE = `${backendApi}/products`;
+
+  const API_BASE = import.meta.env.VITE_API_BASE;
+
+
 
  
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/getAllProducts`, { credentials: "include" });
+      const res = await fetch(`${API_BASE}/products/getAllProducts`, { credentials: "include" });
       const data = await res.json();
       if (data.success) setProducts(data.products);
       else toast.error("Failed to fetch products");
@@ -78,7 +81,7 @@ export default function AllProducts() {
        formData.append("weight", currentProduct.weight);
       if (currentProduct.imageFile) formData.append("image", currentProduct.imageFile);
 
-      const res = await fetch(`${API_BASE}/${currentProduct._id}`, {
+      const res = await fetch(`${API_BASE}/products/${currentProduct._id}`, {
         method: "PUT",
         body: formData,
         credentials: "include", // ✅ Send HTTP-only cookie
@@ -102,7 +105,7 @@ export default function AllProducts() {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      const res = await fetch(`${API_BASE}/${id}`, {
+      const res = await fetch(`${API_BASE}/products/${id}`, {
         method: "DELETE",
         credentials: "include", // ✅ Send HTTP-only cookie
       });

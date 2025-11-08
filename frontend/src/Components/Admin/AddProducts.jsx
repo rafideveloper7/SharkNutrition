@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-const backendApi = import.meta.env.VITE_API_BASE
+
 
 export default function AddProducts() {
   const [formData, setFormData] = useState({
@@ -30,7 +30,9 @@ export default function AddProducts() {
     }
 
     try {
-      const res = await axios.post(`${backendApi}/products`, data, {
+
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE}/products`, data, {
+
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });

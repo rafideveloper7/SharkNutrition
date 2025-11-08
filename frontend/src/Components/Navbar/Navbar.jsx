@@ -18,10 +18,18 @@ function Navbar({ setOpenSearch }) {
   return (
     <header id='header' className='sticky top-0 z-[1000] bg-[#000000ea] shadow-[0_0_2px_#fff] backdrop-blur-md'>
       <div className="container flex justify-between items-center gap-15 h-[90px]">
+        <div className='buttons-container flex gap-5 items-center'>
+          <button onClick={() => setShowMenu(true)} className='menu-btn px-1 cursor-pointer rounded-md border-1 hidden'>
+            <i className="fa-solid fa-bars"></i>
+          </button>
+        </div>
         <div className="logo">
           <Link to='/' className='flex items-center'>
             <img className='w-25' src={logo} alt="" />
-            <h1 className='font-bold text-xl'>Shark Nutrition</h1>
+            <span>
+              <h1 className='font-bold text-xl'>SHARK NUTRITION</h1>
+            <p className='text-[11px] text-center text-blue-400'>DIV INTO ATHENTICITY</p>
+            </span>
           </Link>
         </div>
         <nav className={`${showMenu ? 'showMenu' : ''} flex-1`}>
@@ -58,14 +66,14 @@ function Navbar({ setOpenSearch }) {
           <NavLink to="/wishlist" className='remove-me'><i className="fa-regular fa-heart text-lg me-2"></i></NavLink>
           <div className="relative">
             <NavLink to='/cart'><i className="fa-solid fa-cart-shopping text-lg me-2"></i></NavLink>
-            <span className="cart-count absolute -top-2 -right-1 bg-green-600 text-red-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
+            <span className="cart-count absolute -top-2 -right-1 bg-blue-400 text-white-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
               {cartData?.length}
             </span>
           </div>
 
-          <button onClick={() => setShowMenu(true)} className='menu-btn px-1 cursor-pointer rounded-md border-1 hidden'>
+          {/* <button onClick={() => setShowMenu(true)} className='menu-btn px-1 cursor-pointer rounded-md border-1 hidden'>
             <i className="fa-solid fa-bars"></i>
-          </button>
+          </button> */}
         </div>
       </div>
       {showMenu && <div className="fixed inset-0 bg-black/40 z-40" onClick={() => setShowMenu(false)}></div>}

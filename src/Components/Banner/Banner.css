@@ -1,0 +1,23 @@
+
+#banner .left-items img:first-child,
+#banner .right-items img:first-child{
+    transform: rotate(45deg);
+}
+#banner .left-items img:nth-child(2),
+#banner .right-items img:nth-child(2){
+    transform: rotate(10deg);
+}
+#banner .left-items img:last-child,
+#banner .right-items img:last-child{
+    transform: rotate(-40deg);
+}
+
+@media (max-width: 600px) {
+    #banner h2{
+        font-size: 3vw;
+    }
+    #banner h2 img{
+        width: 6vw;
+        height: 6vw;
+    }
+}

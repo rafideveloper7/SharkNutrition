@@ -1,0 +1,14 @@
+#search{
+    background-color: #000000ee;
+}
+@media (max-width: 900px) {
+    #search .search-content button i{
+        font-size: 16px;
+    }
+    #search .search-content input{
+        font-size: 15px;
+    }
+    #search .search-content p{
+        font-size: 15px;
+    }
+}

@@ -11,12 +11,12 @@ function TrustUs() {
           Our Strategy Is To Provide Our Customers With Quality Products
         </h1>
         <p className="max-w-[740px] text-sm sm:text-base mb-4 text-center px-2">
-          Protonic Nutrition chooses authenticity and customer health over
+          shark Nutrition chooses authenticity and customer health over
           business. Ensuring that each and every single product of ours is
           100% genuine and authentic. We provide you with the best there is.
         </p>
         <p className="leading-7 text-center mb-4 px-2 text-sm sm:text-base">
-          We at Protonic Nutrition make sure that you get your hands on the
+          We at shark Nutrition make sure that you get your hands on the
           latest supplements from Protonic Nutrition. Not only do you save
           money, but you get genuine products at affordable rates with timely
           deliveries.

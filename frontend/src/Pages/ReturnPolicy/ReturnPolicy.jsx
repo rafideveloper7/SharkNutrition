@@ -22,7 +22,7 @@ function ReturnPolicy() {
         </h2>
 
         <p className="text-gray-400 text-base sm:text-sm leading-relaxed mb-6">
-          At Protonic Nutrition, we aim to provide our customers with 100% authentic, sealed, and high-quality supplements.
+          At shark Nutrition, we aim to provide our customers with 100% authentic, sealed, and high-quality supplements.
           Please read this Returns & Refunds Policy carefully before making any purchase.
           By placing an order with us, you agree to the terms outlined below.
         </p>
@@ -101,16 +101,16 @@ function ReturnPolicy() {
           For returns, refunds, or inquiries:
         </p>
         <p className="text-gray-400 text-base sm:text-sm leading-relaxed mb-2">
-          Email: info@protonicnutrition.pk
+          Email: sharknutrition.pk@gmail.com
         </p>
         <p className="text-gray-400 text-base sm:text-sm leading-relaxed mb-2">
-          Instagram: @protonicnutrition.pk
+          Instagram: @sharknutrition.pk
         </p>
 
         <hr className="border-gray-700 my-6" />
 
         <p className="text-gray-400 text-base sm:text-sm leading-relaxed">
-          Protonic Nutrition reserves the right to update or modify this policy at any time without prior notice.
+          shark Nutrition reserves the right to update or modify this policy at any time without prior notice.
           Please review this page regularly for the latest updates.
         </p>
       </div>

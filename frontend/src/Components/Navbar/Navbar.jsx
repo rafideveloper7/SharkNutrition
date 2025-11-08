@@ -21,7 +21,7 @@ function Navbar({ setOpenSearch }) {
         <div className="logo">
           <Link to='/' className='flex items-center'>
             <img className='w-25' src={logo} alt="" />
-            <h1 className='font-bold text-xl'>Shark Nutrition</h1>
+            <h1 className='font-bold text-xl'>SHARK NUTRITIONS</h1>
           </Link>
         </div>
         <nav className={`${showMenu ? 'showMenu' : ''} flex-1`}>
@@ -58,7 +58,7 @@ function Navbar({ setOpenSearch }) {
           <NavLink to="/wishlist" className='remove-me'><i className="fa-regular fa-heart text-lg me-2"></i></NavLink>
           <div className="relative">
             <NavLink to='/cart'><i className="fa-solid fa-cart-shopping text-lg me-2"></i></NavLink>
-            <span className="cart-count absolute -top-2 -right-1 bg-green-600 text-red-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
+            <span className="cart-count absolute -top-2 -right-1 bg-[#2e96d2] text-red-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
               {cartData?.length}
             </span>
           </div>

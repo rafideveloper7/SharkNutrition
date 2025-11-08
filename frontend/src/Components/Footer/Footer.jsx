@@ -31,10 +31,10 @@ function Footer() {
         </nav>
       </div>
       <div className='shadow-[0_0_2px_#fff]'>
-        <p className='container text-[#aaa] py-5'>Copyright © 2025 Protonic Nutrition <br /> Powered by Team Developerans</p>
+        <p className='container text-[#aaa] py-5'>Copyright © 2025 shark Nutritions pk <br /> Powered by Team Developerans</p>
       </div>
     </footer>
-  )
+  ) 
 }
 
 export default Footer

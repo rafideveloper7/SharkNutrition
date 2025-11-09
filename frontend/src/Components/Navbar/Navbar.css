@@ -121,8 +121,14 @@
 }
 
 @media (max-width: 440px) {
+    #header .logo {
+        padding-right: 0;
+    }
     #header .logo h1{
-        font-size: 18px;
+        font-size: 4vw;
+    }
+    #header .logo p{
+        font-size: 3vw;
     }
     #header .buttons-container {
         gap: 10px;

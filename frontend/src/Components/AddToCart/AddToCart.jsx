@@ -7,11 +7,6 @@ export default function AddToCart({ product }) {
 
   function handleAddToCart() {
     const userStr = localStorage.getItem("user");
-    if (!userStr) {
-    toast.error("Please log in to add items to your cart!");
-      return;
-    }
-
     addToCart(product);
      toast.success("Product added to cart!");
   }

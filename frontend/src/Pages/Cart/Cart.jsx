@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getImageUrl } from "../../utils/imageHelper";
 
 export default function Cart() {
-  const { cartData, increaseQuantity, decreaseQuantity, removeCartItem } =
+  const { cartData, setCartData, increaseQuantity, decreaseQuantity, removeCartItem } =
     useContext(CartContext);
 
   const totalPrice = cartData.reduce(
@@ -107,6 +107,7 @@ export default function Cart() {
             <Link to='/checkout'>
               <button className="w-full bg-blue-500 hover:bg-blue-600 text-white mt-4 sm:mt-6 py-2 sm:py-3 rounded-lg font-semibold transition">Checkout</button>
             </Link>
+              <button onClick={() => setCartData([])} className="w-full bg-[#1e2939] text-white mt-4 sm:mt-6 py-2 sm:py-3 rounded-lg font-semibold transition">Reset Cart</button>
           </div>
         )}
       </div>

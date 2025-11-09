@@ -44,7 +44,7 @@ export default function AddProducts() {
   };
 
   return (
-    <div className="p-4 lg:p-6">
+    <div className="p-4 lg:p-6 pb-20">
       <h1 className="text-2xl lg:text-3xl font-bold text-white mb-4 lg:mb-6">
         Add New Product
       </h1>

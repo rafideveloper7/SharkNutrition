@@ -44,7 +44,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://shark-nutrition-frontend.vercel.app",
+      "https://www.sharknutritionpk.store",
     ],
     credentials: true,
   })

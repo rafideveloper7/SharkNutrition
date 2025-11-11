@@ -18,7 +18,7 @@ function TermsConditions() {
       <div className="max-w-4xl mx-auto py-10 px-5 text-gray-400">
         <p className="text-lg leading-relaxed mb-6">
           Disclaimer – Please Read Carefully<br />
-          By accessing and using this website (Protonic Nutrition), you agree to comply with and be bound by our Terms and Conditions.
+          By accessing and using this website (Shark Nutrition), you agree to comply with and be bound by our Terms and Conditions.
           If you do not agree with these terms, you should immediately discontinue using our website and services.
         </p>
 
@@ -29,7 +29,7 @@ function TermsConditions() {
         {/* Section 1 */}
         <h2 className="text-2xl font-semibold mt-10 mb-4 text-gray-200">Overview</h2>
         <p className="text-lg leading-relaxed mb-6">
-          Protonic Nutrition is an independent retailer of health, fitness, and nutritional supplements based in Pakistan.
+          Shark Nutrition is an independent retailer of health, fitness, and nutritional supplements based in Pakistan.
           Our commitment is to deliver 100% original, sealed, and authentic products sourced exclusively from reputable and authorized local distributors.
           We prioritize customer trust, transparency, and safety, ensuring that every product sold meets strict quality standards.
         </p>
@@ -37,7 +37,7 @@ function TermsConditions() {
         {/* Section 2 */}
         <h2 className="text-2xl font-semibold mt-10 mb-4 text-gray-200">No Affiliation, Endorsement, or Partnership</h2>
         <p className="text-lg leading-relaxed mb-6">
-          Protonic Nutrition is not affiliated with, not endorsed by, and does not represent any international brands or manufacturers whose products are displayed or sold on our website.
+          Shark Nutrition is not affiliated with, not endorsed by, and does not represent any international brands or manufacturers whose products are displayed or sold on our website.
           This includes, but is not limited to:
         </p>
         <ul className="list-disc pl-8 text-lg mb-6">
@@ -53,7 +53,7 @@ function TermsConditions() {
         {/* Section 3 */}
         <h2 className="text-2xl font-semibold mt-10 mb-4 text-gray-200">Sourcing & Product Authenticity</h2>
         <p className="text-lg leading-relaxed mb-6">
-          All products sold by Protonic Nutrition are procured through lawful, legitimate, and authorized local suppliers in Pakistan.
+          All products sold by Shark Nutrition are procured through lawful, legitimate, and authorized local suppliers in Pakistan.
           We do not import, manufacture, alter, tamper with, or relabel any products.
           Each product is shipped in its original manufacturer-sealed packaging and handled with strict quality control to maintain authenticity and integrity.
         </p>
@@ -63,14 +63,14 @@ function TermsConditions() {
         <p className="text-lg leading-relaxed mb-6">
           All trademarks, logos, and brand images featured on this website are the exclusive property of their respective owners.
           Their inclusion on our platform is solely for identification purposes.
-          Protonic Nutrition claims no ownership rights over any third-party trademarks or brand names.
+          Shark Nutrition claims no ownership rights over any third-party trademarks or brand names.
           Any reference to these brands is made only to describe the original products offered.
         </p>
 
         {/* Section 5 */}
         <h2 className="text-2xl font-semibold mt-10 mb-4 text-gray-200">Fair Use Disclaimer</h2>
         <p className="text-lg leading-relaxed mb-6">
-          Under applicable intellectual property laws, Protonic Nutrition’s use of brand names, logos, and product images qualifies as nominative fair use.
+          Under applicable intellectual property laws, Shark Nutrition’s use of brand names, logos, and product images qualifies as nominative fair use.
           We use these identifiers only to inform customers about the authenticity, origin, and identity of the products being offered.
           No attempt is made to misrepresent ownership, partnership, or licensing agreements with any brand.
         </p>
@@ -79,14 +79,14 @@ function TermsConditions() {
         <h2 className="text-2xl font-semibold mt-10 mb-4 text-gray-200">Customer Protection & Transparency</h2>
         <p className="text-lg leading-relaxed mb-6">
           We are committed to customer safety, trust, and satisfaction.
-          If you have concerns about authenticity or suspect an issue with any product purchased from Protonic Nutrition, contact us immediately.
+          If you have concerns about authenticity or suspect an issue with any product purchased from Shark Nutrition, contact us immediately.
           We will investigate your query and, if required, verify products directly with authorized distributors.
         </p>
 
         {/* Section 7 */}
         <h2 className="text-2xl font-semibold mt-10 mb-4 text-gray-200">Limitation of Liability</h2>
         <p className="text-lg leading-relaxed mb-6">
-          Protonic Nutrition does not manufacture any products listed on this website and therefore cannot be held liable for:
+          Shark Nutrition does not manufacture any products listed on this website and therefore cannot be held liable for:
         </p>
         <ul className="list-disc pl-8 text-lg mb-6">
           <li>Any adverse effects resulting from improper product usage.</li>
@@ -106,7 +106,7 @@ function TermsConditions() {
         </p>
         <p className="text-lg leading-relaxed mb-6">
           By purchasing and using these products, you accept full responsibility for ensuring compliance with your local laws, regulations, and health guidelines.
-          Protonic Nutrition is not liable for any health issues, allergic reactions, or legal consequences resulting from the use of these products.
+          Shark Nutrition is not liable for any health issues, allergic reactions, or legal consequences resulting from the use of these products.
         </p>
 
         <ul className="list-disc pl-8 text-lg mb-6">
@@ -119,9 +119,9 @@ function TermsConditions() {
 
         {/* Section 9 */}
         <p className="text-lg leading-relaxed mb-6">
-          By purchasing and consuming any products from Protonic Nutrition, you agree and acknowledge that you are using these products voluntarily and at your own risk.
-          Protonic Nutrition shall not be held responsible for any side effects, adverse reactions, or health complications.
-          You waive any right to initiate legal claims against Protonic Nutrition arising from product usage.
+          By purchasing and consuming any products from Shark Nutrition, you agree and acknowledge that you are using these products voluntarily and at your own risk.
+          Shark Nutrition shall not be held responsible for any side effects, adverse reactions, or health complications.
+          You waive any right to initiate legal claims against Shark Nutrition arising from product usage.
         </p>
 
         {/* Section 10 */}
@@ -130,10 +130,10 @@ function TermsConditions() {
           For inquiries, verification, or complaints, contact us at:
         </p>
         <p className="text-lg leading-relaxed mb-6">
-          <strong><span className='text-gray-200'>Email:</span></strong> info@protonicnutrition.pk
+          <strong><span className='text-gray-200'>Email:</span></strong> sharknutrition.pk@gmail.com
         </p>
         <p className="text-lg leading-relaxed mb-6">
-          Protonic Nutrition — your trusted retailer for authentic supplements in Pakistan.
+          Shark Nutrition — your trusted retailer for authentic supplements in Pakistan.
           We are committed to transparency, product integrity, and customer safety.
         </p>
       </div>

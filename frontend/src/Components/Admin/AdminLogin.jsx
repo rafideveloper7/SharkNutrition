@@ -1,52 +1,53 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function AdminLogin() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
- async function handleLogin(e) {
-  e.preventDefault();
-  const username = e.target.username.value.trim();
-  const password = e.target.password.value.trim();
+  async function handleLogin(e) {
+    e.preventDefault();
+    const username = e.target.username.value.trim();
+    const password = e.target.password.value.trim();
 
-  if (!username || !password) {
-    return setMessage("Please fill all fields");
-  }
-
-  try {
-    setLoading(true);
-    setMessage("");
-
-    const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/admin/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include", // ✅ send cookies
-      body: JSON.stringify({ username, password }), // 👈 now matches backend
-    });
-
-    const data = await res.json();
-    console.log("🧩 Login response:", data);
-
-    if (!res.ok) {
-      setMessage(data.error || data.message || "Invalid credentials");
-      return;
+    if (!username || !password) {
+      return setMessage("Please fill all fields");
     }
 
-    if (data.token) {
-      localStorage.setItem("adminToken", data.token);
+    try {
+      setLoading(true);
+      setMessage("");
+
+
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/admin/login`, {
+
+
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // ✅ send cookies
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage(data.message || "Invalid credentials");
+        return;
+      }
+
+      // ✅ Successful login → redirect to admin dashboard
+      navigate("/admin", { replace: true });
+
+    } catch (error) {
+      console.error(error);
+      setMessage("Server error, please try again later");
+    } finally {
+      setLoading(false);
     }
-
-    navigate("/admin", { replace: true });
-
-  } catch (error) {
-    console.error(error);
-    setMessage("Server error, please try again later");
-  } finally {
-    setLoading(false);
   }
-}
+
   return (
     <section className="bg-black fixed top-0 left-0 w-full h-screen flex justify-center items-center">
       <div className="w-full max-w-md bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl">
@@ -57,11 +58,11 @@ function AdminLogin() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label htmlFor="username" className="block text-gray-300 mb-2 text-sm">Email</label>
+            <label htmlFor="username" className="block text-gray-300 mb-2 text-sm">Username</label>
             <input
               type="text"
               id="username"
-              placeholder="Enter admin email"
+              placeholder="Enter admin username"
               className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition"
             />
           </div>

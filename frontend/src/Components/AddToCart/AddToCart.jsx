@@ -6,6 +6,7 @@ export default function AddToCart({ product }) {
   const { addToCart } = useContext(CartContext);
 
   function handleAddToCart() {
+    const userStr = localStorage.getItem("user");
     addToCart(product);
      toast.success("Product added to cart!");
   }
@@ -19,3 +20,5 @@ export default function AddToCart({ product }) {
     </button>
   );
 }
+
+

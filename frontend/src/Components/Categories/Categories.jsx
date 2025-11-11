@@ -16,13 +16,9 @@ function Categories() {
                 
                 const categoryMap = {};
                 products.forEach(p => {
-                    const cat = (p.category || 'Uncategorized').trim();
-                    // Normalize category name for comparison (lowercase, trimmed)
-                    const normalizedCat = cat.toLowerCase().trim();
-                    
-                    // Only add if not already exists (case-insensitive check)
-                    if (!categoryMap[normalizedCat]) {
-                        categoryMap[normalizedCat] = {
+                    const cat = p.category || 'Uncategorized';
+                    if (!categoryMap[cat]) {
+                        categoryMap[cat] = {
                             category: cat,
                             image: p.image || ''
                         };

@@ -5,13 +5,12 @@ import { createOrder } from "../../api";
 function Checkout() {
     const navigate = useNavigate();
     const { cartData, setCartData } = useContext(CartContext);
-    const [orderPlaced, setOrderPlaced] = useState(false);
 
     useEffect(() => {
         if (cartData.length <= 0) {
             navigate("/");
         }
-    }, [cartData.length, navigate]);
+    }, [cartData, navigate]);
 
     // Total amount
     const total = useMemo(() => {
@@ -26,8 +25,10 @@ function Checkout() {
         email: "",
         phone: "",
         address: "",
-        paymentMethod: "",
+        paymentMethod: "", 
     });
+
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
     // Handle input changes
     function handleChange(e) {
@@ -36,62 +37,62 @@ function Checkout() {
     }
 
     // Submit form
-    async function handleSubmit(e) {
-        e.preventDefault();
+async function handleSubmit(e) {
+    e.preventDefault();
 
-        // Validation
-        if (
-            !formData?.name ||
-            !formData?.email ||
-            !formData?.phone ||
-            !formData?.address ||
-            !formData?.paymentMethod
-        ) {
-            alert("Please fill all the fields and select payment method.");
-            return;
-        }
-
-
-        const orderPayload = {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            address: formData.address,
-            paymentMethod: formData.paymentMethod,
-            cartItems: cartData.map(item => ({
-                productId: item.productId,
-                name: item.name,
-                price: item.price,
-                count: item.count,
-                flavor: item.flavor || [],
-            })),
-            totalAmount: total,
-        };
-
-        try {
-            const response = await createOrder(orderPayload);
-            console.log(" Order placed:", response.data);
-
-
-            if (formData.paymentMethod === "cod") {
-                setOrderPlaced(true);
-            } else if (formData.paymentMethod === "bank") {
-                navigate("/bankDetails");
-            }
-
-            // Reset form
-            setFormData({
-                name: "",
-                email: "",
-                phone: "",
-                address: "",
-                paymentMethod: "",
-            });
-        } catch (error) {
-            toast.error("Failed to place order!");
-            console.error(" Error in order submission:", error);
-        }
+    // Validation
+    if (
+        !formData?.name ||
+        !formData?.email ||
+        !formData?.phone ||
+        !formData?.address ||
+        !formData?.paymentMethod
+    ) {
+        alert("Please fill all the fields and select payment method.");
+        return;
     }
+
+   
+    const orderPayload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        paymentMethod: formData.paymentMethod,
+        cartItems: cartData.map(item => ({
+            productId: item.productId,
+            name: item.name,
+            price: item.price,
+            count: item.count,
+            flavor: item.flavor || [],
+        })),
+        totalAmount: total,
+    };
+
+    try {
+        const response = await createOrder(orderPayload);
+        console.log(" Order placed:", response.data);
+
+    
+        if (formData.paymentMethod === "cod") {
+            setOrderPlaced(true);
+        } else if (formData.paymentMethod === "bank") {
+            navigate("/bankDetails");
+        }
+
+        // Reset form
+        setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            address: "",
+            paymentMethod: "",
+        });
+    } catch (error) {
+        toast.error("Failed to place order!");
+        console.error(" Error in order submission:", error);
+    }
+}
 
 
     return (
@@ -158,7 +159,7 @@ function Checkout() {
                                 placeholder="House #, Street, City"
                             ></textarea>
                         </div>
-
+               
                         <div>
                             <label className="block font-medium mb-2">Payment Method</label>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">

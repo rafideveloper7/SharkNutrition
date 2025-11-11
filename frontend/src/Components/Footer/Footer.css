@@ -11,7 +11,7 @@
 }
 
 #footer nav a.active {
-    color: rgb(100, 197, 253);
+    color: greenyellow;
 }
 
 @media (max-width: 1366px) {

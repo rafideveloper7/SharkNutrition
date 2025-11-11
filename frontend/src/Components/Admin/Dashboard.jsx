@@ -126,13 +126,13 @@ export default function Dashboard() {
                 <td className="px-4 py-2">{order.name}</td>
                 <td className="px-4 py-2">{order.email}</td>
                 <td className="px-4 py-2">{order.phone}</td>
-                <td className="px-4 py-2 min-w-50">{order.address}</td>
+                <td className="px-4 py-2">{order.address}</td>
                 <td className="px-4 py-2">Rs {order.totalAmount}</td>
                 <td className="px-4 py-2">{new Date(order.createdAt).toLocaleDateString()}</td>
-                <td className="px-4 py-2 min-w-100">
+                <td className="px-4 py-2">
                   {order.cartItems && order.cartItems.length > 0 ? (
                     order.cartItems.map((item, index) => (
-                      <div className='bg-gray-700 m-2 p-1 rounded-md' key={index}>
+                      <div key={index}>
                         <strong>{item.name}</strong> (x{item.count}) - Rs {item.price}
                       </div>
                     ))

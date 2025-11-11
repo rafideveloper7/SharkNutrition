@@ -21,7 +21,7 @@ const registerAuth = async (req, res, next) => {
     if (!emailRegex.test(email)) {
       return res
         .status(400)
-        .json({ message: `${name}, your email format is invalid.` });
+        .json({ message: `${fullName}, your email format is invalid.` });
     }
 
     if (password.length < 6) {

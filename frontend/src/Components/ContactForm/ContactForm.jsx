@@ -55,7 +55,7 @@ function ContactForm() {
         Contact Customer Support.
       </h1>
       <h4 className="text-center font-[500] mb-4">Fill The Form Below!</h4>
-      <p className="mb-8 text-center text-gray-400">
+      <p className="mb-8 text-center text-gray-600">
         Contact Shark Nutrition today for market competitive prices,
         authentic and original supplements.
       </p>

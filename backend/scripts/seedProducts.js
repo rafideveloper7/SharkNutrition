@@ -5,7 +5,7 @@ import { products } from "../data.js";
 
 dotenv.config();
 
-const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/sharkdb";
+const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/Shark-Nutrition";
 
 async function seed() {
   try {

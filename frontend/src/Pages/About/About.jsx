@@ -10,8 +10,8 @@ function About() {
       <div className=" w-[min(100%,calc(1320px-30px))] mx-auto flex flex-col md:flex-row justify-center p-6 md:p-10">
         {/* Left section: text */}
         <div className="w-full md:w-1/2 p-4 md:p-10 text-center sm:m-2">
-          <h1 className="max-w-[520px] text-[34px] font-bold leading-14 text-center mx-auto md:mx-0 mb-6">
-            WHY CHOOSE SHARK NUTRITION
+          <h1 className="max-w-[520px] text-[34px] font-medium leading-14 text-center mx-auto md:mx-0 mb-6">
+            WHY CHOOSE <span className="text-blue-400 text-5xl ">SHARK</span> NUTRITION
           </h1>
           <p className=" p-3 leading-11 text-[18px] text-center">
             Because We know that athletes and bodybuilders in Pakistan need real
@@ -32,9 +32,9 @@ function About() {
                 each order to encourage a fit lifestyle.
               </p>
               <div className="w-full text-left border-t p-2">
-                {/* <h4 className="text-[18px]  text-[#ffffff] font-semibold leading-6 mb-1">
+                <h4 className="text-[18px]  text-[#ffffff] font-semibold leading-6 mb-1">
                   Gohar Zaman
-                </h4> */}
+                </h4>
                 <p className="text-[14px] text-[#ffffff] leading-7 mb-3">
                   Founder - Shark Nutrition
                 </p>

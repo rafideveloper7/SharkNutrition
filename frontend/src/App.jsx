@@ -25,7 +25,6 @@ import AllProducts from './Components/Admin/AllProducts'
 import AddProducts from './Components/Admin/AddProducts'
 import Users from './Components/Admin/Users'
 import AdminLogin from './Components/Admin/AdminLogin'
-import NotFound from './NotFound/NotFound';
 const backendApi = import.meta.env.VITE_API_BASE
 
 // ✅ Admin Protected Route Component
@@ -147,7 +146,6 @@ function App() {
             <Route path='/return-policy' element={<ReturnPolicy />} />
             <Route path='/terms-and-conditions' element={<TermsConditions />} />
             <Route path='/settings' element={<Settings />} />
-            <Route path='*' element={<NotFound/>}/>
           </Route>
 
           <Route element={<RedirectIfAuthenticated />}>

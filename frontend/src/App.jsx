@@ -27,6 +27,7 @@ import Users from './Components/Admin/Users'
 import AdminLogin from './Components/Admin/AdminLogin'
 import NotFound from './NotFound/NotFound';
 import ProductDetails from './Pages/ProductDetails/ProductDetails';
+import CouponCode from './Components/Admin/CouponCode';
 const backendApi = import.meta.env.VITE_API_BASE
 
 // ✅ Admin Protected Route Component
@@ -132,6 +133,7 @@ function App() {
           <Route path='all-products' element={<AllProducts />} />
           <Route path='add-product' element={<AddProducts />} />
           <Route path='users' element={<Users />} />
+          <Route path='coupons' element={<CouponCode />} />
         </Route>
 
         {/* ✅ Main site routes - WITH Layout */}

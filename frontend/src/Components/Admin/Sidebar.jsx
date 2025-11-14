@@ -12,10 +12,7 @@ export default function Sidebar() {
   const handleLogout = async () => {
     try {
 
-   await fetch(`${import.meta.env.VITE_API_BASE}/api/admin/logout`, {
-       
-
-
+      await fetch(`${import.meta.env.VITE_API_BASE}/api/admin/logout`, {
         method: "POST",
         credentials: "include", // important for cookies
       });
@@ -93,6 +90,16 @@ export default function Sidebar() {
             <i className="fas fa-plus-circle w-6 mr-3"></i>
             <span>Add Product</span>
           </Link>
+
+          <Link
+            to="/admin/coupons"
+            onClick={() => setIsSidebarOpen(false)}
+            className={`flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors ${location.pathname === '/admin/coupons' ? 'bg-blue-400 text-white' : ''
+              }`}
+          >
+            <i className="fas fa-ticket-alt w-6 mr-3"></i>
+            <span>Coupon Codes</span>
+          </Link>
         </nav>
 
         <div className="absolute bottom-0 w-64">
@@ -109,11 +116,10 @@ export default function Sidebar() {
       </div>
 
       {/* Mobile Bottom Navigation (Icons Only) */}
-      <div className="lg:hidden w-[100vw] h-[10vh] fixed bottom-0  left-0 right-0 z-10000 bg-gray-800 text-white p-2 flex justify-center items-center border-t border-gray-700">
+      <div className="lg:hidden w-[100vw] h-[10vh] fixed bottom-0 left-0 right-0 z-10000 bg-gray-800 text-white p-2 flex justify-center items-center border-t border-gray-700">
         <Link
           to="/admin"
-          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin' ? 'bg-blue-400 text-white' : 'text-gray-300'
-            }`}
+          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin' ? 'bg-blue-400 text-white' : 'text-gray-300'}`}
         >
           <i className="fas fa-tachometer-alt text-lg mb-1"></i>
           <span className="text-xs">Dashboard</span>
@@ -121,8 +127,7 @@ export default function Sidebar() {
 
         <Link
           to="/admin/users"
-          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/users' ? 'bg-blue-400 text-white' : 'text-gray-300'
-            }`}
+          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/users' ? 'bg-blue-400 text-white' : 'text-gray-300'}`}
         >
           <i className="fas fa-users text-lg mb-1"></i>
           <span className="text-xs">Users</span>
@@ -130,8 +135,7 @@ export default function Sidebar() {
 
         <Link
           to="/admin/all-products"
-          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/all-products' ? 'bg-blue-400 text-white' : 'text-gray-300'
-            }`}
+          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/all-products' ? 'bg-blue-400 text-white' : 'text-gray-300'}`}
         >
           <i className="fas fa-box text-lg mb-1"></i>
           <span className="text-xs">Products</span>
@@ -139,11 +143,19 @@ export default function Sidebar() {
 
         <Link
           to="/admin/add-product"
-          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/add-product' ? 'bg-blue-400 text-white' : 'text-gray-300'
-            }`}
+          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/add-product' ? 'bg-blue-400 text-white' : 'text-gray-300'}`}
         >
           <i className="fas fa-plus-circle text-lg mb-1"></i>
           <span className="text-xs">Add</span>
+        </Link>
+
+        {/* Coupon Codes Button */}
+        <Link
+          to="/admin/coupons"
+          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/coupons' ? 'bg-blue-400 text-white' : 'text-gray-300'}`}
+        >
+          <i className="fas fa-ticket-alt text-lg mb-1"></i>
+          <span className="text-xs">Coupons</span>
         </Link>
       </div>
     </>

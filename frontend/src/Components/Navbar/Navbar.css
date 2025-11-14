@@ -298,13 +298,9 @@
     }
     
     /* Hide logo text on very small screens if needed */
-    @media (max-width: 360px) {
-        #header .logo-text h1 {
-            display: none;
-        }
-        
-        #header .logo {
-            gap: 0;
-        }
+}
+@media (max-width: 360px) {
+    #header .logo {
+        gap: 0;
     }
 }

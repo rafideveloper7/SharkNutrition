@@ -1,40 +1,68 @@
+/* Categories.css */
 #categories .category-items {
-    cursor: default !important;
-    overflow-x: auto !important;
-    scrollbar-width: thin;
+    cursor: grab;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    width: 100%;
+    max-width: 100vw;
 }
 
 #categories .category-items:active {
-    cursor: grabbing !important;
+    cursor: grabbing;
 }
 
+.category-items-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    min-width: min-content;
+}
+
+.category-item {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Remove any native scrollbars completely */
 .category-items::-webkit-scrollbar {
-    height: 8px;
-    display: block;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
-.category-items::-webkit-scrollbar-thumb {
-    background: #aaa;
-    border-radius: 4px;
+.category-items {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
 }
 
+/* Ensure the scroll container doesn't affect page layout */
+.scroll-container {
+    overscroll-behavior-x: contain;
+    -webkit-overscroll-behavior-x: contain;
+}
 
+/* Make sure images maintain their size */
+#categories .image {
+    flex-shrink: 0;
+}
+
+/* Responsive design */
 @media (max-width: 1366px) {
-    #categories > h2{
+    #categories > h2 {
         font-size: 20px;
-    }
-}
-@media (max-width: 1000px) {
-    #categories .category-items {
-        overflow-x: scroll !important;
     }
 }
 
 @media (max-width: 870px) {
-    #categories{
+    #categories {
         padding-bottom: 0;
     }
-    #categories>h2 {
+    #categories > h2 {
         font-size: 3.3vw;
     }
     #categories .image {
@@ -44,7 +72,7 @@
 }
 
 @media (max-width: 550px) {
-    #categories>h2 {
+    #categories > h2 {
         font-size: 4.3vw;
     }
     
@@ -53,18 +81,11 @@
         height: 80px;
     }
 
-    #categories .category-items {
-        justify-content: flex-start;
-        overflow-x: scroll !important;
-    }
-
-    #categories .category-items {
-        padding-top: 5px;
-    }
-
     #categories .category-items h3 {
         font-size: 11px;
     }
-
     
+    .category-items-inner {
+        gap: 8vw;
+    }
 }

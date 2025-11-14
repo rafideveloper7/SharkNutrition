@@ -3,6 +3,7 @@ import Products from '../Products/Products'
 import Banner from '../../Components/Banner/Banner'
 import TrustUs from '../../Components/CustomersTrust/TrustUs'
 import WhyChoose from '../../Components/WhyChoose/WhyChoose'
+import './Home.css'
 
 function Home() {
 
@@ -12,7 +13,7 @@ function Home() {
       <Banner />
       <Categories />
       <Products />
-      <WhyChoose/>
+      <span className='home-whychoose-page'><WhyChoose/></span>
     </>
   )
 }

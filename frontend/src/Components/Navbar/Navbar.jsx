@@ -25,10 +25,10 @@ function Navbar({ setOpenSearch }) {
         </div>
         <div className="logo pr-[50px] m-auto flex justify-between w-full">
           <Link to='/' className='flex items-center mr-3'>
-            <img className='w-25 mr-[-15px] p-2' src={logo} alt="Shark Nutriton" />
-            <span className=' leading-tight font-bold text-center '>
+            <img className='w-25  p-2' src={logo} alt="Shark Nutriton" />
+            <span className='logo-text leading-tight font-bold text-center '>
               <h1 className=' whitespace-nowrap'>SHARK NUTRITION</h1>
-              <p className='text-[11px] text-center text-blue-400'>DIVE INTO ATHENTICITY</p>
+              <p className=' logo-p text-center text text-blue-400'>DIVE INTO ATHENTICITY</p>
             </span>
           </Link>
         </div>

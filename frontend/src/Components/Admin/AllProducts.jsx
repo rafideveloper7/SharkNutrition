@@ -36,7 +36,7 @@ export default function AllProducts() {
 
 
 
- 
+
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -63,7 +63,7 @@ export default function AllProducts() {
       name: product.name,
       price: product.price,
       category: product.category,
-        flavor: product.flavor || "",
+      flavor: product.flavor || "",
       weight: product.weight || "",
       image: product.image || "",
       imageFile: null,
@@ -77,8 +77,8 @@ export default function AllProducts() {
       formData.append("name", currentProduct.name);
       formData.append("price", Number(currentProduct.price));
       formData.append("category", currentProduct.category);
-       formData.append("flavor", currentProduct.flavor);
-       formData.append("weight", currentProduct.weight);
+      formData.append("flavor", currentProduct.flavor);
+      formData.append("weight", currentProduct.weight);
       if (currentProduct.imageFile) formData.append("image", currentProduct.imageFile);
 
       const res = await fetch(`${API_BASE}/products/${currentProduct._id}`, {
@@ -160,7 +160,12 @@ export default function AllProducts() {
               />
               <h3 className="text-lg lg:text-xl font-bold mb-2">{product.name}</h3>
               <p className="text-gray-300 text-sm lg:text-base mb-2">Category: {product.category}</p>
-              <p className="text-blue-400 font-bold text-base lg:text-lg mb-3">Rs {product.price}</p>
+              <p className="text-blue-400 font-bold text-base lg:text-lg mb-2">Rs {product.price}</p>
+
+              {/* Static Servings and Flavor */}
+              <p className="text-gray-300 text-sm lg:text-base mb-2">Servings: 30</p>
+              <p className="text-gray-300 text-sm lg:text-base mb-3">Flavor: Chocolate</p>
+
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   onClick={() => openEditModal(product)}
@@ -207,15 +212,71 @@ export default function AllProducts() {
               onChange={(e) => setCurrentProduct({ ...currentProduct, category: e.target.value })}
               placeholder="Category"
             />
-     <Input
-              value={currentProduct.flavor}
-              onChange={(e) => setCurrentProduct({ ...currentProduct, flavor: e.target.value })}
-              placeholder="flavor"
-            />
-              <Input
+
+            {/* Dynamic Flavor Fields */}
+            <div>
+              <label className="block text-gray-300 mb-1 text-sm">Flavor</label>
+              {currentProduct.flavor?.map((f, idx) => (
+                <div key={idx} className="flex gap-2 mb-2">
+                  <Input
+                    value={f}
+                    onChange={(e) => {
+                      const newFlavors = [...currentProduct.flavor];
+                      newFlavors[idx] = e.target.value;
+                      setCurrentProduct({ ...currentProduct, flavor: newFlavors });
+                    }}
+                    placeholder="Flavor"
+                  />
+                </div>
+              ))}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    flavor: [...(currentProduct.flavor || []), ""],
+                  })
+                }
+              >
+                + Add Flavor
+              </Button>
+            </div>
+
+            {/* Dynamic Servings Fields */}
+            <div>
+              <label className="block text-gray-300 mb-1 text-sm">Servings</label>
+              {currentProduct.servings?.map((s, idx) => (
+                <div key={idx} className="flex gap-2 mb-2">
+                  <Input
+                    value={s}
+                    onChange={(e) => {
+                      const newServings = [...currentProduct.servings];
+                      newServings[idx] = e.target.value;
+                      setCurrentProduct({ ...currentProduct, servings: newServings });
+                    }}
+                    placeholder="Servings"
+                  />
+                </div>
+              ))}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() =>
+                  setCurrentProduct({
+                    ...currentProduct,
+                    servings: [...(currentProduct.servings || []), ""],
+                  })
+                }
+              >
+                + Add Servings
+              </Button>
+            </div>
+
+            <Input
               value={currentProduct.weight}
               onChange={(e) => setCurrentProduct({ ...currentProduct, weight: e.target.value })}
-              placeholder="weight"
+              placeholder="Weight"
             />
             <div>
               <label className="block text-gray-300 mb-1 text-sm">Product Image</label>

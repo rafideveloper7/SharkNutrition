@@ -2,9 +2,10 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { CartContext } from "../../Context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { createOrder } from "../../api";
+
 function Checkout() {
     const navigate = useNavigate();
-    const { cartData, setCartData } = useContext(CartContext);
+    const { cartData } = useContext(CartContext);
     const [orderPlaced, setOrderPlaced] = useState(false);
 
     useEffect(() => {
@@ -13,7 +14,7 @@ function Checkout() {
         }
     }, [cartData.length, navigate]);
 
-    // Total amount
+    // Total amount (before discount)
     const total = useMemo(() => {
         return cartData
             .reduce((acc, item) => acc + item?.price * item?.count, 0)
@@ -27,7 +28,14 @@ function Checkout() {
         phone: "",
         address: "",
         paymentMethod: "",
+        servings: "",
+        couponCode: "",
     });
+
+    const [discount, setDiscount] = useState(0);
+
+    // Final total after discount
+    const finalTotal = (total - discount).toFixed(2);
 
     // Handle input changes
     function handleChange(e) {
@@ -35,29 +43,44 @@ function Checkout() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
+    // Apply coupon code
+    function applyCoupon() {
+        if (formData.couponCode.trim().toLowerCase() === "5%discount") {
+            const discountAmount = (total * 0.05).toFixed(2);
+            setDiscount(discountAmount);
+            alert("Coupon applied successfully! 5% discount added.");
+        } else {
+            setDiscount(0);
+            alert("Invalid coupon code!");
+        }
+    }
+
     // Submit form
     async function handleSubmit(e) {
         e.preventDefault();
 
-        // Validation
         if (
             !formData?.name ||
             !formData?.email ||
             !formData?.phone ||
             !formData?.address ||
+            !formData?.servings ||
             !formData?.paymentMethod
         ) {
             alert("Please fill all the fields and select payment method.");
             return;
         }
 
-
         const orderPayload = {
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
             address: formData.address,
+            servings: formData.servings,
             paymentMethod: formData.paymentMethod,
+            couponCode: formData.couponCode,
+            discount,
+            totalAmount: finalTotal,
             cartItems: cartData.map(item => ({
                 productId: item.productId,
                 name: item.name,
@@ -65,13 +88,11 @@ function Checkout() {
                 count: item.count,
                 flavor: item.flavor || [],
             })),
-            totalAmount: total,
         };
 
         try {
             const response = await createOrder(orderPayload);
-            console.log(" Order placed:", response.data);
-
+            console.log("Order placed:", response.data);
 
             if (formData.paymentMethod === "cod") {
                 setOrderPlaced(true);
@@ -79,20 +100,20 @@ function Checkout() {
                 navigate("/bankDetails");
             }
 
-            // Reset form
             setFormData({
                 name: "",
                 email: "",
                 phone: "",
                 address: "",
                 paymentMethod: "",
+                servings: "",
+                couponCode: "",
             });
         } catch (error) {
-            toast.error("Failed to place order!");
-            console.error(" Error in order submission:", error);
+            console.error("Error in order submission:", error);
+            alert("Failed to place order!");
         }
     }
-
 
     return (
         <section id="checkout" className="container min-h-[80vh] py-10">
@@ -108,6 +129,7 @@ function Checkout() {
                 </div>
             ) : (
                 <div className="grid md:grid-cols-2 gap-10">
+                    {/* LEFT SIDE FORM */}
                     <form
                         onSubmit={handleSubmit}
                         className="shadow-[0_0_5px_#ddd] rounded-xl p-6 flex flex-col gap-4"
@@ -160,6 +182,41 @@ function Checkout() {
                         </div>
 
                         <div>
+                            <label className="block font-medium mb-1">Servings</label>
+                            <input
+                                type="text"
+                                name="servings"
+                                value={formData?.servings}
+                                onChange={handleChange}
+                                placeholder="Enter servings (e.g., 30 Servings)"
+                                className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
+                            />
+                        </div>
+
+                        {/* COUPON CODE FIELD */}
+                        <div>
+                            <label className="block font-medium mb-1">Code 5% discount</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    name="couponCode"
+                                    value={formData?.couponCode}
+                                    onChange={handleChange}
+                                    placeholder="Enter code here"
+                                    className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
+                                />
+
+                                <button
+                                    type="button"
+                                    onClick={applyCoupon}
+                                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 rounded-md"
+                                >
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
                             <label className="block font-medium mb-2">Payment Method</label>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
                                 <label className="flex items-center gap-2 border border-gray-500 rounded-lg px-4 py-2 cursor-pointer hover:border-blue-400 transition">
@@ -196,8 +253,10 @@ function Checkout() {
                         </button>
                     </form>
 
+                    {/* RIGHT SIDE ORDER SUMMARY */}
                     <div className="shadow-[0_0_5px_#ddd] rounded-xl p-6 h-fit">
                         <h3 className="text-xl font-semibold mb-4 text-blue">Order Summary</h3>
+
                         {cartData.length > 0 ? (
                             <div className="flex flex-col gap-4">
                                 {cartData.map((item) => (
@@ -213,9 +272,22 @@ function Checkout() {
                                         </p>
                                     </div>
                                 ))}
+
                                 <div className="flex justify-between pt-3 font-semibold text-lg">
                                     <span>Total:</span>
                                     <span className="text-blue">Rs {total}</span>
+                                </div>
+
+                                {discount > 0 && (
+                                    <div className="flex justify-between pt-2 text-green-400 font-medium">
+                                        <span>Discount (5%):</span>
+                                        <span>- Rs {discount}</span>
+                                    </div>
+                                )}
+
+                                <div className="flex justify-between pt-3 font-semibold text-lg">
+                                    <span>Final Total:</span>
+                                    <span className="text-blue">Rs {finalTotal}</span>
                                 </div>
                             </div>
                         ) : (

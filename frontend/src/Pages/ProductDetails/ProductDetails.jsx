@@ -9,10 +9,12 @@ import toast from "react-hot-toast";
 
 const ProductDetails = () => {
     const product = {
+        productId: 1,
         name: "Dynamic Multi Vitamin",
         description:
             "A powerful blend of vitamins, minerals, and essential nutrients designed to boost immunity, enhance recovery, and support overall performance.",
         category: "Vitamins & Supplements",
+        price: 11000,
         images: [product1, product2, product3, product4],
 
         // Multiple Options
@@ -32,6 +34,7 @@ const ProductDetails = () => {
             prev === 0 ? product.images.length - 1 : prev - 1
         );
 
+    // Handle Add to Cart
     const { addToCart } = useContext(CartContext);
     function handleAddToCart() {
         const userStr = localStorage.getItem("user");
@@ -107,6 +110,14 @@ const ProductDetails = () => {
                             {product.weight}
                         </p>
                     </div>
+                    <div className="bg-white/5 hover:bg-white/10 transition-all p-4 rounded-xl border border-white/10">
+                        <p className="text-gray-400 text-xs uppercase tracking-widest">
+                            Price
+                        </p>
+                        <p className="font-semibold text-white text-base mt-1">
+                            Rs. {product.price}
+                        </p>
+                    </div>
                 </div>
 
                 {/* Flavors Selection */}
@@ -153,17 +164,14 @@ const ProductDetails = () => {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-wrap items-center gap-4 mt-10">
-                    <button onClick={handleAddToCart} className="relative bg-[#37b5fe] text-black font-semibold px-10 py-3 rounded-xl overflow-hidden transition-all hover:scale-105 shadow-[0_0_15px_#37b5fe] group">
+                    <button onClick={handleAddToCart} className="relative bg-[#37b5fe] text-black font-semibold px-6 py-2 sm:px-8 sm:py-3 rounded-xl overflow-hidden transition-all hover:scale-105 shadow-[0_0_15px_#37b5fe] group">
                         <span className="relative z-10">Add to Cart</span>
                         <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                     </button>
                 </div>
 
-                {/* Divider */}
-                <div className="mt-12 border-t border-white/10 w-3/4"></div>
-
                 {/* Description */}
-                <p className="text-gray-300 leading-relaxed text-base sm:text-lg tracking-wide border-l-4 border-[#37b5fe] pl-3 sm:pl-4">
+                <p className="text-gray-300 leading-relaxed text-base sm:text-lg tracking-wide border-l-0 sm:border-l-4 border-[#37b5fe] pl-0 sm:pl-4">
                     {product.description}
                 </p>
             </div>

@@ -2,21 +2,28 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-
 export default function AddProducts() {
   const [formData, setFormData] = useState({
     name: "",
     category: "",
     price: "",
     weight: "",
-    flavor: "",
-  
+    flavor: [""],
+    servings: [""],
     image: null,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e, idx, type) => {
     if (e.target.name === "image") {
       setFormData({ ...formData, image: e.target.files[0] });
+    } else if (type === "flavor") {
+      const newFlavors = [...formData.flavor];
+      newFlavors[idx] = e.target.value;
+      setFormData({ ...formData, flavor: newFlavors });
+    } else if (type === "servings") {
+      const newServings = [...formData.servings];
+      newServings[idx] = e.target.value;
+      setFormData({ ...formData, servings: newServings });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -26,17 +33,28 @@ export default function AddProducts() {
     e.preventDefault();
     const data = new FormData();
     for (let key in formData) {
-      data.append(key, formData[key]);
+      if (Array.isArray(formData[key])) {
+        data.append(key, JSON.stringify(formData[key]));
+      } else {
+        data.append(key, formData[key]);
+      }
     }
 
     try {
-
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE}/products`, data, {
-
+      await axios.post(`${import.meta.env.VITE_API_BASE}/products`, data, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
       toast.success("Product added successfully!");
+      setFormData({
+        name: "",
+        category: "",
+        price: "",
+        weight: "",
+        flavor: [""],
+        servings: [""],
+        image: null,
+      });
     } catch (err) {
       console.error(err);
       toast.error("Error adding product.");
@@ -77,8 +95,8 @@ export default function AddProducts() {
               <option value="creatine">Creatine</option>
               <option value="preworkout">Pre Workout</option>
               <option value="weightgainer">Weight Gainer</option>
-                <option value="vitamins and minerals">Vitamin and Minerals</option>
-                <option value="amino acid">Amino Acid</option>
+              <option value="vitamins and minerals">Vitamin and Minerals</option>
+              <option value="amino acid">Amino Acid</option>
             </select>
           </div>
 
@@ -108,17 +126,50 @@ export default function AddProducts() {
             </div>
           </div>
 
-          {/* Flavor */}
+          {/* Dynamic Flavor Fields */}
           <div>
             <label className="block text-sm lg:text-base font-medium mb-2">Flavor</label>
-            <input
-              type="text"
-              name="flavor"
-              value={formData.flavor}
-              onChange={handleChange}
-              className="w-full px-3 lg:px-4 py-2 text-sm lg:text-base bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
-              placeholder="Enter flavor"
-            />
+            {formData.flavor.map((f, idx) => (
+              <div key={idx} className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={f}
+                  onChange={(e) => handleChange(e, idx, "flavor")}
+                  className="w-full px-3 lg:px-4 py-2 text-sm lg:text-base bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+                  placeholder="Enter flavor"
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, flavor: [...formData.flavor, ""] })}
+              className="px-3 py-1 border border-blue-500 text-gray-300 rounded-lg hover:bg-blue-500 hover:text-white transition"
+            >
+              + Add Flavor
+            </button>
+          </div>
+
+          {/* Dynamic Servings Fields */}
+          <div>
+            <label className="block text-sm lg:text-base font-medium mb-2">Servings</label>
+            {formData.servings.map((s, idx) => (
+              <div key={idx} className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={s}
+                  onChange={(e) => handleChange(e, idx, "servings")}
+                  className="w-full px-3 lg:px-4 py-2 text-sm lg:text-base bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+                  placeholder="Enter servings"
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, servings: [...formData.servings, ""] })}
+              className="px-3 py-1 border border-blue-500 text-gray-300 rounded-lg hover:bg-blue-500 hover:text-white transition"
+            >
+              + Add Servings
+            </button>
           </div>
 
           {/* Image */}
@@ -127,7 +178,7 @@ export default function AddProducts() {
             <input
               type="file"
               name="image"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               className="w-full px-3 lg:px-4 py-2 text-sm cursor-pointer lg:text-base bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>

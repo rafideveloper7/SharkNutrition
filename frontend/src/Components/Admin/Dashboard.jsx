@@ -114,6 +114,8 @@ export default function Dashboard() {
               <th className="px-4 py-2 text-left">Email</th>
               <th className="px-4 py-2 text-left">Phone</th>
               <th className="px-4 py-2 text-left">Address</th>
+              <th className="px-4 py-2 text-left">Servings</th>
+              <th className="px-4 py-2 text-left">Flavor</th>
               <th className="px-4 py-2 text-left">Total Amount</th>
               <th className="px-4 py-2 text-left">Date</th>
               <th className="px-4 py-2 text-left">Cart Items</th>
@@ -127,6 +129,19 @@ export default function Dashboard() {
                 <td className="px-4 py-2">{order.email}</td>
                 <td className="px-4 py-2">{order.phone}</td>
                 <td className="px-4 py-2 min-w-50">{order.address}</td>
+                <td className="px-4 py-2">
+                  {order.servings ? order.servings : "-"}
+                </td>
+                <td className="px-4 py-2">
+                  {order.cartItems && order.cartItems.length > 0
+                    ? order.cartItems.map((item, idx) => (
+                      <div key={idx}>
+                        {item.flavor ? item.flavor : "-"}
+                      </div>
+                    ))
+                    : "-"
+                  }
+                </td>
                 <td className="px-4 py-2">Rs {order.totalAmount}</td>
                 <td className="px-4 py-2">{new Date(order.createdAt).toLocaleDateString()}</td>
                 <td className="px-4 py-2 min-w-100">
@@ -140,11 +155,11 @@ export default function Dashboard() {
                     "No items"
                   )}
                 </td>
-                <td className="px-4 py-2">{order.paymentMethod == "cod" ? "Cash on Delivery" : order.paymentMethod}</td>
+                <td className="px-4 py-2">{order.paymentMethod === "cod" ? "Cash on Delivery" : order.paymentMethod}</td>
               </tr>
             )) : (
               <tr>
-                <td colSpan="7" className="text-center py-4 text-gray-400">No orders found</td>
+                <td colSpan="10" className="text-center py-4 text-gray-400">No orders found</td>
               </tr>
             )}
           </tbody>

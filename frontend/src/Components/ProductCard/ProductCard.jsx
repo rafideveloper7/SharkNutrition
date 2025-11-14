@@ -94,14 +94,16 @@ function ProductCard({ product, refreshWishlist }) {
     <div className="product-card-container w-90 min-h-[385px]">
       <div className="product-card w-full h-full rounded-4xl hover:shadow-[0_0_20px_#ffffff6b] p-5 transition-all">
         <div className="image w-full h-70 bg-gray-200 rounded-lg overflow-hidden">
-          <img
-            className="w-full h-full object-cover drop-shadow-[0_5px_5px_#444]"
-            src={productImage}
-            alt={product?.name || "Product"}
-            onError={(e) => {
-              e.target.src = "/images/placeholder.png";
-            }}
-          />
+          <Link to={`/products/${product?._id}`}>
+            <img
+              className="w-full h-full object-cover drop-shadow-[0_5px_5px_#444]"
+              src={productImage}
+              alt={product?.name || "Product"}
+              onError={(e) => {
+                e.target.src = "/images/placeholder.png";
+              }}
+            />
+          </Link>
         </div>
 
         <div className="content">
@@ -109,7 +111,9 @@ function ProductCard({ product, refreshWishlist }) {
             className="my-3 font-semibold text-lg truncate"
             title={product?.name}
           >
-            {product?.name || "Unnamed Product"}
+            <Link to={`/products/${product?._id}`}>
+              {product?.name || "Unnamed Product"}
+            </Link>
           </h4>
 
           <div className="flex justify-between items-center mb-3">

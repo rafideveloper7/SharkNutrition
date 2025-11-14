@@ -1,6 +1,11 @@
-h1::before{
-    content: 'Tech';
+
+#layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-h1::after{
-    content: 'Tech';
+
+.home-whychoose-page {
+    margin-bottom: 10px;
 }

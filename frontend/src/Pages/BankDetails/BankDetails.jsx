@@ -19,16 +19,10 @@ export default function BankDetails() {
                         GOHAR ZAMAN
                     </p>
                     <p className="text-gray-300 mt-2">
-                        <span className="font-medium text-gray-400">Meezan Bank</span>
+                        <span className="font-medium text-gray-400">EasyPaisa Account</span>
+                        <span className="text-[#37b5fe] ml-5">03302721777</span>
                     </p>
-                    <p className="text-gray-300 mt-2">
-                        <span className="font-medium text-gray-400">Account Number:</span>{" "}
-                        <span className="text-[#37b5fe]">07060109362467</span>
-                    </p>
-                    <p className="text-gray-300 mt-2">
-                        <span className="font-medium text-gray-400">IBAN:</span>{" "}
-                        <span className="text-[#37b5fe]">PK19MEZN0007060109362467</span>
-                    </p>
+                    
                 </div>
 
                 {/* Product Summary */}
@@ -60,12 +54,12 @@ export default function BankDetails() {
                 </div>
 
                 {/* WhatsApp Note */}
-                <div className="bg-[#002b1f]/70 border border-[#006b4c] rounded-xl p-5 mb-6">
-                    <p className="text-[#58ffbf] font-medium mb-2">
+                <div className="bg-blue-500 border border-[#006b4c] rounded-xl p-5 mb-6">
+                    <p className="text-white font-medium mb-2">
                         📸 Kindly send us a screenshot of your successful payment transaction on our
                         WhatsApp:
                     </p>
-                    <p className="text-[#58ffbf] text-lg font-semibold">
+                    <p className=" text-lg font-semibold">
                         <a
                             href="https://wa.me/923302721777"
                             target="_blank"
@@ -75,7 +69,7 @@ export default function BankDetails() {
                             0330-2721777
                         </a>
                     </p>
-                    <p className="text-[#58ffbf] mt-2 text-sm">
+                    <p className=" mt-2 text-sm">
                         for quick payment verification.
                     </p>
                 </div>

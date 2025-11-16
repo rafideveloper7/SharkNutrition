@@ -7,7 +7,7 @@
     Team : Code Experts
     - codeexperts.org@gmail.com
 
-    contributers
+    Project contributers
 
     Frontend:
 

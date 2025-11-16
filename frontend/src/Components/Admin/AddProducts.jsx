@@ -208,51 +208,9 @@ export default function AddProducts() {
           </div>
 
 </div>
-          {/* Dynamic Flavors */}
-          <div>
-            <label className="block mb-2 font-medium">Flavors</label>
-            {formData.flavor.map((f, idx) => (
-              <div key={idx} className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={f}
-                  onChange={(e) => handleChange(e, idx, "flavor")}
-                  placeholder="Enter flavor"
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
-                />
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => setFormData({ ...formData, flavor: [...formData.flavor, ""] })}
-              className="px-3 py-1 border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition"
-            >
-              + Add Flavor
-            </button>
-          </div>
+          
 
-          {/* Dynamic Servings */}
-          <div>
-            <label className="block mb-2 font-medium">Servings</label>
-            {formData.servings.map((s, idx) => (
-              <div key={idx} className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={s}
-                  onChange={(e) => handleChange(e, idx, "servings")}
-                  placeholder="Enter servings"
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
-                />
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => setFormData({ ...formData, servings: [...formData.servings, ""] })}
-              className="px-3 py-1 border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition"
-            >
-              + Add Serving
-            </button>
-          </div>
+          
 
           {/* Gallery Images */}
           <div>

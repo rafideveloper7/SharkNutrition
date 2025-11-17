@@ -1,5 +1,3 @@
-
-
 import express from "express";
 import { verifyAdmin } from "../middleware/auth.js";
 import User from "../models/User.js";
@@ -8,18 +6,21 @@ import Product from "../models/Product.js";
 
 const router = express.Router();
 
-// GET all dashboard stats (for admin)
+// GET dashboard stats (admin only)
 router.get("/", verifyAdmin, async (req, res) => {
-    try {
-        const totalUsers = await User.countDocuments();
-        const totalOrders = await Orders.countDocuments();
-        const totalProducts = await Product.countDocuments();
+  try {
+    // Count documents
+    const [totalUsers, totalOrders, totalProducts] = await Promise.all([
+      User.countDocuments(),
+      Orders.countDocuments(),
+      Product.countDocuments(),
+    ]);
 
-        res.json({ totalUsers, totalOrders, totalProducts });
-    } catch (error) {
-        console.error("Error fetching stats:", error);
-        res.status(500).json({ success: false, message: "Server Error" });
-    }
+    res.json({ totalUsers, totalOrders, totalProducts });
+  } catch (err) {
+    console.error("Error fetching stats:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
 });
 
 export default router;

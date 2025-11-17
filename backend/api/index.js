@@ -4,10 +4,9 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
 dotenv.config();
 
-// Import your routes
+// Import routes
 import adminRoutes from "../routes/adminRoute.js";
 import userRoutes from "../routes/userRoute.js";
 import orderRoutes from "../routes/orderRoutes.js";
@@ -19,7 +18,7 @@ import couponRoutes from "../routes/couponRoutes.js";
 const app = express();
 
 // Middleware
-app.use(cors({ origin: [process.env.FRONT_END_URL], credentials: true }));
+app.use(cors({ origin: [process.env.FRONT_END_URL || "*"], credentials: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,19 +32,19 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
-app.use("/users", userRoutes);
+app.use("/users", userRoutes); // optional
 app.use("/api/orders", orderRoutes);
 app.use("/export", exportRoutes);
 app.use("/products", productRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/coupons", couponRoutes);
 
-// Root
+// Root route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Shark Nutrition API" });
 });
 
-// Test
+// Test route
 app.get("/test", async (req, res) => {
   try {
     if (!mongoose.connection.readyState) {
@@ -60,7 +59,7 @@ app.get("/test", async (req, res) => {
   }
 });
 
-// 404
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found", method: req.method, url: req.url });
 });

@@ -1,3 +1,4 @@
+// api/index.js
 import serverless from 'serverless-http';
 import express from 'express';
 import cors from 'cors';
@@ -18,7 +19,6 @@ import couponRoutes from '../routes/couponRoutes.js';
 
 // =============== GLOBAL DB CONNECTION ===============
 let isConnected = false;
-
 const connectDB = async () => {
   if (isConnected) return;
   try {
@@ -38,26 +38,31 @@ const connectDB = async () => {
 const app = express();
 
 // Middleware
-app.use(cors({ origin: ['http://localhost:5173', 'https://sharknutritionpk.store'], credentials: true }));
+app.use(cors({ origin: [process.env.FRONT_END_URL || '*'], credentials: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Logging
+// Request logging
 app.use((req, res, next) => {
   console.log(`➡️ ${req.method} ${req.url}`);
   next();
 });
 
-// Routes
+// =============== ROUTES ===============
 app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes);
-app.use('/users', userRoutes);
+app.use('/users', userRoutes); // optional
 app.use('/api/orders', orderRoutes);
 app.use('/export', exportRoutes);
 app.use('/products', productRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/coupons', couponRoutes);
+
+// Root route
+app.get('/', async (req, res) => {
+  res.json({ message: 'Welcome to Shark Nutrition API' });
+});
 
 // Test route
 app.get('/test', async (req, res) => {
@@ -69,10 +74,10 @@ app.get('/test', async (req, res) => {
   }
 });
 
-// 404
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found', method: req.method, url: req.url });
 });
 
-// Export serverless handler
+// Export as Vercel serverless function
 export default serverless(app);

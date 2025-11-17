@@ -1,6 +1,8 @@
+// server.js
 import app from "./api/index.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;

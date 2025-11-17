@@ -1,3 +1,4 @@
+// api/index.js
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// =============== ROUTES ===============
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 app.use("/users", userRoutes); // optional
@@ -64,5 +65,5 @@ app.use((req, res) => {
   res.status(404).json({ error: "Route not found", method: req.method, url: req.url });
 });
 
-// Export for Vercel
+// Export app for Vercel
 export default app;

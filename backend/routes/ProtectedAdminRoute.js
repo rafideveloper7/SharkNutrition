@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-const backendApi = import.meta.env.VITE_API_BASE;
+const backendApi = import.meta.env.VITE_API_BASE
 
 export default function ProtectedAdminRoute() {
   const [checking, setChecking] = useState(true);
@@ -12,10 +11,10 @@ export default function ProtectedAdminRoute() {
       try {
         const res = await fetch(`${backendApi}/api/admin/verify`, {
           method: "GET",
-          credentials: "include", // ensures cookies are sent
+          credentials: "include",
         });
         setIsLoggedIn(res.ok);
-      } catch {
+      } catch (err) {
         setIsLoggedIn(false);
       } finally {
         setChecking(false);

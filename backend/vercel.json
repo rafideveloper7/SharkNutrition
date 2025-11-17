@@ -1,28 +1,19 @@
+
+
+
 {
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
+      "src": "server.js",
       "use": "@vercel/node"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/api/index.js"
+      "src": "/(.*)",
+      "dest": "server.js"
     }
-  ],
-  "env": {
-    "FRONT_END_URL": "https://sharknutritionpk.store",
-    "PORT": "5000",
-    "MONGO_URI": "your-mongo-uri-here",
-    "JWT_SECRET": "your-jwt-secret",
-    "ADMIN_PASSWORD": "your-admin-password",
-    "ADMIN_USERNAME": "your-admin-email",
-    "CLOUDINARY_CLOUD_NAME": "your-cloud-name",
-    "CLOUDINARY_API_KEY": "your-cloud-api-key",
-    "CLOUDINARY_API_SECRET": "your-cloud-api-secret",
-    "NODE_ENV": "production"
-  }
+  ]
+ 
 }
-

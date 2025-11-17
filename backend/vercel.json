@@ -13,7 +13,7 @@
     }
   ],
   "env": {
-    "MONGO_URI": "@mongo_uri",
+    "MONGO_URI": "mongo_uri",
     "JWT_SECRET": "@jwt_secret",
     "CLOUDINARY_CLOUD_NAME": "@cloud_name",
     "CLOUDINARY_API_KEY": "@cloud_api_key",

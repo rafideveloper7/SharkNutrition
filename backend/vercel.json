@@ -1,30 +1,22 @@
 {
-  "name": "shark-backend",
-  "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
-    "vercel-build": "echo no build step"
-  },
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.2",
-    "body-parser": "^2.2.0",
-    "cloudinary": "^1.41.3",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "exceljs": "^4.4.0",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.2",
-    "multer": "^2.0.2",
-    "multer-storage-cloudinary": "^4.0.0",
-    "serverless-http": "^4.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.js"
+    }
+  ],
+  "env": {
+    "MONGO_URI": "@mongo_uri",
+    "CLOUDINARY_CLOUD_NAME": "@cloud_name",
+    "CLOUDINARY_API_KEY": "@cloud_api_key",
+    "CLOUDINARY_API_SECRET": "@cloud_api_secret",
+    "JWT_SECRET": "@jwt_secret"
   }
 }

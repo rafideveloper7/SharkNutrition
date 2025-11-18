@@ -215,7 +215,7 @@ function Checkout() {
 
                         {/* COUPON CODE FIELD */}
                         <div>
-                            <label className="block font-medium mb-1">Code 5% discount</label>
+                            <label className="block font-medium mb-1">CODE:</label>
                             <div className="flex gap-2">
                                 <input
                                     type="text"
@@ -312,10 +312,16 @@ function Checkout() {
                                         <span>- Rs {discount}</span>
                                     </div>
                                 )}
+                                {/* added delivery from frontend */}
+                                <div className="flex justify-between pt-3 font-semibold text-lg">
+                                    <span>Delivery:</span>
+                                    <span className="text-blue">Rs 300</span>
+                                </div>
 
                                 <div className="flex justify-between pt-3 font-semibold text-lg">
                                     <span>Final Total:</span>
-                                    <span className="text-blue">Rs {finalTotal}</span>
+                                    <span className="text-blue">Rs {300 + Number(finalTotal)}</span>
+
                                 </div>
                             </div>
                         ) : (

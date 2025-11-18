@@ -1,9 +1,20 @@
 .banner-img {
-    margin-top: 20px;
+  margin-top: 20px;
+  /* border: 1px solid; */
+  margin: auto;
+  height: 70vh;
 }
-@media (max-width: 440px) {
-    .banner-img {
-        width: 100%;
-        margin-top: -45px;
-    }
+@media (max-width: 430px) {
+  .banner-img {
+    width: 100% !important;
+    /* height: 100%; */
+    height: 30dvh !important;
+    background-position: center;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: auto;
+    margin-bottom: 185px;
+  }
 }

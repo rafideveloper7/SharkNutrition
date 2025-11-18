@@ -28,6 +28,7 @@ import AdminLogin from './Components/Admin/AdminLogin'
 import NotFound from './NotFound/NotFound';
 import ProductDetails from './Pages/ProductDetails/ProductDetails';
 import CouponCode from './Components/Admin/CouponCode';
+import ScrollToTop from './Components/ScrollToTop/ScrollToTop';
 const backendApi = import.meta.env.VITE_API_BASE
 
 // ✅ Admin Protected Route Component

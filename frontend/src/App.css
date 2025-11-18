@@ -1,6 +1,7 @@
 .container{
     max-width: 80%;
     margin: 0 auto;
+    /* overflow-x: hidden; */
 }
 .text-blue{
     color: #37b5fe;
@@ -20,6 +21,8 @@ button{
 }
 @media (max-width: 600px) {
     .container{
-        max-width: 95%;
+        max-width: 100%;
+        /* background-color: #37b5fe; */
+        margin: auto;
     }
 }

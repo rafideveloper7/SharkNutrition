@@ -1,7 +1,7 @@
 /* Categories.css */
 #categories .category-items {
     cursor: grab;
-    overflow: hidden;
+    overflow: auto;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;

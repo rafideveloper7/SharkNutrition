@@ -5,10 +5,24 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header .logo {
+  /* border: 1px solid; */
+  width: fit-content;
+  height: 50px;
 }
 
 #header nav a {
   font-size: 18px;
+}
+
+#header nav {
+  display: flex;
+  justify-content: end;
 }
 
 #header nav a:hover {
@@ -53,7 +67,7 @@
 }
 
 .close-menu-btn {
-    border: none !important;    
+    border: none !important;   
 
 }
 
@@ -307,6 +321,10 @@
 }
 
 @media (max-width: 440px) {
+  #header {
+    width: 100%;
+    margin: 0;
+  }
   #header .logo-text h1 {
     font-size: 17px;
   }

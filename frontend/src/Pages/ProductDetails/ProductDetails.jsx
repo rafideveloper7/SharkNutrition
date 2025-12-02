@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import { CartContext } from "@/Context/CartContext";
@@ -19,13 +19,7 @@ const ProductDetails = () => {
     const [selectedFlavor, setSelectedFlavor] = useState("");
     const [selectedServing, setSelectedServing] = useState("");
     const [isLargeView, setIsLargeView] = useState(false);
-    const [touchStart, setTouchStart] = useState(null);
-    const [touchEnd, setTouchEnd] = useState(null);
     const [isZoomed, setIsZoomed] = useState(false);
-    const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
-
-    const imageRef = useRef(null);
-    const zoomContainerRef = useRef(null);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -64,85 +58,43 @@ const ProductDetails = () => {
             prev === 0 ? (product?.gallery?.length || 1) - 1 : prev - 1
         );
 
-    // Touch swipe handlers
+    // Simple swipe handlers
     const handleTouchStart = (e) => {
-        setTouchStart(e.targetTouches[0].clientX);
+        const touchX = e.touches[0].clientX;
+        e.currentTarget.dataset.touchStart = touchX;
     };
 
-    const handleTouchMove = (e) => {
-        setTouchEnd(e.targetTouches[0].clientX);
-    };
+    const handleTouchEnd = (e) => {
+        const touchStart = parseFloat(e.currentTarget.dataset.touchStart || "0");
+        const touchEnd = e.changedTouches[0].clientX;
+        const diff = touchStart - touchEnd;
 
-    const handleTouchEnd = () => {
-        if (!touchStart || !touchEnd) return;
-        
-        const distance = touchStart - touchEnd;
-        const isLeftSwipe = distance > 50;
-        const isRightSwipe = distance < -50;
-
-        if (isLeftSwipe) {
-            nextSlide();
-        } else if (isRightSwipe) {
-            prevSlide();
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
         }
-
-        setTouchStart(null);
-        setTouchEnd(null);
     };
 
-    // Mouse drag handlers
+    // Simple mouse drag handlers
     const handleMouseDown = (e) => {
-        setTouchStart(e.clientX);
+        e.currentTarget.dataset.mouseStart = e.clientX;
     };
 
-    const handleMouseMove = (e) => {
-        if (touchStart !== null) {
-            setTouchEnd(e.clientX);
+    const handleMouseUp = (e) => {
+        const mouseStart = parseFloat(e.currentTarget.dataset.mouseStart || "0");
+        const mouseEnd = e.clientX;
+        const diff = mouseStart - mouseEnd;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
         }
-    };
-
-    const handleMouseUp = () => {
-        if (!touchStart || !touchEnd) return;
-        
-        const distance = touchStart - touchEnd;
-        const isLeftSwipe = distance > 50;
-        const isRightSwipe = distance < -50;
-
-        if (isLeftSwipe) {
-            nextSlide();
-        } else if (isRightSwipe) {
-            prevSlide();
-        }
-
-        setTouchStart(null);
-        setTouchEnd(null);
-    };
-
-    // Zoom handlers for main slider
-    const handleMouseMoveOnImage = (e) => {
-        if (!isZoomed || !imageRef.current || !zoomContainerRef.current) return;
-
-        const container = zoomContainerRef.current;
-        const image = imageRef.current;
-        const { left, top, width, height } = container.getBoundingClientRect();
-        
-        const x = ((e.clientX - left) / width) * 100;
-        const y = ((e.clientY - top) / height) * 100;
-
-        // Constrain the position within bounds
-        const constrainedX = Math.max(0, Math.min(100, x));
-        const constrainedY = Math.max(0, Math.min(100, y));
-
-        setZoomPosition({ x: constrainedX, y: constrainedY });
-    };
-
-    const handleMouseEnterImage = () => {
-        setIsZoomed(true);
-    };
-
-    const handleMouseLeaveImage = () => {
-        setIsZoomed(false);
-        setZoomPosition({ x: 50, y: 50 }); // Reset to center
     };
 
     function handleAddToCart() {
@@ -165,51 +117,37 @@ const ProductDetails = () => {
                 {/* Left: Image Slider */}
                 <div className="w-full lg:w-1/2 flex flex-col items-center relative">
                     <div 
-                        ref={zoomContainerRef}
-                        className="bg-[#e5e7eb] relative w-full max-w-md overflow-hidden rounded-2xl cursor-grab active:cursor-grabbing"
+                        className="bg-[#e5e7eb] relative w-full max-w-md overflow-hidden rounded-2xl"
                         onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
                         onTouchEnd={handleTouchEnd}
                         onMouseDown={handleMouseDown}
-                        onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUp}
-                        onMouseLeave={handleMouseUp}
                     >
                         <div 
                             className="relative w-full h-[400px] overflow-hidden rounded-2xl border border-[#37b5fe]/40 bg-black"
-                            onMouseEnter={handleMouseEnterImage}
-                            onMouseLeave={handleMouseLeaveImage}
-                            onMouseMove={handleMouseMoveOnImage}
+                            onMouseEnter={() => setIsZoomed(true)}
+                            onMouseLeave={() => setIsZoomed(false)}
                         >
                             <img
-                                ref={imageRef}
                                 src={getImageUrl(product.gallery[currentIndex])}
                                 alt={product.name}
                                 className={`w-full h-full object-cover transition-transform duration-200 select-none ${
-                                    isZoomed ? 'scale-150' : 'scale-100'
+                                    isZoomed ? 'scale-110' : 'scale-100'
                                 }`}
-                                style={{
-                                    transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                                }}
                                 draggable="false"
                             />
-                            
-                            {/* Zoom overlay indicator */}
-                            {isZoomed && (
-                                <div className="absolute inset-0 border-2 border-[#37b5fe]/50 pointer-events-none" />
-                            )}
                         </div>
 
                         {/* Navigation Buttons */}
                         <button
                             onClick={prevSlide}
-                            className="absolute top-1/2 left-3 -translate-y-1/2 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110 z-10"
+                            className="absolute top-1/2 left-3 -translate-y-1/2 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110"
                         >
                             <ChevronLeft className="w-5 h-5" />
                         </button>
                         <button
                             onClick={nextSlide}
-                            className="absolute top-1/2 right-3 -translate-y-1/2 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110 z-10"
+                            className="absolute top-1/2 right-3 -translate-y-1/2 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110"
                         >
                             <ChevronRight className="w-5 h-5" />
                         </button>
@@ -217,17 +155,10 @@ const ProductDetails = () => {
                         {/* Enlarge Icon Button */}
                         <button
                             onClick={() => setIsLargeView(true)}
-                            className="absolute bottom-3 left-3 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110 z-10"
+                            className="absolute bottom-3 left-3 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110"
                         >
                             <ZoomIn className="w-5 h-5" />
                         </button>
-
-                        {/* Zoom hint text */}
-                        {!isZoomed && (
-                            <div className="absolute bottom-3 right-3 bg-black/50 px-2 py-1 rounded text-xs text-white/80 pointer-events-none">
-                                Hover to zoom
-                            </div>
-                        )}
                     </div>
 
                     {/* Thumbnail Slider */}
@@ -351,16 +282,11 @@ const ProductDetails = () => {
                             <X className="w-6 h-6" />
                         </button>
 
-                        {/* Main Image Container with Swipe Support */}
+                        {/* Main Image Container */}
                         <div 
                             className="relative overflow-hidden rounded-2xl bg-black"
                             onTouchStart={handleTouchStart}
-                            onTouchMove={handleTouchMove}
                             onTouchEnd={handleTouchEnd}
-                            onMouseDown={handleMouseDown}
-                            onMouseMove={handleMouseMove}
-                            onMouseUp={handleMouseUp}
-                            onMouseLeave={handleMouseUp}
                         >
                             <img
                                 src={getImageUrl(product.gallery[currentIndex])}

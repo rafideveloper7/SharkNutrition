@@ -59,9 +59,7 @@ export default function AddProducts() {
         method: "POST",
         body: data,
         credentials: "include",
-      });
-
-      const result = await res.json();
+      });      const result = await res.json();
       if (result.success) {
         toast.success("Product added successfully!");
         setFormData({

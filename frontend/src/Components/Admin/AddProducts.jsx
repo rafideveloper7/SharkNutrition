@@ -5,12 +5,14 @@ export default function AddProducts() {
   const [formData, setFormData] = useState({
     name: "",
     category: "",
-    price: "",
+    oldPrice: "",
+    newPrice: "",
+    quantity: "",
     weight: "",
     flavor: [""],
     servings: [""],
     description: "",
-    gallery: [], // multiple images
+    gallery: [],
   });
 
   // Handle input changes
@@ -25,9 +27,17 @@ export default function AddProducts() {
       const newServings = [...formData.servings];
       newServings[idx] = e.target.value;
       setFormData({ ...formData, servings: newServings });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+      return
     }
+
+    const name = e.target.name;
+    let value = e.target.value;
+
+    if (["oldPrice", "newPrice", "quantity"].includes(name)) {
+      value = value === "" ? "" : Number(value);
+    }
+
+    setFormData({ ...formData, [name]: value });
   };
 
   // Remove image from gallery
@@ -41,13 +51,29 @@ export default function AddProducts() {
   // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.name || !formData.category) {
+      toast.error("Please enter product name and category");
+      return;
+    }
+    if (!formData.newPrice || Number(formData.newPrice) <= 0) {
+      toast.error("Please enter a valid new price");
+      return;
+    }
+    if (!formData.quantity || Number(formData.quantity) <= 0) {
+      toast.error("Please enter a valid quantity");
+      return;
+    }
+
     const data = new FormData();
 
     data.append("name", formData.name);
     data.append("category", formData.category);
-    data.append("price", formData.price);
     data.append("weight", formData.weight);
     data.append("description", formData.description);
+
+    data.append("oldPrice", formData.oldPrice !== "" ? String(formData.oldPrice) : "");
+    data.append("newPrice", formData.newPrice !== "" ? String(formData.newPrice) : "");
+    data.append("quantity", formData.quantity !== "" ? String(formData.quantity) : "");
 
     data.append("flavor", JSON.stringify(formData.flavor));
     data.append("servings", JSON.stringify(formData.servings));
@@ -59,13 +85,15 @@ export default function AddProducts() {
         method: "POST",
         body: data,
         credentials: "include",
-      });      const result = await res.json();
+      }); const result = await res.json();
       if (result.success) {
         toast.success("Product added successfully!");
         setFormData({
           name: "",
           category: "",
-          price: "",
+          oldPrice: "",
+          newPrice: "",
+          quantity: "",
           weight: "",
           flavor: [""],
           servings: [""],
@@ -123,16 +151,30 @@ export default function AddProducts() {
           {/* Price & Weight */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block mb-2 font-medium">Price</label>
+              <label className="block mb-2 font-medium">Old Price</label>
               <input
                 type="number"
-                name="price"
-                value={formData.price}
+                name="oldPrice"
+                value={formData.oldPrice}
                 onChange={handleChange}
-                placeholder="Enter price"
+                placeholder="Enter old price"
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
+            <div>
+              <label className="block mb-2 font-medium">New Price</label>
+              <input
+                type="number"
+                name="newPrice"
+                value={formData.newPrice}
+                onChange={handleChange}
+                placeholder="Enter new price"
+                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block mb-2 font-medium">Weight</label>
               <input
@@ -141,6 +183,17 @@ export default function AddProducts() {
                 value={formData.weight}
                 onChange={handleChange}
                 placeholder="e.g., 2kg, 500g"
+                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 font-medium">Quantity</label>
+              <input
+                type="number"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                placeholder="Enter quantity"
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -158,57 +211,57 @@ export default function AddProducts() {
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
-<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
- {/* Dynamic Flavors */}
-          <div>
-            <label className="block mb-2 font-medium">Flavors</label>
-            {formData.flavor.map((f, idx) => (
-              <div key={idx} className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={f}
-                  onChange={(e) => handleChange(e, idx, "flavor")}
-                  placeholder="Enter flavor"
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
-                />
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => setFormData({ ...formData, flavor: [...formData.flavor, ""] })}
-              className="px-3 py-1 border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition"
-            >
-              + Add Flavor
-            </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Dynamic Flavors */}
+            <div>
+              <label className="block mb-2 font-medium">Flavors</label>
+              {formData.flavor.map((f, idx) => (
+                <div key={idx} className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={f}
+                    onChange={(e) => handleChange(e, idx, "flavor")}
+                    placeholder="Enter flavor"
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, flavor: [...formData.flavor, ""] })}
+                className="px-3 py-1 border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition"
+              >
+                + Add Flavor
+              </button>
+            </div>
+
+            {/* Dynamic Servings */}
+            <div>
+              <label className="block mb-2 font-medium">Servings</label>
+              {formData.servings.map((s, idx) => (
+                <div key={idx} className="flex gap-2 mb-2">
+                  <input
+                    type="number"
+                    value={s}
+                    onChange={(e) => handleChange(e, idx, "servings")}
+                    placeholder="Enter servings"
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, servings: [...formData.servings, ""] })}
+                className="px-3 py-1 border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition"
+              >
+                + Add Serving
+              </button>
+            </div>
+
           </div>
 
-          {/* Dynamic Servings */}
-          <div>
-            <label className="block mb-2 font-medium">Servings</label>
-            {formData.servings.map((s, idx) => (
-              <div key={idx} className="flex gap-2 mb-2">
-                <input
-                  type="number"
-                  value={s}
-                  onChange={(e) => handleChange(e, idx, "servings")}
-                  placeholder="Enter servings"
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
-                />
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => setFormData({ ...formData, servings: [...formData.servings, ""] })}
-              className="px-3 py-1 border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition"
-            >
-              + Add Serving
-            </button>
-          </div>
 
-</div>
-          
 
-          
 
           {/* Gallery Images */}
           <div>

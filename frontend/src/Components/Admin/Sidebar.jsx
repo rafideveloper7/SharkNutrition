@@ -100,6 +100,15 @@ export default function Sidebar() {
             <i className="fas fa-ticket-alt w-6 mr-3"></i>
             <span>Coupon Codes</span>
           </Link>
+          <Link
+            to="/admin/reviews"
+            onClick={() => setIsSidebarOpen(false)}
+            className={`flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors ${location.pathname === '/admin/reviews' ? 'bg-blue-400 text-white' : ''
+              }`}
+          >
+            <i className="fas fa-ticket-alt w-6 mr-3"></i>
+            <span>Reviews</span>
+          </Link>
         </nav>
 
         <div className="absolute bottom-0 w-64">
@@ -116,7 +125,7 @@ export default function Sidebar() {
       </div>
 
       {/* Mobile Bottom Navigation (Icons Only) */}
-      <div className="lg:hidden w-[100vw] h-[10vh] fixed bottom-0 left-0 right-0 z-10000 bg-gray-800 text-white p-2 flex justify-center items-center border-t border-gray-700">
+      <div className="lg:hidden w-[100vw] h-[10vh] overflow-x-auto fixed bottom-0 left-0 right-0 z-10000 bg-gray-800 text-white p-2 flex items-center border-t border-gray-700">
         <Link
           to="/admin"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin' ? 'bg-blue-400 text-white' : 'text-gray-300'}`}
@@ -156,6 +165,14 @@ export default function Sidebar() {
         >
           <i className="fas fa-ticket-alt text-lg mb-1"></i>
           <span className="text-xs">Coupons</span>
+        </Link>
+
+        <Link
+          to="/admin/reviews"
+          className={`flex flex-col items-center p-2 rounded-lg transition-colors flex-1 ${location.pathname === '/admin/reviews' ? 'bg-blue-400 text-white' : 'text-gray-300'}`}
+        >
+          <i className="fas fa-ticket-alt text-lg mb-1"></i>
+          <span className="text-xs">Reviews</span>
         </Link>
       </div>
     </>

@@ -1,9 +1,11 @@
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, X, ZoomIn } from "lucide-react";
 import { CartContext } from "@/Context/CartContext";
 import toast from "react-hot-toast";
 import getImageUrl from "@/utils/imageHelper";
+import ReviewSection from "@/Components/ReviewSection/ReviewSection";
+import RatingInCard from "@/Components/RatingInCard/RatingInCard";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
@@ -110,20 +112,23 @@ const ProductDetails = () => {
     if (loading) return <div className="text-center text-white py-20">Loading product...</div>;
     if (error) return <div className="text-center text-red-500 py-20">{error}</div>;
     if (!product) return <div className="text-center text-white py-20">Product not found.</div>;
+    console.log(product);
+
+    const quanity = 0 // just for UI
 
     return (
         <>
             <section className="flex flex-col lg:flex-row items-center justify-center text-white px-6 py-15 gap-12 max-w-7xl mx-auto">
                 {/* Left: Image Slider */}
                 <div className="w-full lg:w-1/2 flex flex-col items-center relative">
-                    <div 
+                    <div
                         className="bg-[#e5e7eb] relative w-full max-w-md overflow-hidden rounded-2xl"
                         onTouchStart={handleTouchStart}
                         onTouchEnd={handleTouchEnd}
                         onMouseDown={handleMouseDown}
                         onMouseUp={handleMouseUp}
                     >
-                        <div 
+                        <div
                             className="relative w-full h-[400px] overflow-hidden rounded-2xl border border-[#37b5fe]/40 bg-black"
                             onMouseEnter={() => setIsZoomed(true)}
                             onMouseLeave={() => setIsZoomed(false)}
@@ -131,9 +136,8 @@ const ProductDetails = () => {
                             <img
                                 src={getImageUrl(product.gallery[currentIndex])}
                                 alt={product.name}
-                                className={`w-full h-full object-cover transition-transform duration-200 select-none ${
-                                    isZoomed ? 'scale-110' : 'scale-100'
-                                }`}
+                                className={`w-full h-full object-cover transition-transform duration-200 select-none ${isZoomed ? 'scale-110' : 'scale-100'
+                                    }`}
                                 draggable="false"
                             />
                         </div>
@@ -200,7 +204,7 @@ const ProductDetails = () => {
                                 Weight
                             </p>
                             <p className="font-semibold text-white text-base mt-1">
-                                {product.weight}
+                                {product.weight || "undefined"}
                             </p>
                         </div>
                         <div className="bg-white/5 hover:bg-white/10 transition-all p-4 rounded-xl border border-white/10">
@@ -209,6 +213,16 @@ const ProductDetails = () => {
                             </p>
                             <p className="font-semibold text-white text-base mt-1">
                                 Rs. {product.price}
+                                <del className="text-gray-400 ms-3 font-normal">33000</del>
+                            </p>
+                        </div>
+                        <div className="bg-white/5 hover:bg-white/10 transition-all p-4 rounded-xl border border-white/10">
+                            <p className="text-gray-400 text-xs uppercase tracking-widest">
+                                Ratings
+                            </p>
+                            <p className="font-semibold text-white text-base mt-1 flex gap-2 items-center">
+                                <Star className={`w-5 fill-yellow-400 stroke-yellow-400`} />
+                                5.0
                             </p>
                         </div>
                     </div>
@@ -257,10 +271,13 @@ const ProductDetails = () => {
 
                     {/* CTA Buttons */}
                     <div className="flex flex-wrap items-center gap-4 mt-10">
-                        <button onClick={handleAddToCart} className="relative bg-[#37b5fe] text-black font-semibold px-6 py-2 sm:px-8 sm:py-3 rounded-xl overflow-hidden transition-all hover:scale-105 shadow-[0_0_15px_#37b5fe] group">
-                            <span className="relative z-10">Add to Cart</span>
-                            <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                        </button>
+                        {quanity > 0 ?
+                            <button onClick={handleAddToCart} className="relative bg-[#37b5fe] text-black font-semibold px-6 py-2 sm:px-8 sm:py-3 rounded-xl overflow-hidden transition-all hover:scale-105 shadow-[0_0_15px_#37b5fe] group">
+                                <span className="relative z-10">Add to Cart</span>
+                                <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                            </button>
+                            : <p className="border border-gray-400 rounded-lg py-2 px-3 text-center text-red-500 text-bold mt-2">Out of stock</p>
+                        }
                     </div>
 
                     {/* Description */}
@@ -269,6 +286,8 @@ const ProductDetails = () => {
                     </p>
                 </div>
             </section>
+
+            <ReviewSection />
 
             {/* Large Image View Modal */}
             {isLargeView && (
@@ -283,7 +302,7 @@ const ProductDetails = () => {
                         </button>
 
                         {/* Main Image Container */}
-                        <div 
+                        <div
                             className="relative overflow-hidden rounded-2xl bg-black"
                             onTouchStart={handleTouchStart}
                             onTouchEnd={handleTouchEnd}

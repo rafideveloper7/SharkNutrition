@@ -80,7 +80,7 @@ export default function AllProducts() {
       formData.append("description", currentProduct.description);
       formData.append("flavor", JSON.stringify(currentProduct.flavor));
       formData.append("servings", JSON.stringify(currentProduct.servings));
-      
+
       // Append each existing image URL separately. This is easier for backend to parse.
       currentProduct.existingGallery.forEach(url => formData.append("existingGallery[]", url));
 
@@ -184,7 +184,11 @@ export default function AllProducts() {
               />
               <h3 className="text-lg lg:text-xl font-bold mb-2">{product.name}</h3>
               <p className="text-gray-300 text-sm lg:text-base mb-2">Category: {product.category}</p>
-              <p className="text-blue-400 font-bold text-base lg:text-lg mb-2">Rs {product.price}</p>
+              <p>
+                <del className="text-gray-400 text-base lg:text-lg mb-2 me-2">Rs 20000</del>
+                <ins className="text-blue-400 font-bold text-base lg:text-lg mb-2 no-underline">Rs 19000</ins>
+              </p>
+              <p className="text-gray-300 text-base lg:text-lg mb-2">Quantity: <span className="text-blue-300">21</span></p>
               <p className="text-gray-300 text-sm lg:text-base mb-2">Servings: {product.servings?.join(", ")}</p>
               <p className="text-gray-300 text-sm lg:text-base mb-3">Flavor: {product.flavor?.join(", ")}</p>
 
@@ -224,10 +228,22 @@ export default function AllProducts() {
               placeholder="Name"
             />
             <Input
-              value={currentProduct.price}
               type="number"
-              onChange={(e) => setCurrentProduct({ ...currentProduct, price: e.target.value })}
-              placeholder="Price"
+              value={currentProduct.oldPrice}
+              onChange={(e) => setCurrentProduct({ ...currentProduct, oldPrice: e.target.value })}
+              placeholder="Old price"
+            />
+            <Input
+              type="number"
+              value={currentProduct.newPrice}
+              onChange={(e) => setCurrentProduct({ ...currentProduct, newPrice: e.target.value })}
+              placeholder="New Price"
+            />
+            <Input
+              type="number"
+              value={currentProduct.quantity}
+              onChange={(e) => setCurrentProduct({ ...currentProduct, quantity: e.target.value })}
+              placeholder="Quantity"
             />
             <Input
               value={currentProduct.category}
@@ -325,53 +341,53 @@ export default function AllProducts() {
 
             {/* New Gallery Images */}
             <div>
-  <label className="block text-gray-300 mb-1 text-sm">Add New Images</label>
+              <label className="block text-gray-300 mb-1 text-sm">Add New Images</label>
 
-  {/* Hidden file input */}
-  <input
-    type="file"
-    name="gallery"
-    multiple
-    accept="image/*"
-    id="galleryInput"
-    onChange={(e) =>
-      setCurrentProduct({ ...currentProduct, gallery: [...currentProduct.gallery, ...e.target.files] })
-    }
-    className="hidden"
-  />
+              {/* Hidden file input */}
+              <input
+                type="file"
+                name="gallery"
+                multiple
+                accept="image/*"
+                id="galleryInput"
+                onChange={(e) =>
+                  setCurrentProduct({ ...currentProduct, gallery: [...currentProduct.gallery, ...e.target.files] })
+                }
+                className="hidden"
+              />
 
-  {/* Custom button */}
-  <label
-    htmlFor="galleryInput"
-    className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium text-sm lg:text-base"
-  >
-    + Select Images
-  </label>
+              {/* Custom button */}
+              <label
+                htmlFor="galleryInput"
+                className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium text-sm lg:text-base"
+              >
+                + Select Images
+              </label>
 
-  <div className="flex flex-wrap gap-2 mt-2">
-    {currentProduct.gallery?.map((file, idx) => (
-      <div key={idx} className="relative w-20 h-20">
-        <img
-          src={URL.createObjectURL(file)}
-          alt="preview"
-          className="w-full h-full object-cover rounded-md"
-        />
-        <button
-          type="button"
-          onClick={() => {
-            setCurrentProduct({
-              ...currentProduct,
-              gallery: currentProduct.gallery.filter((_, i) => i !== idx),
-            });
-          }}
-          className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-        >
-          x
-        </button>
-      </div>
-    ))}
-  </div>
-</div>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {currentProduct.gallery?.map((file, idx) => (
+                  <div key={idx} className="relative w-20 h-20">
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt="preview"
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCurrentProduct({
+                          ...currentProduct,
+                          gallery: currentProduct.gallery.filter((_, i) => i !== idx),
+                        });
+                      }}
+                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                    >
+                      x
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
 
           </div>
 

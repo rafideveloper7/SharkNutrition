@@ -1,0 +1,134 @@
+.product-card-container {
+  width: fit-content;
+  margin: auto;
+}
+
+/* Desktop and Laptop */
+@media (min-width: 1024px) {
+  .product-card-container {
+    margin: 3px;
+  }
+}
+
+/* PRODUCT CARD DEFAULT */
+.product-card {
+  transition: all 0.5s ease;
+  background: #111;
+  border-radius: 18px;
+  padding: 12px;
+  width: 100%;
+  height: auto;
+}
+
+/* Desktop ONLY */
+@media (min-width: 1024px) {
+  .product-card {
+    position: static;
+    background: #111;
+    padding: 12px;
+    border-radius: 18px;
+    width: 300px;
+
+  }
+
+  .product-card:hover {
+    background-color: #000;
+    transform: translateY(-3px);
+  }
+  
+  /* Hide flavor-weight and add-to-cart by default on desktop */
+  .product-card .flavor-weight,
+  .product-card .add-to-cart {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  /* Show on hover */
+  .product-card:hover .flavor-weight,
+  .product-card:hover .add-to-cart {
+    opacity: 1;
+    max-height: 100px;
+  }
+}
+
+/* Image general */
+.product-card .image {
+  height: 270px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.product-card h4 {
+  margin: 6px 0 2px;
+  font-size: 15px;
+  line-height: 1.2;
+  color: white;
+}
+
+/* Price-row */
+.product-card .price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.price {
+  color: rgb(65, 185, 255);
+  font-size: medium;
+  font-weight: bold;
+}
+
+/* Laptop adjustments */
+@media (max-width: 1366px) {
+  .product-card {
+    padding: 12px;
+  }
+
+  .product-card .image {
+    height: 200px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .product-card {
+    padding: 10px;
+    box-shadow: none;
+  }
+
+  /* Always show on tablet and mobile */
+  .product-card .flavor-weight,
+  .product-card .add-to-cart {
+    max-height: 100px;
+    opacity: 1;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .product-card {
+    padding: 10px;
+    gap: 8px;
+    height: auto;
+    margin: auto;
+  }
+
+  .product-card .image {
+    height: 150px;
+  }
+
+  .product-card h4 {
+    font-size: 14px;
+    line-break: anywhere;
+  }
+}
+
+/* Tiny phones */
+@media (max-width: 350px) {
+  .product-card .image {
+    height: 50vw;
+  }
+}

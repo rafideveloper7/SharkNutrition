@@ -26,13 +26,14 @@ export const createOrder = async (req, res) => {
     await newOrder.save();
 
     //  ---- MINUS STOCK FOR EACH PRODUCT ---
-    for (const item of orderData.cartItems) {
-      await Product.findOneAndUpdate(
-        { productId: item.productId },
-        { $inc: { quantity: -item.count } },
-        { new: true }
-      );
-    }
+for (const item of orderData.cartItems) {
+  await Product.findByIdAndUpdate(
+    item.productId,                      // correct id
+    { $inc: { quantity: -item.count } }, // minus stock
+    { new: true }
+  );
+}
+
 
     //  ---- RESPONSE ---
     res.status(201).json({

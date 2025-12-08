@@ -7,43 +7,62 @@ export const CartContext = createContext(null);
 export function ContextProvider({ children }) {
   const [cartData, setCartData] = useState([]);
 
-  const addToCart = (product) => {
-    setCartData((prev) => {
-      const existingItem = prev.find(
-        (item) =>
-          item.productId === product.productId &&
-          item.servings === product.servings &&
-          item.flavor === product.flavor
-      );
+ 
 
-      if (existingItem) {
-        // Increase count if same product + same flavor + same serving exists
-        return prev.map((item) =>
-          item.productId === product.productId &&
-          item.servings === product.servings &&
-          item.flavor === product.flavor
-            ? { ...item, count: item.count + 1 }
-            : item
-        );
-      } else {
-        // Add new product item WITH servings & flavor
-        return [
-          ...prev,
-          {
-            productId: product?.productId || product?._id,
-            name: product?.name,
-            price: product?.price,
-            discountedPrice: product?.discountedPrice || product?.price,
-            count: 1,
-            image: product?.image,
-            servings: product?.servings,
-            flavor: product?.flavor,
-            quantity: product?.quantity || 0,
-          },
-        ];
+const addToCart = (product) => {
+  let added = false;
+
+  setCartData((prev) => {
+    const existingItem = prev.find(
+      (item) =>
+        item.productId === product.productId &&
+        item.servings === product.servings &&
+        item.flavor === product.flavor
+    );
+
+    const stockQty = product.quantity || 0;
+
+    if (existingItem) {
+      if (existingItem.count + 1 > stockQty) {
+        toast.error(`Only ${stockQty} item(s) available in stock!`);
+        return prev;
       }
-    });
-  };
+      added = true;
+      return prev.map((item) =>
+        item.productId === product.productId &&
+        item.servings === product.servings &&
+        item.flavor === product.flavor
+          ? { ...item, count: item.count + 1 }
+          : item
+      );
+    }
+
+    if (stockQty <= 0) {
+      toast.error("Product is out of stock!");
+      return prev;
+    }
+
+    added = true;
+    return [
+      ...prev,
+      {
+        productId: product?.productId || product?._id,
+        name: product?.name,
+        price: product?.price,
+        discountedPrice: product?.discountedPrice || product?.price,
+        count: 1,
+        image: product?.image,
+        servings: product?.servings,
+        flavor: product?.flavor,
+        quantity: stockQty,
+      },
+    ];
+  });
+
+  return { added }; 
+};
+
+
 
   const increaseQuantity = (id) => {
     setCartData((prev) =>

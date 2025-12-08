@@ -10,7 +10,7 @@ const API_BASE = import.meta.env.VITE_API_BASE;
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart,cartData  } = useContext(CartContext);
 
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -83,36 +83,34 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-    if (!product || product.quantity === 0) {
-      toast.error("Product is out of stock!");
-      return;
-    }
-    const discountedPrice = product.discountPercent
-      ? Math.round(
-          product.price - (product.price * product.discountPercent) / 100
-        )
-      : product.price;
-
-    addToCart({
-      ...product,
-      productId: product._id,
-      flavor: selectedFlavor,
-      servings: selectedServing,
-      discountedPrice,
-    });
+    const result =addToCart({
+    ...product,
+    productId: product._id,
+    flavor: selectedFlavor,
+    servings: selectedServing,
+    discountedPrice: product.discountPercent
+      ? Math.round(product.price - (product.price * product.discountPercent) / 100)
+      : product.price,
+  });
+  
+  // Show success toast only if product was added
+  if (result?.added) {
     toast.success("Product added to cart!");
-  };
+  }
+};
 
-  if (loading)
-    return (
-      <div className="text-center text-white py-20">Loading product...</div>
-    );
-  if (error)
-    return <div className="text-center text-red-500 py-20">{error}</div>;
-  if (!product)
-    return (
-      <div className="text-center text-white py-20">Product not found.</div>
-    );
+
+ if (loading) {
+  return <div className="text-center text-white py-20">Loading product...</div>;
+}
+
+if (error) {
+  return <div className="text-center text-red-500 py-20">{error}</div>;
+}
+
+if (!product) {
+  return <div className="text-center text-white py-20">Product not found.</div>;
+}
 
   return (
     <>

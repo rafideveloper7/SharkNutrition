@@ -85,12 +85,15 @@ router.get("/verify", (req, res) => {
 
 //  LOGOUT ROUTE
 router.post("/logout", (req, res) => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.clearCookie(COOKIE_NAME, {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     path: "/",
   });
+
   return res.json({ message: "Logged out successfully" });
 });
 

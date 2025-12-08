@@ -12,7 +12,7 @@ export default function AdminReviews() {
       setLoading(true);
       setError(null);
 
-      const res = await fetch("http://localhost:5000/api/reviews/all", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/reviews/all`, {
         credentials: "include",
       });
 
@@ -43,7 +43,7 @@ export default function AdminReviews() {
     if (!confirm("Are you sure you want to delete this review?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/reviews/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/reviews/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

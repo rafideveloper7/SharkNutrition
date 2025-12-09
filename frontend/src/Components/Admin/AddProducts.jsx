@@ -13,7 +13,7 @@ export default function AddProducts() {
     servings: [""],
     description: "",
     gallery: [],
-  });
+  });  
 
   // Handle input changes
   const handleChange = (e, idx, type) => {
@@ -86,6 +86,8 @@ export default function AddProducts() {
 
     formData.gallery.forEach((file) => data.append("images", file));
 
+    console.log(data);
+    
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE}/products`, {
         method: "POST",
@@ -155,7 +157,7 @@ export default function AddProducts() {
             </select>
           </div>
 
-          {/* Price & Weight */}
+          {/* Price & Discount */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block mb-2 font-medium">Price</label>

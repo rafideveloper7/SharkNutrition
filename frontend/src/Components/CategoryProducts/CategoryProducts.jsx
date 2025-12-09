@@ -2,6 +2,7 @@ import React from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 
 function CategoryProducts({ product, catId }) {
+    
     if (!product?.products || product.products.length === 0) {
         return null;
     }

@@ -15,7 +15,7 @@ function Categories() {
         const products = await fetchAllProducts();
 
         const categoryMap = {};
-        products.forEach((p) => {
+        products?.forEach((p) => {
           const cat = p.category || "Uncategorized";
           if (!categoryMap[cat]) {
             categoryMap[cat] = {

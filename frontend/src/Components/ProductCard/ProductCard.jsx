@@ -111,7 +111,7 @@ function ProductCard({ product, refreshWishlist }) {
           </Link>
           <div className="absolute top-0 left-0 text-[10px] text-black font-bold flex text-white items-center gap-[1px]">
             {/* Discount Badge */}
-            {hasDiscount && (
+            {hasDiscount > 0 && (
               <div className="absolute top-0 left-0 text-[10px] text-black font-bold flex text-white items-center gap-[1px]">
                 <span className="bg-gray-500 rounded-full w-8 h-8 flex justify-center items-center">
                   {" "}

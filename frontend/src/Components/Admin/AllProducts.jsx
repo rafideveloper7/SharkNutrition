@@ -258,6 +258,9 @@ export default function AllProducts() {
                 <p className="text-gray-300 text-sm lg:text-base mb-3">
                   Flavor: {product.flavor?.join(", ")}
                 </p>
+                <p className="text-gray-300 text-sm lg:text-base mb-3">
+                  Discount: {product?.discountPercent}%
+                </p>
 
                 <div className="flex flex-col sm:flex-row gap-2">
                   <Button

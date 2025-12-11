@@ -266,7 +266,7 @@ export default function AllProducts() {
                   <Button
                     onClick={() => openEditModal(product)}
                     className="bg-blue-400 hover:bg-blue-700 text-white flex-1"
-                  >
+                  >-
                     Edit
                   </Button>
                   <Button

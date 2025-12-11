@@ -16,7 +16,7 @@ function CategoryProducts({ product, catId }) {
     return (
         <section 
             id={`${product?.category.toLowerCase().replace(/\s+/g, '-')}`} 
-            className='py-10'
+            className='py-10 px-[2vw]'
         >
          <h2 className='text-3xl text-center font-medium pb-5'>
                 {capitalizeCategory(product?.category)}

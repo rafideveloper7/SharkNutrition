@@ -46,7 +46,7 @@ function Categories() {
   }
 
   return (
-    <section id="categories" className="py-10 px-5">
+    <section id="categories" className="py-10">
       <h2 className="text-3xl text-center font-medium pb-5">
         SHOP BY CATEGORIES
       </h2>

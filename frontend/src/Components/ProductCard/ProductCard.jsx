@@ -150,7 +150,7 @@ function ProductCard({ product, refreshWishlist }) {
           <div className="flex justify-between items-center py-2">
             <p className="brand text-gray-400 text-xs">Optimum Nutrition</p>
             {product.quantity <= 0 && (
-              <p className="text-xs relative bg-[#37b5fe] px-1 py-1 text-black font-semibold rounded-sm overflow-hidden">
+              <p className="text-[9px] sm:text-xs min-w-fit relative border border-gray-300 px-1 sm:px-2 py-1 text-red-500 font-semibold rounded-md overflow-hidden">
                 <span className="relative z-10">Out of stock</span>
                 {/* <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300"></span> */}
               </p>

@@ -1,4 +1,9 @@
 /* Categories.css */
+
+#categories {
+    width: 100vw;
+}
+
 #categories .category-items {
     cursor: grab;
     overflow: auto;

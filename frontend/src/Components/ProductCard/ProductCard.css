@@ -1,6 +1,7 @@
 .product-card-container {
   width: fit-content;
-  margin: auto;
+  margin: 10px; 
+  /* border: 1px solid yellow; */
 }
 
 /* Desktop and Laptop */

@@ -48,7 +48,7 @@
   right: 20px; /* <<< RIGHT side */
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
+  color: #ff0000;
   font-size: 20px;
   width: 36px;
   height: 36px;
@@ -58,6 +58,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   z-index: 51;
+  /* border: 1px solid yellow; */
 }
 
 #header nav .close-menu-btn:hover {
@@ -334,12 +335,14 @@
   }
 
   #header .buttons-container {
-    gap: 8px;
+    gap: 4px;
+    padding-right: 0;
   }
-
+  
   #header .cart-btn {
     background-color: transparent;
     padding: 0;
+
   }
 
   #header .cart-btn i {
@@ -354,7 +357,35 @@
   /* Hide logo text on very small screens if needed */
 }
 @media (max-width: 360px) {
+
+  .nav {
+    display: flex;
+    justify-content: start;
+
+  }
+  .logo {
+    padding: 0;
+
+  }
+
+  .logo img {
+    width: 56px !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .logo-text h1 {
+    margin: 0 !important;
+    font-size: 13px !important;
+    padding: 0 !important;
+  }
+  
   #header .logo {
     gap: 0;
+  }
+
+  .buttons-container {
+    padding-right: 0;
+    margin: 0;
   }
 }

@@ -18,8 +18,24 @@ function ProductCard({ product, refreshWishlist }) {
   function checkWishlistStatus() {
     try {
       const userStr = localStorage.getItem("user");
-      if (!userStr) return;
 
+      // =========================
+      // 🚫 GUEST USER
+      // =========================
+      if (!userStr) {
+        const guestWishlist = getGuestWishlist();
+
+        const exists = guestWishlist.some(
+          (item) => item?.productId?._id === product?._id
+        );
+
+        setIsInWishlist(exists);
+        return;
+      }
+
+      // =========================
+      // ✅ LOGGED-IN USER
+      // =========================
       const currentUser = JSON.parse(userStr);
       const wishlist = currentUser?.wishlist || [];
 
@@ -33,16 +49,62 @@ function ProductCard({ product, refreshWishlist }) {
     }
   }
 
+  // Local Storage helper functions
+  const GUEST_WISHLIST_KEY = "guest_wishlist";
+  function getGuestWishlist() {
+    const data = localStorage.getItem(GUEST_WISHLIST_KEY);
+    return data ? JSON.parse(data) : [];
+  }
+  function saveGuestWishlist(wishlist) {
+    localStorage.setItem(GUEST_WISHLIST_KEY, JSON.stringify(wishlist));
+  }
+
   async function handleWishlist() {
     try {
       const userStr = localStorage.getItem("user");
+
+      // =========================
+      // 🚫 GUEST USER (NO LOGIN)
+      // =========================
       if (!userStr) {
-        toast.error("Please log in to manage your wishlist!");
+        let guestWishlist = getGuestWishlist();
+
+        const exists = guestWishlist.find(
+          (item) => item.productId._id === product._id
+        );
+
+        if (exists) {
+          // remove
+          guestWishlist = guestWishlist.filter(
+            (item) => item.productId._id !== product._id
+          );
+          toast.success("Removed from wishlist");
+          setIsInWishlist(false);
+        } else {
+          // add
+          guestWishlist.push({
+            _id: Date.now().toString(), // unique id
+            productId: product,
+          });
+          toast.success("Added to wishlist");
+          setIsInWishlist(true);
+        }
+
+        saveGuestWishlist(guestWishlist);
+
+        if (typeof refreshWishlist === "function") {
+          refreshWishlist();
+        }
+
         return;
       }
 
+      // =========================
+      // ✅ LOGGED-IN USER
+      // =========================
       const currentUser = JSON.parse(userStr);
       const email = currentUser?.email;
+
       if (!email) {
         toast.error("User session invalid. Please log in again!");
         return;
@@ -72,24 +134,25 @@ function ProductCard({ product, refreshWishlist }) {
       }
 
       toast.success(
-        isInWishlist ? "Removed from wishlist " : "Added to wishlist "
+        isInWishlist ? "Removed from wishlist" : "Added to wishlist"
       );
     } catch (err) {
-      console.error(" Wishlist update failed:", err);
+      console.error("Wishlist update failed:", err);
       toast.error(
         err.response?.data?.message ||
-          "Failed to update wishlist. Please try again."
+        "Failed to update wishlist. Please try again."
       );
     } finally {
       setLoading(false);
     }
   }
+
   const hasDiscount = product?.discountPercent && product.discountPercent > 0;
   const discountedPrice = hasDiscount
     ? Math.round(
-        product.price - (product.price * product.discountPercent) / 100
-      )
-    : product.price;
+      product?.price - (product?.price * product?.discountPercent) / 100
+    )
+    : product?.price;
 
   const productImage = getImageUrl(product?.image);
   const hasFlavorOrWeight = product?.flavor?.length > 0 || product?.weight;
@@ -115,7 +178,7 @@ function ProductCard({ product, refreshWishlist }) {
               <div className="absolute top-0 left-0 text-[10px] text-black font-bold flex text-white items-center gap-[1px]">
                 <span className="bg-gray-500 rounded-full w-8 h-8 flex justify-center items-center">
                   {" "}
-                  {product.discountPercent}%
+                  {product?.discountPercent}%
                 </span>
               </div>
             )}
@@ -128,11 +191,10 @@ function ProductCard({ product, refreshWishlist }) {
               title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
             >
               <i
-                className={`text-xl ${
-                  isInWishlist
-                    ? "fa-solid fa-heart text-blue-500"
-                    : "fa-regular fa-heart hover:text-blue-500"
-                }`}
+                className={`text-xl ${isInWishlist
+                  ? "fa-solid fa-heart text-blue-500"
+                  : "fa-regular fa-heart hover:text-blue-500"
+                  }`}
               ></i>
             </button>
           </div>
@@ -146,16 +208,7 @@ function ProductCard({ product, refreshWishlist }) {
               {product?.name || "Unnamed Product"}
             </Link>
           </h4>
-
-          <div className="flex justify-between items-center py-2">
-            <p className="brand text-gray-400 text-xs">Optimum Nutrition</p>
-            {product.quantity <= 0 && (
-              <p className="text-[9px] sm:text-xs min-w-fit relative border border-gray-300 px-1 sm:px-2 py-1 text-red-500 font-semibold rounded-md overflow-hidden">
-                <span className="relative z-10">Out of stock</span>
-                {/* <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300"></span> */}
-              </p>
-            )}
-          </div>
+          <p className="brand text-gray-400 text-xs">Optimum Nutrition</p>
 
           <RatingInCard
             rating={product?.ratings?.averageRating?.toFixed(1) || 0}
@@ -165,20 +218,27 @@ function ProductCard({ product, refreshWishlist }) {
           {/* Price and Wishlist */}
           <div className="flex gap-5 items-center">
             {/* Price */}
-            <p>
-              {hasDiscount ? (
-                <>
-                  <del className="text-gray-400">Rs {product.price}</del>
-                  <strong className="ml-3 text-blue-400">
-                    Rs {discountedPrice}
-                  </strong>
-                </>
-              ) : (
-                <strong className="ml-3 text-blue-400">
-                  Rs {product.price}
+            {hasDiscount ? (
+              <div className="flex flex-col">
+                <del className="text-gray-400 font-semibold">Rs {product?.price}</del>
+                <strong className="text-blue-400 text-xl">
+                  Rs {discountedPrice}
                 </strong>
-              )}
-            </p>
+              </div>
+            ) : (
+              <strong className="ml-3 text-blue-400">
+                Rs {product?.price}
+              </strong>
+            )}
+          </div>
+          <div className="flex justify-center mt-3">
+            {product?.quantity <= 0 ? (
+              <p className="text-xs min-w-fit relative border border-gray-300 py-3 px-5 text-red-500 font-semibold rounded-md overflow-hidden">
+                <span className="relative z-10">Out of stock</span>
+              </p>
+            ) :
+              <AddToCart product={product} />
+            }
           </div>
         </div>
       </div>

@@ -1,44 +1,65 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 import axios from "axios";
-const backendApi = import.meta.env.VITE_API_BASE
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
-    const fetchWishlistFromBackend = async () => {
+    const fetchWishlist = async () => {
+      const userStr = localStorage.getItem("user");
+
+      // =========================
+      // 🚫 GUEST USER
+      // =========================
+      if (!userStr) {
+        const guestWishlist = getGuestWishlist();
+        setWishlist(guestWishlist);
+        return;
+      }
+
+      // =========================
+      // ✅ LOGGED-IN USER
+      // =========================
       try {
-        const currentUser = JSON.parse(localStorage.getItem("user"));
+        const currentUser = JSON.parse(userStr);
         if (!currentUser?.email) return;
 
         const res = await axios.get(
-
           `${import.meta.env.VITE_API_BASE}/api/users/wishlist/${currentUser.email}`
-
-
         );
+
         setWishlist(res.data.wishlist);
       } catch (err) {
-        console.error(" Failed to load wishlist:", err);
+        console.error("Failed to load wishlist:", err);
       }
     };
 
-    fetchWishlistFromBackend();
+    fetchWishlist();
   }, []);
 
+  // =========================
+  // 🔄 REFRESH (after add/remove)
+  // =========================
   const refreshWishlist = async () => {
-    const currentUser = JSON.parse(localStorage.getItem("user"));
+    const userStr = localStorage.getItem("user");
+
+    // guest refresh
+    if (!userStr) {
+      setWishlist(getGuestWishlist());
+      return;
+    }
+
+    // logged-in refresh
+    const currentUser = JSON.parse(userStr);
     const res = await axios.get(
-
       `${import.meta.env.VITE_API_BASE}/api/users/wishlist/${currentUser.email}`
-
     );
     setWishlist(res.data.wishlist);
   };
 
   return (
-    <div className="flex justify-center items-start py-5 text-white px-4 md:px-0 relative">
+    <div className="flex justify-center items-start py-5 text-white px-4 md:px-0">
       <div className="w-full p-6 md:p-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-8 text-blue text-center">
           Your Wishlist
@@ -48,8 +69,8 @@ export default function Wishlist() {
           {wishlist?.length > 0 ? (
             wishlist.map((item) => (
               <ProductCard
-                key={item.productId._id}
-                product={item.productId}
+                key={item?.productId?._id || item?._id}
+                product={item?.productId}
                 refreshWishlist={refreshWishlist}
               />
             ))
@@ -62,4 +83,14 @@ export default function Wishlist() {
       </div>
     </div>
   );
+}
+
+// =========================
+// 🧠 Guest helpers
+// =========================
+const GUEST_WISHLIST_KEY = "guest_wishlist";
+
+function getGuestWishlist() {
+  const data = localStorage.getItem(GUEST_WISHLIST_KEY);
+  return data ? JSON.parse(data) : [];
 }

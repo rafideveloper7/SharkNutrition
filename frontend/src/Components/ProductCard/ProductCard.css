@@ -1,7 +1,5 @@
 .product-card-container {
-  width: fit-content;
-  margin: 10px; 
-  /* border: 1px solid yellow; */
+  width: 100%;
 }
 
 /* Desktop and Laptop */
@@ -25,25 +23,12 @@
 @media (min-width: 1024px) {
   .product-card {
     position: static;
-    background: #111;
-    padding: 12px;
-    border-radius: 18px;
     width: 300px;
-
   }
 
   .product-card:hover {
     background-color: #000;
     transform: translateY(-3px);
-  }
-  
-  /* Hide flavor-weight and add-to-cart by default on desktop */
-  .product-card .flavor-weight,
-  .product-card .add-to-cart {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
   }
   
   /* Show on hover */

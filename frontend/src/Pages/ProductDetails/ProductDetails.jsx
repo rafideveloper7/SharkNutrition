@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Star, X, ZoomIn } from "lucide-react";
 import { CartContext } from "@/Context/CartContext";
 import toast from "react-hot-toast";
@@ -14,23 +14,35 @@ const API_BASE = import.meta.env.VITE_API_BASE;
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart, cartData } = useContext(CartContext);
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedFlavor, setSelectedFlavor] = useState("");
   const [selectedServing, setSelectedServing] = useState("");
-  const [isLargeView, setIsLargeView] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
 
-  const touchStartX = useRef(0);
-  const touchStartY = useRef(0);
-  const touchStartTime = useRef(0);
-  const isSwiping = useRef(false);
+  // for scroll into reviews
+  const reviewsRef = useRef(null);
+  const hasScrolled = useRef(false);
+  const location = useLocation();
+  useEffect(() => {
+    if (reviews.length === 0) return; // wait until reviews are loaded
+    if (location.hash !== "#reviews") return;
+    if (!reviewsRef.current) return;
+    if (hasScrolled.current) return;
+
+    hasScrolled.current = true;
+
+    // wait for DOM to fully paint
+    requestAnimationFrame(() => {
+      reviewsRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [reviews, location.hash]);
 
   // Fetch product and reviews
   useEffect(() => {
@@ -96,6 +108,7 @@ const ProductDetails = () => {
     return <div className="text-center text-white py-20">Product not found.</div>;
   }
 
+  console.log(product?.servings)
   return (
     <>
       <section className="flex flex-col lg:flex-row justify-center text-white px-6 py-15 gap-12 max-w-7xl mx-auto">
@@ -108,7 +121,7 @@ const ProductDetails = () => {
             {product.name}
           </h1>
           <h3 className="font-semibold text-md">{product.brandName || "N/A"}</h3>
-  
+
           <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 mt-6 text-sm">
             <div className="bg-white/5 hover:bg-white/10 transition-all p-4 rounded-xl border border-white/10">
               <p className="text-gray-400 text-xs uppercase tracking-widest">
@@ -152,46 +165,52 @@ const ProductDetails = () => {
           </div>
 
           {/* Flavors */}
-          <div>
-            <p className="text-gray-400 text-sm uppercase mb-2 tracking-widest">
-              Select Flavor
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {product.flavor.map((flavor) => (
-                <button
-                  key={flavor}
-                  onClick={() => setSelectedFlavor(flavor)}
-                  className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${selectedFlavor === flavor
-                    ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
-                    : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
-                    }`}
-                >
-                  {flavor}
-                </button>
-              ))}
+          {
+            product?.flavor[0] &&
+            <div>
+              <p className="text-gray-400 text-sm uppercase mb-2 tracking-widest">
+                Select Flavor
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {product.flavor.map((flavor) => (
+                  <button
+                    key={flavor}
+                    onClick={() => setSelectedFlavor(flavor)}
+                    className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${selectedFlavor === flavor
+                      ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
+                      : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
+                      }`}
+                  >
+                    {flavor}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          }
 
           {/* Servings */}
-          <div>
-            <p className="text-gray-400 text-sm uppercase mb-2 tracking-widest">
-              Select Servings
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {product.servings.map((serving) => (
-                <button
-                  key={serving}
-                  onClick={() => setSelectedServing(serving)}
-                  className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${selectedServing === serving
-                    ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
-                    : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
-                    }`}
-                >
-                  {serving}
-                </button>
-              ))}
+          {
+            product?.servings[0] &&
+            <div>
+              <p className="text-gray-400 text-sm uppercase mb-2 tracking-widest">
+                Select Servings
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {product.servings.map((serving) => (
+                  <button
+                    key={serving}
+                    onClick={() => setSelectedServing(serving)}
+                    className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${selectedServing === serving
+                      ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
+                      : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
+                      }`}
+                  >
+                    {serving}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          }
 
           {/* CTA Button */}
           <div className="flex flex-wrap items-center gap-4 mt-10">
@@ -218,6 +237,7 @@ const ProductDetails = () => {
 
       {/* Reviews */}
       <ReviewSection
+        ref={reviewsRef}
         reviews={reviews}
         productId={id}
         onReviewAdded={(updatedProduct) => setProduct(updatedProduct)}

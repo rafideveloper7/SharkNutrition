@@ -129,7 +129,6 @@ function Checkout() {
 
     try {
       const responseData = await createOrder(orderPayload);
-      console.log("Order placed:", responseData.data);
 
       if (formData.paymentMethod === "cod") {
         setOrderPlaced(true);

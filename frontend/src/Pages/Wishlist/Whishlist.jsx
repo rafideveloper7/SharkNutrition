@@ -65,28 +65,29 @@ export default function Wishlist() {
           Your Wishlist
         </h1>
 
-        <div className="grid grid-cols-2 gap-[2vw] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {wishlist?.length > 0 ? (
-            wishlist.map((item) => (
+        {wishlist?.length > 0 ? (
+          <div className="grid grid-cols-2 gap-[2vw] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {wishlist.map((item) => (
               <ProductCard
                 key={item?.productId?._id || item?._id}
                 product={item?.productId}
                 refreshWishlist={refreshWishlist}
               />
             ))
-          ) : (
-            <p className="text-gray-400 text-center py-10 text-lg">
-              Your wishlist is empty
-            </p>
-          )}
-        </div>
+            }
+          </div>
+        ) : (
+          <p className="w-full text-gray-400 text-center py-10 text-lg text-center">
+            Your wishlist is empty
+          </p>
+        )}
       </div>
     </div>
   );
 }
 
 // =========================
-// 🧠 Guest helpers
+// Guest helpers
 // =========================
 const GUEST_WISHLIST_KEY = "guest_wishlist";
 

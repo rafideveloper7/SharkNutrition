@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { Star } from "lucide-react";
 import toast from "react-hot-toast";
-
+import "./ReviewsSection.css"
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-export default function ReviewSection({
-  reviews: initialReviews = [],
-  productId,
-  onReviewAdded,
-}) {
+const ReviewSection = forwardRef(function ReviewSection(
+  {
+    reviews: initialReviews = [],
+    productId,
+    onReviewAdded,
+  },
+  reviewsRef
+) {
   const [reviews, setReviews] = useState(initialReviews);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
@@ -48,7 +51,6 @@ export default function ReviewSection({
       rating,
       message: form.message,
     };
-    console.log(payload);
 
 
     // logged-in user
@@ -65,7 +67,6 @@ export default function ReviewSection({
       payload.name = form.name;
       payload.email = form.email;
     }
-    console.log(payload);
 
     setSubmitting(true);
     try {
@@ -169,7 +170,7 @@ export default function ReviewSection({
         </div>
 
         {/* Review Form */}
-        <form
+        <form id="reviews" ref={reviewsRef}
           onSubmit={handleSubmit}
           className="bg-white/5 rounded-xl space-y-5 max-w-[500px]"
         >
@@ -179,7 +180,7 @@ export default function ReviewSection({
             onChange={handleInput}
             disabled={!!user}
             placeholder="Name"
-            className="w-full p-2 bg-black/20 border rounded"
+            className="w-full p-2 bg-black/20 border focus:border-blue-400 rounded outline-0"
           />
 
           <input
@@ -188,7 +189,7 @@ export default function ReviewSection({
             onChange={handleInput}
             disabled={!!user}
             placeholder="Email"
-            className="w-full p-2 bg-black/20 border rounded"
+            className="w-full p-2 bg-black/20 border focus:border-blue-400 rounded outline-0"
           />
 
           <textarea
@@ -197,7 +198,7 @@ export default function ReviewSection({
             onChange={handleInput}
             rows={4}
             placeholder="Your review"
-            className="w-full p-2 bg-black/20 border rounded"
+            className="w-full p-2 bg-black/20 border focus:border-blue-400 rounded outline-0"
           />
 
           <button
@@ -210,4 +211,6 @@ export default function ReviewSection({
       </div>
     </section>
   );
-}
+})
+
+export default ReviewSection;

@@ -25,6 +25,7 @@ export default function AllProducts() {
   const [currentProduct, setCurrentProduct] = useState({
     _id: "",
     name: "",
+    brandName: "",
     price: "",
     category: "",
     flavor: [""],
@@ -62,6 +63,7 @@ export default function AllProducts() {
     setCurrentProduct({
       _id: product._id,
       name: product.name,
+      brandName: product?.brandName || "",
       discountPercent: product.discountPercent || 0,
 
       price: product.price,
@@ -81,6 +83,7 @@ export default function AllProducts() {
     try {
       const formData = new FormData();
       formData.append("name", currentProduct.name);
+      formData.append("brandName", currentProduct.brandName || "");
       formData.append("price", Number(currentProduct.price));
 
       formData.append(
@@ -202,16 +205,16 @@ export default function AllProducts() {
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-10 sm:pb-0 lg:gap-6">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => {
             const hasDiscount =
               product.discountPercent && product.discountPercent > 0;
             const discountedPrice = hasDiscount
               ? Math.round(
-                  product.price -
-                    (product.price * product.discountPercent) / 100
-                )
+                product.price -
+                (product.price * product.discountPercent) / 100
+              )
               : product.price;
 
             return (
@@ -224,9 +227,15 @@ export default function AllProducts() {
                   alt={product.name}
                   className="mx-auto h-40 lg:h-48 object-cover rounded-md mb-3 lg:mb-4"
                 />
-                <h3 className="text-lg lg:text-xl font-bold mb-2">
+                <h3 className="text-lg lg:text-xl font-bold">
                   {product.name}
                 </h3>
+                {
+                  product?.brandName &&
+                  <h4 className="text-md lg:text-lg mb-2">
+                    {product?.brandName}
+                  </h4>
+                }
                 <p className="text-gray-300 text-sm lg:text-base mb-2">
                   Category: {product.category}
                 </p>
@@ -295,12 +304,23 @@ export default function AllProducts() {
           </DialogHeader>
 
           <div className="space-y-2 mt-1">
+            {/* Product Name */}
+            <label className="block text-gray-300 mb-1 text-sm">Product Name</label>
             <Input
               value={currentProduct.name}
               onChange={(e) =>
                 setCurrentProduct({ ...currentProduct, name: e.target.value })
               }
               placeholder="Name"
+            />
+            {/* Brand Name */}
+            <label className="block text-gray-300 mb-1 text-sm">Brand Name</label>
+            <Input
+              value={currentProduct?.brandName || ""}
+              onChange={(e) =>
+                setCurrentProduct({ ...currentProduct, brandName: e.target.value })
+              }
+              placeholder="Brand name"
             />
             {/* PRICE */}
             <label className="block text-gray-300 mb-1 text-sm">Price</label>

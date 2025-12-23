@@ -1,16 +1,20 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Star, X, ZoomIn } from "lucide-react";
 import { CartContext } from "@/Context/CartContext";
 import toast from "react-hot-toast";
 import getImageUrl from "@/utils/imageHelper";
 import ReviewSection from "@/Components/ReviewSection/ReviewSection";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import ProductImageSlider from "./ProductImageSlider";
+import "./ProductDetails.css"
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { addToCart,cartData  } = useContext(CartContext);
+  const { addToCart, cartData } = useContext(CartContext);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -22,6 +26,11 @@ const ProductDetails = () => {
   const [selectedServing, setSelectedServing] = useState("");
   const [isLargeView, setIsLargeView] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
+
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const touchStartTime = useRef(0);
+  const isSwiping = useRef(false);
 
   // Fetch product and reviews
   useEffect(() => {
@@ -57,130 +66,48 @@ const ProductDetails = () => {
     fetchProductAndReviews();
   }, [id]);
 
-  const nextSlide = () =>
-    setCurrentIndex((prev) => (prev + 1) % (product?.gallery?.length || 1));
-  const prevSlide = () =>
-    setCurrentIndex((prev) =>
-      prev === 0 ? (product?.gallery?.length || 1) - 1 : prev - 1
-    );
-
-  const handleTouchStart = (e) => {
-    e.currentTarget.dataset.touchStart = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e) => {
-    const diff =
-      parseFloat(e.currentTarget.dataset.touchStart) -
-      e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
-  };
-
-  const handleMouseDown = (e) => {
-    e.currentTarget.dataset.mouseStart = e.clientX;
-  };
-  const handleMouseUp = (e) => {
-    const diff = parseFloat(e.currentTarget.dataset.mouseStart) - e.clientX;
-    if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
-  };
-
   const handleAddToCart = () => {
-    const result =addToCart({
-    ...product,
-    productId: product._id,
-    flavor: selectedFlavor,
-    servings: selectedServing,
-    discountedPrice: product.discountPercent
-      ? Math.round(product.price - (product.price * product.discountPercent) / 100)
-      : product.price,
-  });
-  
-  // Show success toast only if product was added
-  if (result?.added) {
-    toast.success("Product added to cart!");
+    const result = addToCart({
+      ...product,
+      productId: product._id,
+      flavor: selectedFlavor,
+      servings: selectedServing,
+      discountedPrice: product.discountPercent
+        ? Math.round(product.price - (product.price * product.discountPercent) / 100)
+        : product.price,
+    });
+
+    // Show success toast only if product was added
+    if (result?.added) {
+      toast.success("Product added to cart!");
+    }
+  };
+
+
+  if (loading) {
+    return <div className="text-center text-white py-20">Loading product...</div>;
   }
-};
 
+  if (error) {
+    return <div className="text-center text-red-500 py-20">{error}</div>;
+  }
 
- if (loading) {
-  return <div className="text-center text-white py-20">Loading product...</div>;
-}
-
-if (error) {
-  return <div className="text-center text-red-500 py-20">{error}</div>;
-}
-
-if (!product) {
-  return <div className="text-center text-white py-20">Product not found.</div>;
-}
+  if (!product) {
+    return <div className="text-center text-white py-20">Product not found.</div>;
+  }
 
   return (
     <>
-      <section className="flex flex-col lg:flex-row items-center justify-center text-white px-6 py-15 gap-12 max-w-7xl mx-auto">
+      <section className="flex flex-col lg:flex-row justify-center text-white px-6 py-15 gap-12 max-w-7xl mx-auto">
         {/* Left: Image Slider */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center relative">
-          <div
-            className="bg-[#e5e7eb] relative w-full max-w-md overflow-hidden rounded-2xl"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-          >
-            <div
-              className="relative w-full h-[400px] overflow-hidden rounded-2xl border border-[#37b5fe]/40 bg-black"
-              onMouseEnter={() => setIsZoomed(true)}
-              onMouseLeave={() => setIsZoomed(false)}
-            >
-              <img
-                src={getImageUrl(product.gallery[currentIndex])}
-                alt={product.name}
-                className={`w-full h-full object-cover transition-transform duration-200 select-none ${
-                  isZoomed ? "scale-110" : "scale-100"
-                }`}
-                draggable="false"
-              />
-            </div>
-
-            <button
-              onClick={prevSlide}
-              className="absolute top-1/2 left-3 -translate-y-1/2 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute top-1/2 right-3 -translate-y-1/2 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setIsLargeView(true)}
-              className="absolute bottom-3 left-3 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110"
-            >
-              <ZoomIn className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="flex flex-wrap justify-center mt-4 gap-3">
-            {product.gallery.map((img, index) => (
-              <img
-                key={index}
-                src={getImageUrl(img)}
-                alt={`Thumbnail ${index}`}
-                onClick={() => setCurrentIndex(index)}
-                className={`bg-black-300 w-20 h-20 object-cover rounded-xl cursor-pointer border-2 transition ${
-                  currentIndex === index
-                    ? "border-[#37b5fe]"
-                    : "border-transparent hover:border-[#37b5fe]/50"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
+        <ProductImageSlider product={product} />
 
         {/* Right: Product Details */}
         <div className="w-full lg:w-1/2 space-y-8">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#37b5fe] uppercase tracking-wide drop-shadow-[0_0_5px_#37b5fe70] leading-snug">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#37b5fe] m-0 uppercase tracking-wide drop-shadow-[0_0_5px_#37b5fe70] leading-snug">
             {product.name}
           </h1>
+          <h3 className="font-semibold text-md">Brand Name</h3>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 mt-6 text-sm">
             <div className="bg-white/5 hover:bg-white/10 transition-all p-4 rounded-xl border border-white/10">
@@ -234,11 +161,10 @@ if (!product) {
                 <button
                   key={flavor}
                   onClick={() => setSelectedFlavor(flavor)}
-                  className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${
-                    selectedFlavor === flavor
-                      ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
-                      : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
-                  }`}
+                  className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${selectedFlavor === flavor
+                    ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
+                    : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
+                    }`}
                 >
                   {flavor}
                 </button>
@@ -256,11 +182,10 @@ if (!product) {
                 <button
                   key={serving}
                   onClick={() => setSelectedServing(serving)}
-                  className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${
-                    selectedServing === serving
-                      ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
-                      : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
-                  }`}
+                  className={`px-4 py-2 rounded-lg border transition-all text-sm font-medium ${selectedServing === serving
+                    ? "border-[#37b5fe] bg-[#37b5fe]/10 text-white shadow-[0_0_8px_#37b5fe50]"
+                    : "border-gray-700 text-gray-300 hover:border-[#37b5fe] hover:text-[#37b5fe]"
+                    }`}
                 >
                   {serving}
                 </button>
@@ -297,47 +222,6 @@ if (!product) {
         productId={id}
         onReviewAdded={(updatedProduct) => setProduct(updatedProduct)}
       />
-
-      {/* Large Image Modal */}
-      {isLargeView && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-4xl max-h-full w-full">
-            <button
-              onClick={() => setIsLargeView(false)}
-              className="absolute top-4 right-4 z-10 bg-[#37b5fe] p-2 rounded-full transition hover:scale-110"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <div
-              className="relative overflow-hidden rounded-2xl bg-black"
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-            >
-              <img
-                src={getImageUrl(product.gallery[currentIndex])}
-                alt={product.name}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-2xl select-none"
-                draggable="false"
-              />
-              <button
-                onClick={prevSlide}
-                className="absolute top-1/2 left-4 -translate-y-1/2 bg-[#37b5fe] p-3 rounded-full transition hover:scale-110"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute top-1/2 right-4 -translate-y-1/2 bg-[#37b5fe] p-3 rounded-full transition hover:scale-110"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full text-white text-sm">
-              {currentIndex + 1} / {product.gallery.length}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

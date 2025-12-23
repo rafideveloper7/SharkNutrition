@@ -9,6 +9,8 @@ export default function Dashboard() {
   });
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log(orders);
+
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,10 +33,6 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-    {currentOrders.length > 0 &&
-  console.log(currentOrders)
-}
-
   }
 
   if (loading) {
@@ -119,7 +117,7 @@ export default function Dashboard() {
               <th className="px-4 py-2 text-left">Phone</th>
               <th className="px-4 py-2 text-left">Address</th>
               <th className="px-4 py-2 text-left">Total Amount</th>
-              <th className="px-4 py-2 text-left">Date</th>              
+              <th className="px-4 py-2 text-left">Date</th>
               <th className="px-4 py-2 text-left">Products</th>
               <th className="px-4 py-2 text-left">Servings</th>
               <th className="px-4 py-2 text-left">Flavor</th>

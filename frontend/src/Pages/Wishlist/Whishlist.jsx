@@ -60,12 +60,12 @@ export default function Wishlist() {
 
   return (
     <div className="flex justify-center items-start py-5 text-white px-4 md:px-0">
-      <div className="w-full p-6 md:p-8">
+      <div className="w-full py-10 px-[2vw]">
         <h1 className="text-3xl md:text-4xl font-bold mb-8 text-blue text-center">
           Your Wishlist
         </h1>
 
-        <div className="flex flex-wrap gap-10 justify-center">
+        <div className="grid grid-cols-2 gap-[2vw] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {wishlist?.length > 0 ? (
             wishlist.map((item) => (
               <ProductCard

@@ -9,7 +9,8 @@ export default function CouponCode() {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
+    
+    
     const initialFormData = {
         code: "",
         discountType: "percentage",

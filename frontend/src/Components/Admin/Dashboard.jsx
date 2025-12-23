@@ -116,8 +116,8 @@ export default function Dashboard() {
               <th className="px-4 py-2 text-left">Email</th>
               <th className="px-4 py-2 text-left">Phone</th>
               <th className="px-4 py-2 text-left">Address</th>
-                 <th className="px-4 py-2 text-left">Discount</th>
-                    <th className="px-4 py-2 text-left">Coupon Code</th>
+              <th className="px-4 py-2 text-left">Discount</th>
+              <th className="px-4 py-2 text-left">Coupon Code</th>
               <th className="px-4 py-2 text-left">Total Amount</th>
               <th className="px-4 py-2 text-left">Date</th>
               <th className="px-4 py-2 text-left">Products</th>
@@ -127,24 +127,24 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-{currentOrders.length > 0 ? (
+            {currentOrders.length > 0 ? (
               currentOrders.map((order) =>
                 order.cartItems.map((item, itemIndex) => (
                   <tr key={`${order._id}-${item.productId}-${itemIndex}`} className="border-b border-gray-600">
                     {itemIndex === 0 && (
-                                  <>
+                      <>
                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top min-w-32 border-r border-gray-700">{order.name}</td>
                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top min-w-40 border-r border-gray-700">{order.email}</td>
                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top border-r border-gray-700">{order.phone}</td>
                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top min-w-50 border-r border-gray-700">{order.address}</td>
                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top min-w-50 border-r border-gray-700"> Rs {order.discount || 0}</td>
-                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top min-w-50 border-r border-gray-700"> {order.couponCode || "-"}</td>
+                        <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top min-w-50 border-r border-gray-700"> {order.couponCode || "-"}</td>
 
                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top border-r border-gray-700">Rs {order.totalAmount}</td>
                         <td rowSpan={order.cartItems.length} className="px-4 py-2 align-top border-r border-gray-700">{new Date(order.createdAt).toLocaleDateString()}</td>
                       </>
                     )}
-                    <td className="px-4 py-2"><strong>{item.name}</strong> (x{item.count})</td>
+                    <td className="px-4 py-2"><strong>{item.name}</strong> (x{item.count}) <span className='bg-black rounded-md p-1'>{item?.productId}</span></td>
                     <td className="px-4 py-2">{item.servings || "-"}</td>
                     <td className="px-4 py-2">{item.flavor || "-"}</td>
                     {itemIndex === 0 && (

@@ -112,7 +112,7 @@ function Checkout() {
       couponCode: formData.couponCode,
       totalAmount: finalTotal,
       cartItems: cartData.map((item) => ({
-        productId: item.productId,
+       productId: item._id,  
         name: item.name,
         price: item.price,
         count: item.count,
@@ -306,7 +306,7 @@ function Checkout() {
               <div className="flex flex-col gap-4">
                 {cartData.map((item) => (
                   <div
-                    key={item?.productId}
+                  key={item._id} 
                     className="flex justify-between items-center border-b pb-2"
                   >
                     <p className="font-medium text-gray-400">

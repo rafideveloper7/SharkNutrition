@@ -15,7 +15,7 @@ const addToCart = (product) => {
   setCartData((prev) => {
     const existingItem = prev.find(
       (item) =>
-        item.productId === product.productId &&
+      item._id === product._id && 
         item.servings === product.servings &&
         item.flavor === product.flavor
     );
@@ -29,7 +29,7 @@ const addToCart = (product) => {
       }
       added = true;
       return prev.map((item) =>
-        item.productId === product.productId &&
+         item._id === product._id && 
         item.servings === product.servings &&
         item.flavor === product.flavor
           ? { ...item, count: item.count + 1 }
@@ -46,7 +46,8 @@ const addToCart = (product) => {
     return [
       ...prev,
       {
-        productId: product?.productId || product?._id,
+        _id: product._id, 
+        productId: product.productId, 
         name: product?.name,
         price: product?.price,
         discountedPrice: product?.discountedPrice || product?.price,
@@ -67,7 +68,7 @@ const addToCart = (product) => {
   const increaseQuantity = (id) => {
     setCartData((prev) =>
       prev.map((item) => {
-        if (item.productId === id) {
+       if (item._id === id) { 
           if (item.count >= item.quantity) {
             toast.error(`Only ${item.quantity} item(s) available in stock!`, {
               id: "stock-error",
@@ -86,7 +87,7 @@ const addToCart = (product) => {
     setCartData((prev) =>
       prev
         .map((item) =>
-          item.productId === id
+              item._id === id  
             ? { ...item, count: Math.max(1, item.count - 1) }
             : item
         )
@@ -99,7 +100,7 @@ const addToCart = (product) => {
 
   //  Remove product from cart
   const removeCartItem = (id) => {
-    setCartData((prev) => prev.filter((item) => item.productId !== id));
+   setCartData((prev) => prev.filter((item) => item._id !== id)); 
   };
 
   return (

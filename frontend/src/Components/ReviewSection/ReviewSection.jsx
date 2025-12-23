@@ -15,63 +15,66 @@ export default function ReviewSection({
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 
-  // Initialize user from localStorage
+  // get user once
   const [user, setUser] = useState(() => {
     const u = localStorage.getItem("user");
     return u ? JSON.parse(u) : null;
   });
 
-  // Autofill name & email if user is logged in
+  // autofill for logged-in
   useEffect(() => {
     if (user) {
-      setForm((prev) => {
-        if (prev.name !== user.fullName || prev.email !== user.email) {
-          return { ...prev, name: user.fullName, email: user.email };
-        }
-        return prev;
-      });
+      setForm((prev) => ({
+        ...prev,
+        name: user.fullName,
+        email: user.email,
+      }));
     }
   }, [user]);
 
-  // Handle input (only message editable)
   const handleInput = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Submit review
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Re-fetch user from localStorage to ensure we have the latest data
-    const currentUser = localStorage.getItem("user");
-    const userData = currentUser ? JSON.parse(currentUser) : null;
-
-    if (!userData)
-      return toast.error("You must be logged in to submit a review");
     if (!rating) return toast.error("Please select a rating");
 
-    const userId = userData._id || userData.id;
-    if (!userId) {
-      console.error("User data:", userData);
-      return toast.error("Invalid user data - missing user ID");
+    // build payload HERE (single place)
+    const payload = {
+      productId,
+      rating,
+      message: form.message,
+    };
+    console.log(payload);
+
+
+    // logged-in user
+    if (user) {
+      payload.userId = user._id || user.id;
+      payload.name = user.fullName;
+      payload.email = user.email;
     }
+    // guest user
+    else {
+      if (!form.name || !form.email) {
+        return toast.error("Name and email are required");
+      }
+      payload.name = form.name;
+      payload.email = form.email;
+    }
+    console.log(payload);
 
     setSubmitting(true);
     try {
       const res = await fetch(`${API_BASE}/api/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId,
-          userId,
-          name: userData.fullName || "",
-          email: userData.email || "",
-          message: form.message,
-          rating,
-        }),
+        body: JSON.stringify(payload),
       });
-      console.log("User from localStorage:", user);
+
       const data = await res.json();
       if (!data.success)
         throw new Error(data.error || "Failed to submit review");
@@ -83,31 +86,28 @@ export default function ReviewSection({
       if (onReviewAdded && data.updatedProduct) {
         onReviewAdded(data.updatedProduct);
       }
+
       toast.success("Review submitted successfully");
     } catch (err) {
-      console.error(err);
       toast.error(err.message);
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Render stars
   const RenderStars = ({ count }) => (
     <div className="flex gap-1">
       {[...Array(5)].map((_, i) => (
         <Star
           key={i}
-          className={`w-4 h-4 ${
-            i < count
-              ? "fill-yellow-400 stroke-yellow-400"
-              : "fill-none stroke-gray-500"
-          }`}
+          className={`w-4 h-4 ${i < count
+            ? "fill-yellow-400 stroke-yellow-400"
+            : "fill-none stroke-gray-500"
+            }`}
         />
       ))}
     </div>
   );
-
   return (
     <section className="w-full px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 text-white max-w-6xl mx-auto">
       {/* Reviews */}
@@ -157,11 +157,10 @@ export default function ReviewSection({
                   onMouseLeave={() => setHover(null)}
                 >
                   <Star
-                    className={`w-7 h-7 transition ${
-                      (hover || rating) >= index
-                        ? "fill-yellow-400 stroke-yellow-400"
-                        : "fill-none stroke-gray-600"
-                    }`}
+                    className={`w-7 h-7 transition ${(hover || rating) >= index
+                      ? "fill-yellow-400 stroke-yellow-400"
+                      : "fill-none stroke-gray-600"
+                      }`}
                   />
                 </button>
               );
@@ -172,52 +171,40 @@ export default function ReviewSection({
         {/* Review Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white/5 border border-white/10 p-6 rounded-xl space-y-5 shadow-[0_0_15px_#37b5fe40]"
+          className="bg-white/5 rounded-xl space-y-5 max-w-[500px]"
         >
-          <div className="flex flex-col gap-1">
-            <label className="text-gray-300 text-sm">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              disabled={!!user}
-              className="bg-black/20 border border-gray-700 rounded-lg p-2 text-white focus:border-[#37b5fe] outline-none"
-            />
-          </div>
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleInput}
+            disabled={!!user}
+            placeholder="Name"
+            className="w-full p-2 bg-black/20 border rounded"
+          />
 
-          <div className="flex flex-col gap-1">
-            <label className="text-gray-300 text-sm">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              disabled={!!user}
-              className="bg-black/20 border border-gray-700 rounded-lg p-2 text-white focus:border-[#37b5fe] outline-none"
-            />
-          </div>
+          <input
+            name="email"
+            value={form.email}
+            onChange={handleInput}
+            disabled={!!user}
+            placeholder="Email"
+            className="w-full p-2 bg-black/20 border rounded"
+          />
 
-          <div className="flex flex-col gap-1">
-            <label className="text-gray-300 text-sm">Review Message</label>
-            <textarea
-              name="message"
-              value={form.message}
-              onChange={handleInput}
-              required
-              rows={4}
-              className="bg-black/20 border border-gray-700 rounded-lg p-2 text-white focus:border-[#37b5fe] outline-none"
-            ></textarea>
-          </div>
+          <textarea
+            name="message"
+            value={form.message}
+            onChange={handleInput}
+            rows={4}
+            placeholder="Your review"
+            className="w-full p-2 bg-black/20 border rounded"
+          />
 
           <button
-            type="submit"
-            disabled={!user || submitting}
-            className="bg-[#37b5fe] text-black font-semibold px-6 py-2 rounded-xl transition hover:scale-105 shadow-[0_0_15px_#37b5fe]"
+            disabled={submitting}
+            className="bg-[#37b5fe] text-black px-6 py-2 rounded"
           >
-            {submitting
-              ? "Submitting..."
-              : !user
-              ? "Login to review"
-              : "Submit Review"}
+            {submitting ? "Submitting..." : "Submit Review"}
           </button>
         </form>
       </div>

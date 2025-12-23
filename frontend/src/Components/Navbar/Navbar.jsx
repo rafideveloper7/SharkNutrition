@@ -23,11 +23,11 @@ function Navbar({ setOpenSearch }) {
       <div className="container flex justify-between items-center gap-15 h-[90px] m-auto">
         <div className="buttons-container flex gap-5 items-center">
           <button
-            onClick={() => setShowMenu(true)}
-            className="menu-btn px-1 cursor-pointer rounded-md border-1 hidden"
-          >
-            <i className="fa-solid fa-bars"></i>
-          </button>
+              onClick={() => setShowMenu(true)}
+              className="menu-btn px-1 cursor-pointer rounded-md border-1 hidden"
+            >
+              <i className="fa-solid fa-bars"></i>
+            </button>
         </div>
         <div className="logo pr-[50px] m-auto flex justify-between w-full">
           <Link to="/" className="flex items-center mr-3">
@@ -111,7 +111,7 @@ function Navbar({ setOpenSearch }) {
             <NavLink to="/cart">
               <i className="fa-solid fa-cart-shopping text-lg me-2"></i>
             </NavLink>
-            <span className="cart-count absolute -top-2 -right-1 bg-blue-400 text-white-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
+            <span className="cart-count absolute -top-2 -right-0 bg-blue-400 text-white-600 text-center text-sm font-bold w-4 h-4 flex items-center justify-center rounded-full">
               {cartData?.length}
             </span>
           </div>

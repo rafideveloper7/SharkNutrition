@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 export default function AddProducts() {
   const [formData, setFormData] = useState({
     name: "",
+    brandName: "",
     category: "",
     price: 0,
     discountPercent: 0,
@@ -74,6 +75,7 @@ export default function AddProducts() {
     const data = new FormData();
 
     data.append("name", formData.name);
+    data.append("brandName", formData.brandName);
     data.append("category", formData.category);
     data.append("weight", formData.weight);
     data.append("description", formData.description);
@@ -99,6 +101,7 @@ export default function AddProducts() {
         toast.success("Product added successfully!");
         setFormData({
           name: "",
+          brandName: "",
           category: "",
           price: 0,
           discountPercent: 0,
@@ -134,6 +137,18 @@ export default function AddProducts() {
               value={formData.name}
               onChange={handleChange}
               placeholder="Enter product name"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          {/* Brand Name */}
+          <div>
+            <label className="block mb-2 font-medium">Brand Name</label>
+            <input
+              type="text"
+              name="brandName"
+              value={formData.brandName}
+              onChange={handleChange}
+              placeholder="Enter brand name"
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>

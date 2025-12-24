@@ -2,15 +2,14 @@ import { useContext } from "react";
 import { CartContext } from "../../Context/CartContext";
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../../utils/imageHelper";
-import { toast } from "react-hot-toast";
 
 export default function Cart() {
   const {
     cartData,
-    setCartData,
     increaseQuantity,
     decreaseQuantity,
     removeCartItem,
+    clearCart
   } = useContext(CartContext);
 
   const totalPrice = cartData.reduce(
@@ -59,7 +58,7 @@ export default function Cart() {
                 {/*  Quantity Controls */}
                 <div className="flex items-center gap-1 border-1 max-w-[fit-content] rounded-full p-1">
                   <button
-                    onClick={() => decreaseQuantity(item.productId)}
+                    onClick={() => decreaseQuantity(item?._id)}
                     className="px-2 py-[2px] text-black rounded-full bg-gray-300"
                   >
                     −
@@ -71,11 +70,7 @@ export default function Cart() {
 
                   <button
                     onClick={() =>
-                      increaseQuantity(
-                        item.productId,
-                        item.flavor,
-                        item.servings
-                      )
+                      increaseQuantity(item?._id)
                     }
                     className="px-2 py-[2px] text-black rounded-full bg-gray-300"
                   >
@@ -92,7 +87,7 @@ export default function Cart() {
                     ).toLocaleString()}
                   </div>
                   <button
-                    onClick={() => removeCartItem(item.productId)}
+                    onClick={() => removeCartItem(item?._id)}
                     className="border border-blue-400 text-white px-3 py-1 sm:px-4 sm:py-1 rounded-lg hover:bg-blue-600 hover:text-white transition"
                   >
                     Remove
@@ -127,7 +122,7 @@ export default function Cart() {
             </Link>
 
             <button
-              onClick={() => setCartData([])}
+              onClick={() => clearCart()}
               className="w-full bg-[#1e2939] text-white mt-4 sm:mt-6 py-2 sm:py-3 rounded-lg font-semibold transition"
             >
               Reset Cart

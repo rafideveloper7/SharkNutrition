@@ -17,6 +17,18 @@ function Checkout() {
     }
   }, [cartData.length, navigate]);
 
+  // Let Cart empty after 3 sec of cod order placement
+  useEffect(() => {
+    if (!orderPlaced) return;
+
+    const timer = setTimeout(() => {
+      clearCart();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [orderPlaced]);
+
+
   // Total amount (before discount)
   const total = useMemo(() => {
     return cartData
@@ -112,7 +124,7 @@ function Checkout() {
       couponCode: formData.couponCode,
       totalAmount: finalTotal,
       cartItems: cartData.map((item) => ({
-       productId: item._id,  
+        productId: item._id,
         name: item.name,
         price: item.price,
         count: item.count,
@@ -132,7 +144,6 @@ function Checkout() {
 
       if (formData.paymentMethod === "cod") {
         setOrderPlaced(true);
-        clearCart();
       } else if (formData.paymentMethod === "bank") {
         navigate("/bankDetails");
       }
@@ -149,8 +160,8 @@ function Checkout() {
       console.error("Error in order submission:", error);
       toast.error(
         error.response?.data?.message ||
-          error.message ||
-          "Failed to place order!"
+        error.message ||
+        "Failed to place order!"
       );
     }
   }
@@ -247,11 +258,10 @@ function Checkout() {
               </div>
               {couponMessage.text && (
                 <p
-                  className={`text-sm mt-2 ${
-                    couponMessage.type === "success"
-                      ? "text-green-400"
-                      : "text-red-400"
-                  }`}
+                  className={`text-sm mt-2 ${couponMessage.type === "success"
+                    ? "text-green-400"
+                    : "text-red-400"
+                    }`}
                 >
                   {couponMessage.text}
                 </p>
@@ -305,7 +315,7 @@ function Checkout() {
               <div className="flex flex-col gap-4">
                 {cartData.map((item) => (
                   <div
-                  key={item._id} 
+                    key={item._id}
                     className="flex justify-between items-center border-b pb-2"
                   >
                     <p className="font-medium text-gray-400">

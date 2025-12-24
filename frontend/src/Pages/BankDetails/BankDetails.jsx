@@ -1,13 +1,14 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CartContext } from "../../Context/CartContext";
 
 export default function BankDetails() {
-    const { cartData } = useContext(CartContext);
+    const { cartData, clearCart } = useContext(CartContext);
 
+    useEffect(() => { clearCart() }, [])
     return (
         <section className=" text-gray-200 py-10 px-4 md:px-10">
             <div className="max-w-3xl mx-auto bg-[#111] shadow-[0_0_25px_rgba(55,181,254,0.2)] rounded-2xl p-8 border border-[#222]">
-                
+
                 {/* Heading */}
                 <h2 className="text-3xl font-bold text-center mb-8">
                     <span className="text-[#37b5fe]">Bank</span> Transfer Details
@@ -22,7 +23,7 @@ export default function BankDetails() {
                         <span className="font-medium text-gray-400">EasyPaisa Account</span>
                         <span className="text-[#37b5fe] ml-5">03302721777</span>
                     </p>
-                    
+
                 </div>
 
                 {/* Product Summary */}

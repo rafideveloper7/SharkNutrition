@@ -108,7 +108,6 @@ const ProductDetails = () => {
     return <div className="text-center text-white py-20">Product not found.</div>;
   }
 
-  console.log(product?.servings)
   return (
     <>
       <section className="flex flex-col lg:flex-row justify-center text-white px-6 py-15 gap-12 max-w-7xl mx-auto">

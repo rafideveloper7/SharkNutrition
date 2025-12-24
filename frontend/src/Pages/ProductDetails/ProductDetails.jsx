@@ -120,7 +120,7 @@ const ProductDetails = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#37b5fe] m-0 uppercase tracking-wide drop-shadow-[0_0_5px_#37b5fe70] leading-snug">
             {product.name}
           </h1>
-          <h3 className="font-semibold text-md">{product.brandName || "N/A"}</h3>
+          <h3 className="font-semibold text-md">{product.brandName || ""}</h3>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 gap-6 mt-6 text-sm">
             <div className="bg-white/5 hover:bg-white/10 transition-all p-4 rounded-xl border border-white/10">

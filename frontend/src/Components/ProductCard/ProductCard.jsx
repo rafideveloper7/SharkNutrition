@@ -208,7 +208,7 @@ function ProductCard({ product, refreshWishlist }) {
               {product?.name || "Unnamed Product"}
             </Link>
           </h4>
-          <p className="brand text-gray-400 text-xs mb-1">{product?.brandName || "Unnamed Product"}</p>
+          <p className="brand text-gray-400 text-xs mb-1">{product?.brandName || ""}</p>
  
           <RatingInCard
             rating={product?.ratings?.averageRating?.toFixed(1) || 0}

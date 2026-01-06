@@ -322,7 +322,7 @@ function Checkout() {
                       {item?.name?.slice(0, 20)}...
                     </p>
                     <p className="text-gray-400">
-                      {item?.count} × ${item?.discountedPrice}
+                      {item?.count} × RS{item?.discountedPrice}
                     </p>
                   </div>
                 ))}

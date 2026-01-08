@@ -1,13 +1,12 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Star, X, ZoomIn } from "lucide-react";
+import { Star } from "lucide-react";
 import { CartContext } from "@/Context/CartContext";
 import toast from "react-hot-toast";
-import getImageUrl from "@/utils/imageHelper";
 import ReviewSection from "@/Components/ReviewSection/ReviewSection";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import ProductImageSlider from "./ProductImageSlider";
 import "./ProductDetails.css"
+import SimilarProducts from "@/Components/SimilarProducts/SimilarProducts";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
@@ -94,7 +93,6 @@ const ProductDetails = () => {
       toast.success("Product added to cart!");
     }
   };
-
 
   if (loading) {
     return <div className="text-center text-white py-20">Loading product...</div>;
@@ -241,6 +239,9 @@ const ProductDetails = () => {
         productId={id}
         onReviewAdded={(updatedProduct) => setProduct(updatedProduct)}
       />
+
+      {/* Similar Products - You May Also Like */}
+      <SimilarProducts category={product?.category} />
     </>
   );
 };

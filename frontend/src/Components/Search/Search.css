@@ -1,6 +1,9 @@
 #search{
     background-color: #000000ee;
 }
+#search .product-card-container{
+    width: fit-content;
+}
 @media (max-width: 900px) {
     #search .search-content button i{
         font-size: 16px;

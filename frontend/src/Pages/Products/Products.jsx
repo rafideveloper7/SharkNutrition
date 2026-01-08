@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CategoryProducts from "../../Components/CategoryProducts/CategoryProducts";
 import { fetchAllProducts } from "../../api";
-import { toast } from "react-hot-toast";
 function Products() {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -63,7 +63,7 @@ function Search({ setOpenSearch }) {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-y-10 px-5 container py-10 mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10 gap-x-2 container py-10 mb-10">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((item) => (
             <ProductCard key={`${item._id || item.productId}`} setOpenSearch={setOpenSearch} product={item} />

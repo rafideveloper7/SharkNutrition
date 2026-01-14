@@ -363,11 +363,14 @@ router.post(
       const cleanCategory = category.toLowerCase().trim();
       const validCategories = [
         "protein",
+        "weightgainer",
         "creatine",
         "preworkout",
-        "weightgainer",
         "vitamins and minerals",
         "amino acid",
+        "fat burner",
+        "other",
+        "accessories"
       ];
       if (!validCategories.includes(cleanCategory)) {
         return res.status(400).json({

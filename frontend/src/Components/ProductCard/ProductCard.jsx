@@ -166,6 +166,7 @@ function ProductCard({ product, refreshWishlist }) {
             <img
               className="w-full h-full object-cover"
               src={productImage}
+              loading="lazy"
               alt={product?.name || "Product"}
               onError={(e) => {
                 e.target.src = "/images/placeholder.png";

@@ -164,11 +164,15 @@ export default function AddProducts() {
             >
               <option value="">Select Category</option>
               <option value="protein">Protein</option>
+              <option value="mass gainer">Mass Gainer</option>
               <option value="creatine">Creatine</option>
               <option value="preworkout">Pre Workout</option>
-              <option value="weightgainer">Weight Gainer</option>
-              <option value="vitamins and minerals">Vitamin & Minerals</option>
               <option value="amino acid">Amino Acid</option>
+              <option value="weightgainer">Weight Gainer</option>
+              <option value="vitamin and mineral">Vitamin & Mineral</option>
+              <option value="fat burner">Fat Burner</option>
+              <option value="other">Other</option>
+              <option value="accessories">Accessories</option>
             </select>
           </div>
 

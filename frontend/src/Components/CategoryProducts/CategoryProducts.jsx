@@ -9,8 +9,9 @@ function CategoryProducts({ product, catId }) {
     const capitalizeCategory = (str) => {
         return str
             .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .map(word => word?.toUpperCase())
             .join(' ');
+            //  + word.slice(1).toLowerCase()
     };
 
     return (

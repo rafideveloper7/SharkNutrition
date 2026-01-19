@@ -42,16 +42,32 @@ const connectDB = async () => {
 const app = express();
 
 // =============== MIDDLEWARE ===============
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "https://sharknutritionpk.store"
+//     ,
+//     ],
+//     credentials: true,
+//   })
+// );
+
+const allowedOrigins = process.env.FRONT_END_URL.split(",");
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://sharknutritionpk.store"
-    ,
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-  })
+  }),
 );
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -61,10 +77,6 @@ app.use((req, res, next) => {
   console.log(`➡️ ${req.method} ${req.url}`);
   next();
 });
-
-
-
-
 
 // =============== ROUTES ===============
 app.use("/api/admin", adminRoutes);

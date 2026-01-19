@@ -21,7 +21,7 @@ function Categories() {
     { category: "creatine", image: creatineImg },
     { category: "pre workout", image: preworkoutImg },
     { category: "amino acid", image: aminoAcidImg },
-    { category: "vitamin and mineral", image: vitaminsMineralsImg },
+    { category: "MULTIVITAMIN", image: vitaminsMineralsImg },
     { category: "fat burner", image: fatBurnerImg },
     { category: "other", image: otherImg },
     { category: "accessories", image: accessoriesImg },

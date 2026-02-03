@@ -1,33 +1,28 @@
 import "./Categories.css";
 import ScrollContainer from "react-indiana-drag-scroll";
 import "react-indiana-drag-scroll/dist/style.css";
-import { useState } from "react";
-// Images
-import proteinImg from "../../assets/categories/PROTEIN.png";
-import massGainerImg from "../../assets/categories/MASS-GAINER.png";
-import creatineImg from "../../assets/categories/CREATINE.png";
-import preworkoutImg from "../../assets/categories/PRE-WORKOUT.png";
-import aminoAcidImg from "../../assets/categories/AMINO_ACID.png";
-import vitaminsMineralsImg from "../../assets/categories/VITAMIN-AND-MINERAL.png";
-import fatBurnerImg from "../../assets/categories/FAT-BURNER.png";
-import otherImg from "../../assets/categories/OTHER.png";
-import accessoriesImg from "../../assets/categories/ACCESSORIES.png";
-// ...
+import { useState, useEffect } from "react";
 
 function Categories() {
-  const STATIC_CATEGORIES = [
-    { category: "protein", image: proteinImg },
-    { category: "mass gainer", image: massGainerImg },
-    { category: "creatine", image: creatineImg },
-    { category: "pre workout", image: preworkoutImg },
-    { category: "amino acid", image: aminoAcidImg },
-    { category: "MULTIVITAMIN", image: vitaminsMineralsImg },
-    { category: "fat burner", image: fatBurnerImg },
-    { category: "other", image: otherImg },
-    { category: "accessories", image: accessoriesImg },
-  ];
+  const [categories, setCategories] = useState([]);
 
-  const [categories] = useState(STATIC_CATEGORIES);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/categories/slider/home`);
+        const data = await res.json();
+        if (data.success) {
+          setCategories(data.categories);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (categories.length === 0) return null;
 
   return (
     <section id="categories" className="py-10">
@@ -43,8 +38,8 @@ function Categories() {
         <div className="category-items-inner flex gap-[5vw] py-5 px-5">
           {categories?.map((item, index) => (
             <a
-              href={`#${item?.category?.toLowerCase().replace(/\s+/g, '-')}`}
-              key={item?.category + " -" + index}
+              href={`#${item?.name?.toLowerCase().replace(/\s+/g, '-')}`}
+              key={item?._id || index}
               className="category-item flex-shrink-0"
             >
               <div className="text-center">
@@ -52,16 +47,14 @@ function Categories() {
                   <img
                     className="w-full h-full object-cover rounded-full drop-shadow-[0_5px_5px_#444]"
                     src={item?.image}
-                    alt={item?.category}
+                    alt={item?.name}
                     onError={(e) => {
                       e.target.src = "/images/placeholder.png";
                     }}
                   />
                 </div>
                 <h3 className="font-semibold">
-                  {item?.category.toUpperCase()
-                    // item?.category.slice(1)
-                  }
+                  {item?.name?.toUpperCase()}
                 </h3>
               </div>
             </a>

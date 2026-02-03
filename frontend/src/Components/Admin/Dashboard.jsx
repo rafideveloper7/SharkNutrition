@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDashboardStats, fetchAllOrders } from '../../api';
+import CategoryList from '../admin/CategoryList'; // Category components import
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -9,12 +10,13 @@ export default function Dashboard() {
   });
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(orders);
-
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  // Category toggle (optional UX)
+  const [showCategories, setShowCategories] = useState(false);
 
   useEffect(() => {
     loadDashboard();
@@ -106,6 +108,26 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Categories Toggle */}
+      <div className="mb-6">
+        <button
+          onClick={() => setShowCategories(!showCategories)}
+          className="px-4 py-2 bg-indigo-600 rounded hover:bg-indigo-700 transition"
+        >
+          {showCategories ? "Hide Categories" : "Manage Categories"}
+        </button>
+      </div>
+
+      {/* Category Form + List */}
+      {showCategories && (
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold mb-4">Category Management</h2>
+          <div className="bg-gray-900 p-4 rounded-lg shadow-lg">
+            <CategoryList />
+          </div>
+        </div>
+      )}
+
       {/* Orders Table */}
       <h2 className="text-2xl font-bold mb-4">Recent Orders</h2>
       <div className="bg-gray-800 p-4 rounded-lg shadow-lg overflow-x-auto">
@@ -157,7 +179,7 @@ export default function Dashboard() {
               )
             ) : (
               <tr>
-                <td colSpan="10" className="text-center py-4 text-gray-400">No orders found</td>
+                <td colSpan="12" className="text-center py-4 text-gray-400">No orders found</td>
               </tr>
             )}
           </tbody>

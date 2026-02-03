@@ -137,6 +137,16 @@ export default function AdminReviews() {
 
               {/* Message */}
               <p className="text-gray-300 text-sm mt-3">{rev.message}</p>
+              {rev.image && (
+  <img
+    src={rev.image.startsWith("http") 
+      ? rev.image 
+      : `${import.meta.env.VITE_API_BASE}${rev.image}`
+    }
+    alt="Review"
+    className="mt-3 max-h-40 w-full object-cover rounded-lg"
+  />
+)}
             </div>
           ))}
         </div>

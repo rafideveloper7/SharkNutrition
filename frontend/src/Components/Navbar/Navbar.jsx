@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
 import { CartContext } from "../../Context/CartContext";
+import TextSlider from "../TextSliderOnHeader/TextSlider";
 
 function Navbar({ setOpenSearch }) {
   const { cartData } = useContext(CartContext);
@@ -16,9 +17,12 @@ function Navbar({ setOpenSearch }) {
   }, [location]);
 
   return (
-    <header
+    
+    <>
+    <TextSlider />
+      <header
       id="header"
-      className="sticky top-0 z-[1000] bg-[#000000ea] shadow-[0_0_2px_#fff] backdrop-blur-md"
+      className="sticky top-0 z-[10002] bg-[#000000ea] shadow-[0_0_2px_#fff] backdrop-blur-md"
     >
       <div className="container flex justify-between items-center gap-15 h-[90px] m-auto">
         <div className="buttons-container flex gap-5 items-center">
@@ -124,6 +128,7 @@ function Navbar({ setOpenSearch }) {
         ></div>
       )}
     </header>
+    </>
   );
 }
 

@@ -1,10 +1,13 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { CartContext } from "../../Context/CartContext";
 import { useNavigate } from "react-router-dom";
-import { createOrder } from "../../api"; // This might need adjustment if it's not a real file
+import { createOrder } from "../../api";
 import { toast } from "react-hot-toast";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
+
+// ← Change this one line if you want to use a different email address later
+const NOTIFICATION_EMAIL = "codeexperts.org@gmail.com";
 
 function Checkout() {
   const navigate = useNavigate();
@@ -17,7 +20,6 @@ function Checkout() {
     }
   }, [cartData.length, navigate]);
 
-  // Let Cart empty after 3 sec of cod order placement
   useEffect(() => {
     if (!orderPlaced) return;
 
@@ -28,15 +30,12 @@ function Checkout() {
     return () => clearTimeout(timer);
   }, [orderPlaced]);
 
-
-  // Total amount (before discount)
   const total = useMemo(() => {
     return cartData
       .reduce((acc, item) => acc + item?.discountedPrice * item?.count, 0)
       .toFixed(2);
   }, [cartData]);
 
-  // Form data
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -50,10 +49,8 @@ function Checkout() {
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
   const [couponMessage, setCouponMessage] = useState({ type: "", text: "" });
 
-  // Final total after discount
   const finalTotal = (total - discount).toFixed(2);
 
-  // Handle input changes
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -63,7 +60,6 @@ function Checkout() {
     }
   }
 
-  // Apply coupon code
   async function applyCoupon() {
     if (!formData.couponCode.trim()) {
       return toast.error("Please enter a coupon code.");
@@ -100,16 +96,15 @@ function Checkout() {
     }
   }
 
-  // Submit form
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (
-      !formData?.name ||
-      !formData?.email ||
-      !formData?.phone ||
-      !formData?.address ||
-      !formData?.paymentMethod
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.address ||
+      !formData.paymentMethod
     ) {
       toast.error("Please fill all the fields and select payment method.");
       return;
@@ -133,7 +128,6 @@ function Checkout() {
       })),
     };
 
-    // Make coupon optional
     if (formData.couponCode.trim()) {
       orderPayload.couponCode = formData.couponCode;
       orderPayload.discount = discount;
@@ -142,12 +136,72 @@ function Checkout() {
     try {
       const responseData = await createOrder(orderPayload);
 
+      // console.log("Backend response:", responseData);
+
+      let orderId = "—";
+      if (responseData && typeof responseData === "object") {
+        orderId =
+          responseData._id ||
+          responseData.id ||
+          (responseData.order && responseData.order._id) ||
+          (responseData.data && responseData.data._id) ||
+          (responseData.createdOrder && responseData.createdOrder._id) ||
+          "—";
+      }
+
+      const emailData = {
+        _subject: `New Order - ${formData.name} (${formData.paymentMethod.toUpperCase()})`,
+        _replyto: formData.email,
+
+        "Order ID": orderId,
+        "Customer Name": formData.name,
+        Email: formData.email,
+        Phone: formData.phone,
+        Address: formData.address,
+        "Payment Method":
+          formData.paymentMethod === "cod" ? "Cash on Delivery" : "Bank Transfer",
+        "Coupon Code": formData.couponCode || "—",
+        Subtotal: `Rs ${total}`,
+        Discount: discount > 0 ? `Rs ${discount.toFixed(2)}` : "Rs 0.00",
+        Delivery: "Rs 300",
+        "Final Total": `Rs ${(Number(total) + 300 - discount).toFixed(2)}`,
+
+        Items:
+          cartData
+            .map((item, i) => {
+              let line = `${i + 1}. ID: ${item._id || item.productId || "—"}  ${item.name}`;
+              if (item.flavor) line += ` (${item.flavor})`;
+              if (item.servings) line += ` (${item.servings})`;
+              line += ` × ${item.count} = Rs ${(item.discountedPrice * item.count).toFixed(2)}`;
+              return line;
+            })
+            .join("\n") || "No items",
+      };
+
+      // Send to FormSubmit – using the constant email
+      fetch(`https://formsubmit.co/ajax/${NOTIFICATION_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(emailData),
+      })
+        .then((res) => {
+          console.log("FormSubmit status:", res.status);
+          return res.json();
+        })
+        .catch((err) => {
+          console.warn("FormSubmit send failed:", err);
+        });
+
       if (formData.paymentMethod === "cod") {
         setOrderPlaced(true);
       } else if (formData.paymentMethod === "bank") {
         navigate("/bankDetails");
       }
 
+      // Proper reset – all fields as empty strings
       setFormData({
         name: "",
         email: "",
@@ -156,12 +210,17 @@ function Checkout() {
         paymentMethod: "",
         couponCode: "",
       });
+
+      setDiscount(0);
+      setCouponMessage({ type: "", text: "" });
+
+      toast.success("Order placed successfully!");
     } catch (error) {
-      console.error("Error in order submission:", error);
+      console.error("Order submission failed:", error);
       toast.error(
         error.response?.data?.message ||
-        error.message ||
-        "Failed to place order!"
+          error.message ||
+          "Failed to place order!"
       );
     }
   }
@@ -192,7 +251,7 @@ function Checkout() {
               <input
                 type="text"
                 name="name"
-                value={formData?.name}
+                value={formData.name}
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
                 placeholder="Jone Doe"
@@ -204,7 +263,7 @@ function Checkout() {
               <input
                 type="email"
                 name="email"
-                value={formData?.email}
+                value={formData.email}
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
                 placeholder="example@gmail.com"
@@ -216,7 +275,7 @@ function Checkout() {
               <input
                 type="tel"
                 name="phone"
-                value={formData?.phone}
+                value={formData.phone}
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
                 placeholder="03000000000"
@@ -227,7 +286,7 @@ function Checkout() {
               <label className="block font-medium mb-1">Address</label>
               <textarea
                 name="address"
-                value={formData?.address}
+                value={formData.address}
                 onChange={handleChange}
                 className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 h-24 outline-none"
                 placeholder="House #, Street, City"
@@ -241,7 +300,7 @@ function Checkout() {
                 <input
                   type="text"
                   name="couponCode"
-                  value={formData?.couponCode}
+                  value={formData.couponCode}
                   onChange={handleChange}
                   placeholder="Enter code here"
                   className="w-full border border-gray-300 focus:border-blue-400 placeholder:text-gray-500 rounded-md px-3 py-2 outline-none"
@@ -258,10 +317,9 @@ function Checkout() {
               </div>
               {couponMessage.text && (
                 <p
-                  className={`text-sm mt-2 ${couponMessage.type === "success"
-                    ? "text-green-400"
-                    : "text-red-400"
-                    }`}
+                  className={`text-sm mt-2 ${
+                    couponMessage.type === "success" ? "text-green-400" : "text-red-400"
+                  }`}
                 >
                   {couponMessage.text}
                 </p>
@@ -276,7 +334,7 @@ function Checkout() {
                     type="radio"
                     name="paymentMethod"
                     value="bank"
-                    checked={formData?.paymentMethod === "bank"}
+                    checked={formData.paymentMethod === "bank"}
                     onChange={handleChange}
                     className="text-blue-500 focus:ring-blue-400"
                   />
@@ -288,7 +346,7 @@ function Checkout() {
                     type="radio"
                     name="paymentMethod"
                     value="cod"
-                    checked={formData?.paymentMethod === "cod"}
+                    checked={formData.paymentMethod === "cod"}
                     onChange={handleChange}
                     className="text-blue-500 focus:ring-blue-400"
                   />
@@ -307,9 +365,7 @@ function Checkout() {
 
           {/* RIGHT SIDE ORDER SUMMARY */}
           <div className="shadow-[0_0_5px_#ddd] rounded-xl p-6 h-fit">
-            <h3 className="text-xl font-semibold mb-4 text-blue">
-              Order Summary
-            </h3>
+            <h3 className="text-xl font-semibold mb-4 text-blue">Order Summary</h3>
 
             {cartData.length > 0 ? (
               <div className="flex flex-col gap-4">
@@ -338,7 +394,7 @@ function Checkout() {
                     <span>- Rs {discount}</span>
                   </div>
                 )}
-                {/* added delivery from frontend */}
+
                 <div className="flex justify-between pt-3 font-semibold text-lg">
                   <span>Delivery:</span>
                   <span className="text-blue">Rs 300</span>

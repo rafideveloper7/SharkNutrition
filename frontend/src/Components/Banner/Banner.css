@@ -1,20 +1,40 @@
-.banner-img {
-  margin-top: 20px;
-  /* border: 1px solid; */
-  margin: auto;
-  height: 70vh;
+/* Banner.css */
+#banner {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
 }
-@media (max-width: 430px) {
-  .banner-img {
-    width: 100% !important;
-    /* height: 100%; */
-    height: 30dvh !important;
-    background-position: center;
-    object-fit: cover;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    margin: auto;
-    margin-bottom: 185px;
-  }
+
+.banner-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Swiper custom styles */
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.swiper-pagination-bullet-active {
+  background: #3b82f6;
+}
+
+/* Video styling */
+video {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

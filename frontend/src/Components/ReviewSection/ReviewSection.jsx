@@ -17,6 +17,11 @@ const ReviewSection = forwardRef(function ReviewSection(
   const [hover, setHover] = useState(null);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
+const [image, setImage] = useState(null);
+
+const handleFileChange = (e) => {
+  setImage(e.target.files[0]);
+};
 
   // get user once
   const [user, setUser] = useState(() => {
@@ -41,60 +46,52 @@ const ReviewSection = forwardRef(function ReviewSection(
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!rating) return toast.error("Please select a rating");
+  if (!rating) return toast.error("Please select a rating");
 
-    // build payload HERE (single place)
-    const payload = {
-      productId,
-      rating,
-      message: form.message,
-    };
+  const formData = new FormData();
+  formData.append("productId", productId);
+  formData.append("rating", rating);
+  formData.append("message", form.message);
 
+  if (user) {
+    formData.append("userId", user._id || user.id);
+    formData.append("name", user.fullName);
+    formData.append("email", user.email);
+  } else {
+    if (!form.name || !form.email) return toast.error("Name and email are required");
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+  }
 
-    // logged-in user
-    if (user) {
-      payload.userId = user._id || user.id;
-      payload.name = user.fullName;
-      payload.email = user.email;
-    }
-    // guest user
-    else {
-      if (!form.name || !form.email) {
-        return toast.error("Name and email are required");
-      }
-      payload.name = form.name;
-      payload.email = form.email;
-    }
+  if (image) formData.append("image", image);
 
-    setSubmitting(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/reviews`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+  setSubmitting(true);
+  try {
+    const res = await fetch(`${API_BASE}/api/reviews`, {
+      method: "POST",
+      body: formData, // <-- send FormData
+    });
 
-      const data = await res.json();
-      if (!data.success)
-        throw new Error(data.error || "Failed to submit review");
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || "Failed to submit review");
 
-      setReviews([data.review, ...reviews]);
-      setForm((prev) => ({ ...prev, message: "" }));
-      setRating(0);
+    setReviews([data.review, ...reviews]);
+    setForm((prev) => ({ ...prev, message: "" }));
+    setRating(0);
+    setImage(null);
 
-      if (onReviewAdded && data.updatedProduct) {
-        onReviewAdded(data.updatedProduct);
-      }
+    if (onReviewAdded && data.updatedProduct) onReviewAdded(data.updatedProduct);
 
-      toast.success("Review submitted successfully");
-    } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    toast.success("Review submitted successfully");
+  } catch (err) {
+    toast.error(err.message);
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   const RenderStars = ({ count }) => (
     <div className="flex gap-1">
@@ -135,6 +132,16 @@ const ReviewSection = forwardRef(function ReviewSection(
             <p className="text-gray-500 text-xs mt-2">
               {new Date(rev.createdAt).toLocaleDateString()}
             </p>
+            
+ {rev.image && (
+  <img
+    src={rev.image.startsWith("http") ? rev.image : `${API_BASE}${rev.image}`}
+    alt="Review"
+    className="mt-2 max-h-40 rounded object-cover"
+  />
+)}
+
+    
           </div>
         ))}
       </div>
@@ -192,6 +199,8 @@ const ReviewSection = forwardRef(function ReviewSection(
             className="w-full p-2 bg-black/20 border focus:border-blue-400 rounded outline-0"
           />
 
+
+
           <textarea
             name="message"
             value={form.message}
@@ -200,7 +209,22 @@ const ReviewSection = forwardRef(function ReviewSection(
             placeholder="Your review"
             className="w-full p-2 bg-black/20 border focus:border-blue-400 rounded outline-0"
           />
+          <input
+  type="file"
+  accept="image/*"
+  onChange={handleFileChange}
+  className="w-full p-2 bg-black/20 border focus:border-blue-400 rounded outline-0"
+/>
 
+
+  {/* <-- ADD IMAGE PREVIEW HERE */}
+  {image && (
+    <img
+      src={URL.createObjectURL(image)}
+      alt="Preview"
+      className="mt-2 max-h-32 rounded object-cover"
+    />
+  )}
           <button
             disabled={submitting}
             className="bg-[#37b5fe] text-black px-6 py-2 rounded"

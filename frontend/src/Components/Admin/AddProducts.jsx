@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 export default function AddProducts() {
@@ -15,6 +15,21 @@ export default function AddProducts() {
     description: "",
     gallery: [],
   });  
+  const [categories, setCategories] = useState([]);
+
+  // Fetch categories from DB
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/categories`);
+        const data = await res.json();
+        if (data.categories) setCategories(data.categories);
+      } catch (err) {
+        console.error("Failed to fetch categories", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // Handle input changes
   const handleChange = (e, idx, type) => {
@@ -163,16 +178,9 @@ export default function AddProducts() {
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
             >
               <option value="">Select Category</option>
-              <option value="protein">Protein</option>
-              <option value="mass gainer">Mass Gainer</option>
-              <option value="creatine">Creatine</option>
-              <option value="preworkout">Pre Workout</option>
-              <option value="amino acid">Amino Acid</option>
-              <option value="weightgainer">Weight Gainer</option>
-              <option value="vitamin and mineral">Vitamin & Mineral</option>
-              <option value="fat burner">Fat Burner</option>
-              <option value="other">Other</option>
-              <option value="accessories">Accessories</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat.name}>{cat.name}</option>
+              ))}
             </select>
           </div>
 

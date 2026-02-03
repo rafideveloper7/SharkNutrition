@@ -7,24 +7,28 @@ function Products() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadProducts();
+    loadData();
   }, []);
 
-  async function loadProducts() {
+  async function loadData() {
     try {
       setLoading(true);
       setError(null);
 
-      const response = await fetchAllProducts();
+      // Fetch products and categories in parallel
+      const [productsResponse, categoriesResponse] = await Promise.all([
+        fetchAllProducts(),
+        fetch(`${import.meta.env.VITE_API_BASE}/api/categories`).then((res) => res.json())
+      ]);
 
       // Handle different API response formats
       let productArray = [];
-      if (Array.isArray(response)) {
-        productArray = response;
-      } else if (response?.data && Array.isArray(response.data)) {
-        productArray = response.data;
-      } else if (response?.products && Array.isArray(response.products)) {
-        productArray = response.products;
+      if (Array.isArray(productsResponse)) {
+        productArray = productsResponse;
+      } else if (productsResponse?.data && Array.isArray(productsResponse.data)) {
+        productArray = productsResponse.data;
+      } else if (productsResponse?.products && Array.isArray(productsResponse.products)) {
+        productArray = productsResponse.products;
       }
 
 
@@ -34,29 +38,55 @@ function Products() {
         return;
       }
 
-      const categoryMap = {};
-      productArray.forEach((product) => {
-        const category = product.category || "Uncategorized";
-
-        if (!categoryMap[category]) {
-          categoryMap[category] = [];
-        }
-
-        categoryMap[category].push(product);
+      // Handle categories for sorting
+      const categories = categoriesResponse.categories || [];
+      
+      // Sort categories by sliderOrder (ascending)
+      categories.sort((a, b) => {
+        const orderA = (a.sliderOrder !== undefined && a.sliderOrder !== null) ? a.sliderOrder : 9999;
+        const orderB = (b.sliderOrder !== undefined && b.sliderOrder !== null) ? b.sliderOrder : 9999;
+        return orderA - orderB;
       });
 
-      const groupedArray = Object.keys(categoryMap).map(
-        (categoryName, index) => ({
+      // Create a map for order index
+      const categoryOrderMap = {};
+      categories.forEach((cat, index) => {
+        categoryOrderMap[cat.name.toLowerCase().trim()] = index;
+      });
+
+      // Group products by category
+      const categoryMap = {};
+      productArray.forEach((product) => {
+        const categoryKey = product.category ? product.category.toLowerCase().trim() : "uncategorized";
+
+        if (!categoryMap[categoryKey]) {
+          categoryMap[categoryKey] = [];
+        }
+
+        categoryMap[categoryKey].push(product);
+      });
+
+      // Create groups array
+      const groupedArray = Object.keys(categoryMap).map((key, index) => {
+        // Find proper display name from categories list if available
+        const matchedCategory = categories.find(c => c.name.toLowerCase().trim() === key);
+        const displayName = matchedCategory ? matchedCategory.name : key.charAt(0).toUpperCase() + key.slice(1);
+
+        return {
           catId: index + 1,
-          category: categoryName,
-          products: categoryMap[categoryName],
-        })
-      );
+          category: displayName,
+          products: categoryMap[key],
+          sortIndex: categoryOrderMap[key] !== undefined ? categoryOrderMap[key] : 9999
+        };
+      });
+
+      // Sort groups based on the order map
+      groupedArray.sort((a, b) => a.sortIndex - b.sortIndex);
 
       setGroups(groupedArray);
     } catch (err) {
-      console.error(" Failed to load products:", err);
-      setError(err.message || "Failed to load products");
+      console.error(" Failed to load data:", err);
+      setError(err.message || "Failed to load data");
     } finally {
       setLoading(false);
     }
@@ -76,7 +106,7 @@ function Products() {
       <section className="py-10 text-center">
         <p className="text-xl text-red-500 mb-4">{error}</p>
         <button
-          onClick={loadProducts}
+          onClick={loadData}
           className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
         >
           Try Again
@@ -93,23 +123,9 @@ function Products() {
     );
   }
 
-  const categoryOrder = ["protein", "creatine", "preworkout", "weightgainer"];
-  const sortedGroups = [...groups].sort((a, b) => {
-    const aIndex = categoryOrder.indexOf(
-      a.category.toLowerCase().replace(/\s+/g, "")
-    );
-    const bIndex = categoryOrder.indexOf(
-      b.category.toLowerCase().replace(/\s+/g, "")
-    );
-
-    if (aIndex === -1) return 1;
-    if (bIndex === -1) return -1;
-    return aIndex - bIndex;
-  });
-
   return (
     <section id="products" className="py-10">
-      {sortedGroups.map((group) => (
+      {groups.map((group) => (
         <CategoryProducts
           key={group.catId}
           product={group}

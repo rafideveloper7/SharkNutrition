@@ -77,7 +77,7 @@ function SimilarProducts({ category }) {
             className="px-2 sm:px-0 py-10"
         >
             <h3 className="text-xl font-medium mb-5">
-                {apiCalled && filteredProducts.length < 10 ? "" : "You may also like"}
+                {apiCalled && filteredProducts.length < 10 ? "" : "YOU MAY ALSO LIKE"}
             </h3>
 
             {/* Loading */}

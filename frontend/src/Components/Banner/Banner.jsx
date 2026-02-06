@@ -18,7 +18,7 @@ function Banner() {
     { src: slideThree, category: "creatine" },
     { src: slideFour, category: "pre-workout" },
     { src: slideFive, category: "amino-acid" },
-    { src: slideSix, category: "other" },
+    { src: slideSix, category: "accessories" },
   ];
 
   const handleScroll = (categoryId) => {

@@ -141,7 +141,6 @@ const handleFileChange = (e) => {
   />
 )}
 
-    
           </div>
         ))}
       </div>
@@ -198,8 +197,6 @@ const handleFileChange = (e) => {
             placeholder="Email"
             className="w-full p-2 bg-black/20 border focus:border-blue-400 rounded outline-0"
           />
-
-
 
           <textarea
             name="message"

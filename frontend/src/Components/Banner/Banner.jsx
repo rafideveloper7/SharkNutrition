@@ -4,23 +4,19 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import slideOne from "../../assets/videos-for-hero/Slide 1.MOV";
-import slideTwo from "../../assets/videos-for-hero/Slide 2.MOV";
-import slideThree from "../../assets/videos-for-hero/Slide 3.MOV";
-import slideFour from "../../assets/videos-for-hero/Slide 4.MOV";
-import slideFive from "../../assets/videos-for-hero/Slide 5.MOV";
-import slideSix from "../../assets/videos-for-hero/Slide 6.MOV";
-import slideSeven from "../../assets/videos-for-hero/Slide 7.MOV";
+import slideOne from "../../assets/videos-for-hero/1.PNG";
+import slideTwo from "../../assets/videos-for-hero/2.PNG";
+import slideThree from "../../assets/videos-for-hero/3.PNG";
+import slideFour from "../../assets/videos-for-hero/4.PNG";
+import slideFive from "../../assets/videos-for-hero/5.PNG";
 
 function Banner() {
   const videos = [
-    { src: slideOne, category: "" },
-    { src: slideTwo, category: "" },
-    { src: slideThree, category: "protein" },
-    { src: slideFour, category: "creatine" },
-    { src: slideFive, category: "pre-workout" },
-    { src: slideSix, category: "amino-acid" },
-    { src: slideSeven, category: "other" },
+    { src: slideOne, category: "pre-workout" },
+    { src: slideTwo, category: "protein" },
+    { src: slideThree, category: "creatine" },
+    { src: slideFour, category: "accessories" },
+    { src: slideFive, category: "amino-acid" },
   ];
 
   const handleScroll = (categoryId) => {
@@ -43,9 +39,9 @@ function Banner() {
       {/* Content */}
       <div className="bg-black text-white py-12 px-4 text-center -mt-6 lg:-mt-72">
         
-        <h1 className="text-2xl md:text-4xl font-bold mb-8 lg:text-5xl">
+        {/* <h1 className="text-2xl md:text-4xl font-bold mb-8 lg:text-5xl">
           WELCOME TO <br /> SHARK NUTRITION
-        </h1>
+        </h1> */}
 
         <div className="w-full max-w-4xl mx-auto">
           <Swiper
@@ -65,7 +61,7 @@ function Banner() {
                   onClick={() => handleScroll(video.category)}
                   className="w-full aspect-video bg-black rounded-lg overflow-hidden cursor-pointer"
                 >
-                  <video
+                  <img
                     className="w-full h-full object-cover"
                     src={video.src}
                     autoPlay

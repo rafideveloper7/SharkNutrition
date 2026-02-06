@@ -4,19 +4,21 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import slideOne from "../../assets/videos-for-hero/1.PNG";
-import slideTwo from "../../assets/videos-for-hero/2.PNG";
-import slideThree from "../../assets/videos-for-hero/3.PNG";
-import slideFour from "../../assets/videos-for-hero/4.PNG";
-import slideFive from "../../assets/videos-for-hero/5.PNG";
+import slideOne from "../../assets/videos-for-hero/Slide 1.PNG";
+import slideTwo from "../../assets/videos-for-hero/Slide 2.PNG";
+import slideThree from "../../assets/videos-for-hero/Slide 3.PNG";
+import slideFour from "../../assets/videos-for-hero/Slide 4.PNG";
+import slideFive from "../../assets/videos-for-hero/Slide 5.PNG";
+import slideSix from "../../assets/videos-for-hero/Slide 6.PNG";
 
 function Banner() {
   const videos = [
-    { src: slideOne, category: "pre-workout" },
+    { src: slideOne, category: "" },
     { src: slideTwo, category: "protein" },
     { src: slideThree, category: "creatine" },
-    { src: slideFour, category: "accessories" },
+    { src: slideFour, category: "pre-workout" },
     { src: slideFive, category: "amino-acid" },
+    { src: slideSix, category: "other" },
   ];
 
   const handleScroll = (categoryId) => {

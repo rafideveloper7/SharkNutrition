@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 const API_BASE = import.meta.env.VITE_API_BASE;
 
 // ← Change this one line if you want to use a different email address later
-const NOTIFICATION_EMAIL = "codeexperts.org@gmail.com";
+const NOTIFICATION_EMAIL = "sharknutrition.pk@gmail.com";
 
 function Checkout() {
   const navigate = useNavigate();

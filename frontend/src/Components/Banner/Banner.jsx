@@ -46,6 +46,7 @@ function Banner() {
         </h1> */}
 
         <div className="w-full max-w-4xl mx-auto">
+          {/* <h3>how are you</h3> */}
           <Swiper
             modules={[Autoplay, Pagination]}
             slidesPerView={1}
@@ -55,7 +56,7 @@ function Banner() {
               disableOnInteraction: false,
             }}
             pagination={{ clickable: true }}
-            className="rounded-lg overflow-hidden shadow-2xl"
+            className="rounded-lg overflow-hidden shadow-2xl -mt-18 lg:mt-1"
           >
             {videos.map((video) => (
               <SwiperSlide key={video.category}>

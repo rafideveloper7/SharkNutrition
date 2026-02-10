@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 
 function CategoryProducts({ product, catId }) {
@@ -11,8 +11,40 @@ function CategoryProducts({ product, catId }) {
             .split(' ')
             .map(word => word?.toUpperCase())
             .join(' ');
-            //  + word.slice(1).toLowerCase()
+        //  + word.slice(1).toLowerCase()
     };
+
+    // ✅ Save scroll position
+    useEffect(() => {
+        let timeoutId = null;
+
+        const handleScroll = () => {
+            if (timeoutId) return;
+
+            timeoutId = setTimeout(() => {
+                sessionStorage.setItem("plpScroll", window.scrollY);
+                timeoutId = null;
+            }, 200);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, []);
+
+    // ✅ Restore scroll position
+    useEffect(() => {
+        const scrollPos = sessionStorage.getItem("plpScroll");
+
+        if (scrollPos) {
+            setTimeout(() => {
+                window.scrollTo(0, parseInt(scrollPos));
+            }, 300);
+        }
+    }, []);
 
     return (
         <section

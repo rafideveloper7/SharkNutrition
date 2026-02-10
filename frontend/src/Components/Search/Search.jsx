@@ -66,7 +66,7 @@ function Search({ setOpenSearch }) {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10 gap-x-2 container py-10 mb-10">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((item) => (
-            <ProductCard key={`${item._id || item.productId}`} setOpenSearch={setOpenSearch} product={item} />
+            <ProductCard key={`${item._id || item.productId}`} onClick={() => setOpenSearch(false)} product={item} />
           ))
         ) : query.length > 0 ? (
           <p className="text-center text-gray-400 col-span-full">

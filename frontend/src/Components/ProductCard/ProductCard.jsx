@@ -7,7 +7,7 @@ import { getImageUrl } from "../../utils/imageHelper";
 import toast from "react-hot-toast";
 import RatingInCard from "../RatingInCard/RatingInCard";
 
-function ProductCard({ product, refreshWishlist }) {
+function ProductCard({ product, refreshWishlist, onClick }) {
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -162,7 +162,7 @@ function ProductCard({ product, refreshWishlist }) {
       <div className="product-card">
         {/* Image Section */}
         <div className="image relative">
-          <Link to={`/products/${product?._id}`}>
+          <Link to={`/products/${product?._id}`} onClick={onClick} >
             <img
               className="w-full h-full object-cover"
               src={productImage}

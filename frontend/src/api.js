@@ -67,7 +67,6 @@ export const fetchAllOrders = () => {
     });
 };
 
-
 export const submitContactForm = (formData) => {
   return api
     .post("/api/contact", formData)

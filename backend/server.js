@@ -47,6 +47,7 @@ const allowedOrigins = [
   "https://sharknutstore.vercel.app"
 ];
 
+
 app.use(
   cors({
     origin: (origin, callback) => {

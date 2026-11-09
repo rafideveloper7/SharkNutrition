@@ -43,6 +43,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://sharknutritionpk.store",
   "https://www.sharknutritionpk.store",
+  "https://sharknutrition.pk",
+  "https://sharknutstore.vercel.app"
 ];
 
 app.use(

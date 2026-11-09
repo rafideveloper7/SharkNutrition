@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDashboardStats, fetchAllOrders } from '../../api';
-import CategoryList from '../admin/CategoryList'; // Category components import
+import CategoryList from './CategoryList';
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
